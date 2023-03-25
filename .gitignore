@@ -1,0 +1,8 @@
+# Node.js
+node_modules/
+# WebStorm project files
+.idea/
+# macOS
+.DS_Store
+# Windows
+Thumbs.db Desktop.ini
