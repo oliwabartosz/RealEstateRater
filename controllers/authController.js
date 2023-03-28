@@ -12,13 +12,13 @@ const usersDb = {
 }
 
 const handleLogin = async (req, res) => {
-    const {user, pass} = req.body;
-    if (!user || !pass) return res.status(400).send('User and password are required.')  // 400 - Bad request
-    const foundUser = usersDb.users.find(person => person.username === user);
-    if (!foundUser) return res.sendStatus(401); // 401 - Unauthorized
+    const {username, password} = req.body;
+    if (!username || !password) return res.status(400).send('User and password are required.')  // 400 - Bad request
+    const foundUser = usersDb.users.find(person => person.username === username);
+    if (!foundUser) return res.send(401, 'Bad login or passwaord'); // 401 - Unauthorized
 
     // Evaluate password
-    const match = await bcrypt.compare(pass, foundUser.password);
+    const match = await bcrypt.compare(password, foundUser.password);
     if (match) {
         // create JWTs
         const accessToken = jwt.sign(
@@ -42,7 +42,7 @@ const handleLogin = async (req, res) => {
         res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
         res.json({accessToken})
     } else {
-        res.sendStatus(401); // 401 - Unauthorized
+        res.send(401, 'Bad login or passwaord'); // 401 - Unauthorized
     }
 };
 
