@@ -6,3 +6,5 @@ node_modules/
 .DS_Store
 # Windows
 Thumbs.db Desktop.ini
+# env
+.env
