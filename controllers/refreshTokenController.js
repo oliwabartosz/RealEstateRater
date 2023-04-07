@@ -8,12 +8,14 @@ const usersDb = {
     }
 }
 
-const handleRefreshToken = async (req, res) => {
-    const cookies = req.cookies
-    if (!cookies?.jwt) return res.sendStatus(401)  // 401 - Unauthorized
+const handleRefreshToken = (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
-    const foundUser = usersDb.users.find(person => person.refreshToken === refreshToken)
-    if (!foundUser) return res.sendStatus(403); // 403 - Unauthorized
+    console.log(refreshToken)
+    const foundUser = usersDb.users.find(person => person.refreshToken === refreshToken);
+    console.log(usersDb.users.find(person => person.username === 'test1'))
+    if (!foundUser) return res.sendStatus(403); //Forbidden
 
     // Evaluate JWT
     jwt.verify(
@@ -21,8 +23,14 @@ const handleRefreshToken = async (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
             if (err || foundUser.username !== decoded.username) return res.sendStatus(403);
+            const roles = Object.values(foundUser.roles);
             const accessToken = jwt.sign(
-                {'username': decoded.username},
+                {
+                    "UserInfo": {
+                        "username": decoded.username,
+                        "roles": roles
+                    }
+                },
                 process.env.ACCESS_TOKEN_SECRET,
                 {expiresIn: '30s'}
             );

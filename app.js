@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const hbs = require('express-handlebars');
 const path = require('path');
@@ -9,7 +10,7 @@ const {housesRouter} = require("./routers/houses/houses");
 const {plotsRouter} = require("./routers/plots/plots");
 const {homeRouter} = require("./routers/home/home");
 const {apiRouter} = require("./routers/api/api");
-const {registerRouter} = require("./routers/login/register");
+const {registerRouter} = require("./routers/admin/register");
 const {authRouter} = require("./routers/login/auth");
 const {verifyJwt} = require("./middlewares/veryfiyJwt");
 const {refreshRouter} = require("./routers/login/refresh");
@@ -40,18 +41,17 @@ app.set('views', __dirname + '/views');
 
 // ROUTERS
 app.use('/', homeRouter);
-app.use('/re/login', loginRouter);
-app.use('/re/register', registerRouter);
-app.use('/re/auth', authRouter);
-app.use('/re/refresh', refreshRouter);
-app.use('/re/logout', logoutRouter);
+app.use('/rer/login', loginRouter);
+app.use('/rer/auth', authRouter);
+app.use('/rer/refresh', refreshRouter);
+app.use('/rer/logout', logoutRouter);
 
-
-// app.use(verifyJwt);
-app.use('/re/flats', flatsRouter);
-app.use('/re/houses', housesRouter);
-app.use('/re/plots', plotsRouter);
-app.use('/re/api', apiRouter);
+//app.use(verifyJwt);
+app.use('/rer/register', registerRouter)
+app.use('/rer/flats', flatsRouter);
+app.use('/rer/houses', housesRouter);
+app.use('/rer/plots', plotsRouter);
+app.use('/rer/api', apiRouter);
 
 
 app.get('/test', (req, res) => {

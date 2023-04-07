@@ -1,0 +1,46 @@
+function plotsRecords(record) {
+    return {
+        id:record.id,
+        number:record.number,
+        user:record.user,
+        updateDate:record.updateDate,
+        market:record.market,
+        offerId:record.offerId,
+        offerIdExpected:record.offerIdExpected,
+        offerType:record.offerType,
+        offerStatus:record.offerStatus,
+        dateAdded:record.dateAdded,
+        dateChanged:record.dateChanged,
+        dateUpdated:record.dateUpdated,
+        dateEndTransaction:record.dateEndTransaction,
+        localization:record.localization,
+        street:record.street,
+        lawStatus:record.lawStatus,
+        price:record.price,
+        plotArea:record.plotArea,
+        priceM2:record.priceM2,
+        electricity:record.electricity,
+        water:record.water,
+        gas:record.gas,
+        sewers:record.sewers,
+        buildingConditions:record.buildingConditions,
+        buildingPermit:record.buildingPermit,
+        localPlan:record.localPlan,
+        plotPurpose:record.plotPurpose,
+        plotPurposeInPlan:record.plotPurposeInPlan,
+        accessRoad:record.accessRoad,
+        lotShape:record.lotShape,
+        waterIntake:record.waterIntake,
+        sewageType:record.sewageType,
+        fence:record.fence,
+        buildingOnPlot:record.buildingOnPlot,
+        plotWidth:record.plotWidth,
+        plotLength:record.plotLength,
+        description:record.description,
+        plotWidthLengthRatio:record.plotWidthLengthRatio
+    }
+}
+
+module.exports = {
+    plotsRecords,
+}
