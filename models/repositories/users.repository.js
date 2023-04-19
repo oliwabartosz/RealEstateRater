@@ -49,15 +49,10 @@ class UsersRepository {
         }
     }
 
-    static async addRefreshToken(record) {
-        UsersRepository._checkRecord(record);
-        if (!record.id) {
-            throw new Error('Users ID not provided.');
-        }
-
-        await pool.execute('UPDATE `users` SET `refreshToken` = :refreshToken WHERE id = :id', {
-            id: record.id,
-            refreshToken: record.refreshToken
+    static async addRefreshToken(username, refreshToken) {
+        await pool.execute('UPDATE `users` SET `refreshToken` = :refreshToken WHERE username = :username', {
+            username: username,
+            refreshToken: refreshToken
         });
     }
 
@@ -98,12 +93,41 @@ class UsersRepository {
             username: username
         });
 
-        return results.length === 0 ? true : null;
+        return results.length === 1 ? true : null;
+    }
+
+    static async getPasswordFromDatabase(username) {
+        const [results] = await pool.execute('SELECT `password` FROM `users` WHERE username = :username', {
+            username: username
+        });
+
+        return results.length === 1 ? new UsersRecord(results[0]) : null;
+    }
+
+    static async getRefreshTokenFromDatabase(refreshToken) {
+        const [results] = await pool.execute('SELECT `username`, `refreshToken` FROM `users` WHERE `refreshToken` = :refreshToken', {
+            refreshToken: refreshToken
+        });
+
+        return results.length === 1 ? new UsersRecord(results[0]) : null;
+    }
+
+    static async getRolesFromDatabase(username) {
+
+        const [results] = await pool.execute('SELECT DISTINCT `users`.`username`, `roles`.`id`, roles.`userRole`' +
+            ' FROM `users` JOIN `users_roles` ON `users`.`id` = `users_roles`.`userId` JOIN `roles` ON' +
+            ' `users_roles`.`roleId` WHERE `users`.`username` = :username', {
+            username: username
+        });
+
+        const resultsIdArray = results.map(obj => obj.id)
+
+        return results.length > 0 ? resultsIdArray : null;
     }
 
     static async findAll() {
 
-        const [results] = await pool.execute('SELECT `id`, `username`, `password`, `refreshToken` FROM `todos`');
+        const [results] = await pool.execute('SELECT `id`, `username` FROM `users`');
         return results.map(result => new UsersRecord(result));
     }
 

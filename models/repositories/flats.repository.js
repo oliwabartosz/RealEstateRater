@@ -24,7 +24,6 @@ class FlatsRepository {
         }
 
         const values = Object.keys(record).map((key) => record[key]);
-        console.log(values)
         const placeholders = Array(values.length).fill("?").join(", ");
         const sql = `INSERT INTO flats (${Object.keys(record).join(", ")}) VALUES (${placeholders})`;
 
@@ -56,12 +55,12 @@ class FlatsRepository {
         });
     }
 
-    static async find(id) {
+    static async find(number) {
 
-        const [results] = await pool.execute('SELECT * FROM `todos` WHERE id = :id', {
-            id: id,
+        const [results] = await pool.execute('SELECT * FROM `flats` WHERE number = :number', {
+            number,
         });
-        return results.length === 1 ? new TodoRecord(results[0]) : null;
+        return results.length === 1 ? new FlatsRecord(results[0]) : null;
     }
 
     static async findAll() {

@@ -1,0 +1,15 @@
+<h4>Winda</h4>
+<p><strong>Liczba kondygnacji:</strong> {{ add flat_data.floorsNumber 1 }}</p>
+<p><strong>Winda:</strong> {{ flat_data.elevator }}
+
+<p>wind: {{!-- dodać opis, zrobić ify --}}</p>
+
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" id="elevator_yes" name="elevator" value="1">
+    <label class="form-check-label" for="elevator_yes">Tak</label>
+</div>
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" id="elevator_no" name="elevator" value="0">
+    <label class="form-check-label" for="elevator_no">Nie</label>
+</div>
+<hr class="mt-0 mb-4">

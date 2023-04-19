@@ -1,4 +1,5 @@
-const {checkUserNamePassword, checkIfUserExists, createNewUser, checkRolesProvided} = require("./utils/registrationController");
+const {checkUserNamePassword, checkIfUserExists, createNewUser, checkRolesProvided} = require("./utils/utils");
+const {UsersRepository} = require("../models/repositories/users.repository");
 
 
 const handleNewUser = async (req, res) => {
@@ -7,13 +8,13 @@ const handleNewUser = async (req, res) => {
         return;
     }
 
-    // Check if roles are correct - user can add roles ['user', 'api', 'admin']
+    // Checks if roles are correct - user can add roles ['user', 'api', 'admin']
     // If roles is empty Array or not provided, the 'user' role is set.
     if (checkRolesProvided(req, res)) {
         return;
     }
 
-    // Check in database if username exists
+    // Checks if username exists in a database
     if (await checkIfUserExists(req, res)) {
         return;
     }

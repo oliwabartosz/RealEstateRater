@@ -1,0 +1,35 @@
+<h1 class="mt-2 text-center">{{flat_data.offerId}}</h1>
+
+<h1 class="mt-2 text-center">Oferta #{{flat_data.number}}/{{ lastNumber }}</h1>
+
+<p><strong>Status w bazie: </strong></p> {{!-- polaczyc w bazie tabele --}}
+<hr class="mt-0 mb-4">
+
+<form action="{{add flat_data.number 1}}" method="post">
+
+    <h2>Opis oferty</h2>
+    {{>flat_description}}
+    <hr class="mt-0 mb-4">
+
+    <h2>Dane techniczne</h2>
+    {{>flat_technology}}
+    {{>flat_law}}
+    {{>flat_balcony}}
+    {{>flat_elevator}}
+    {{>flat_basement}}
+    {{>flat_garage}}
+    {{>flat_garage}}
+    {{>flat_garden}}
+    {{>flat_monitoring}}
+    {{>flat_outbuilding}}
+    {{>flat_rent}}
+    {{>gallery}}
+    {{>flat_modernization}}
+    {{>flat_kitchen}}
+    {{>flat_quality}}
+    {{>flat_comments}}
+    {{>realestate_delete}}
+
+    <button type="submit" class="btn btn-success">Zapisz i nast.</button>
+
+</form>
