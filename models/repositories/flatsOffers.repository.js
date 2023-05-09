@@ -3,7 +3,7 @@ const {pool} = require("../../config/dbConn");
 const {FlatsRecord} = require("../flats.record");
 const {flatsRecords} = require("../db_columns/flats");
 
-class FlatsRepository {
+class FlatsOffersRepository {
     static _checkRecord(record) {
         if (!(record instanceof FlatsRecord)) {
             throw new Error('record must be an instance of FlatsRecord')
@@ -12,20 +12,20 @@ class FlatsRepository {
 
     static async _getLastNumber() {
         const [results] = await pool.execute('SELECT `number` FROM `flats` ORDER BY `number` DESC LIMIT 1;');
-        return results[0].number;
+        return results && results.length > 0 ? results[0].number : 0;
     }
     static async insert(record) {
-        FlatsRepository._checkRecord(record);
+        FlatsOffersRepository._checkRecord(record);
         record.id = record.id ?? uuid();
 
-        const lastFlatNumber = await this._getLastNumber()
-        if (parseInt(record.number) <= parseInt(lastFlatNumber)) {
-            record.number = parseInt(lastFlatNumber) + 1
-        }
+        const lastFlatNumber = await this._getLastNumber();
+        record.number = lastFlatNumber + 1;
 
+        const columns = Object.keys(record)
         const values = Object.keys(record).map((key) => record[key]);
-        const placeholders = Array(values.length).fill("?").join(", ");
-        const sql = `INSERT INTO flats (${Object.keys(record).join(", ")}) VALUES (${placeholders})`;
+
+        const placeholders = Array(columns.length).fill("?").join(", ");
+        const sql = `INSERT INTO flats (${columns.join(", ")}) VALUES (${placeholders})`;
 
         await pool.execute(sql, values);
 
@@ -33,25 +33,13 @@ class FlatsRepository {
     }
 
     static async delete(record) {
-        FlatsRepository._checkRecord(record);
+        FlatsOffersRepository._checkRecord(record);
         if (!record.id) {
-            throw new Error('Todo has no ID.');
+            throw new Error('Flat ID missing.');
         }
 
-        await pool.execute('DELETE FROM `todos` WHERE id = :id', {
+        await pool.execute('DELETE FROM `flats` WHERE id = :id', {
             id: record.id
-        });
-    }
-
-    static async update(record) {
-        FlatsRepository._checkRecord(record)
-        if (!record.id) {
-            throw new Error('Todo has no ID.');
-        }
-        record._validate()
-        await pool.execute('UPDATE `todos` SET `title` = :title WHERE id = :id', {
-            id: record.id,
-            title: record.title
         });
     }
 
@@ -62,13 +50,11 @@ class FlatsRepository {
         });
         return results.length === 1 ? new FlatsRecord(results[0]) : null;
     }
-
     static async findAll() {
 
-        const [results] = await pool.execute('SELECT * FROM `todos`');
-        return results.map(result => new TodoRecord(result));
+        const [results] = await pool.execute('SELECT * FROM `flats`');
+        return results.map(result => new FlatsRecord(result));
     }
-
     static async getLastNumber() {
         const [result] = await pool.execute('SELECT `number` FROM `flats` ORDER BY `number` DESC LIMIT 1;');
         if (result.length > 0) {
@@ -80,5 +66,5 @@ class FlatsRepository {
 }
 
 module.exports = {
-    FlatsRepository,
+    FlatsRepository: FlatsOffersRepository,
 }
