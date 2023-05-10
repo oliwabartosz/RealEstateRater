@@ -1,7 +1,6 @@
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../config/dbConn");
 const {FlatsRecord} = require("../flats.record");
-const {flatsRecords} = require("../db_columns/flats");
 
 class FlatsOffersRepository {
     static _checkRecord(record) {
