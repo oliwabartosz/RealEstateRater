@@ -113,6 +113,22 @@ const FLATS_RECORD_FIELDS_ANS = {
 
 }
 
+const FLATS_RECORD_SHORT_ANS = {
+    flatId:'flatId',
+    technologyShortAns:'technologyShortAns',
+    elevatorShortAns:'elevatorShortAns',
+    basementShortAns:'basementShortAns',
+    garageShortAns:'garageShortAns',
+    gardenShortAns:'gardenShortAns',
+    modernizationShortAns:'modernizationShortAns',
+    alarmShortAns:'alarmShortAns',
+    kitchenShortAns:'kitchenShortAns',
+    outbuildingShortAns:'outbuildingShortAns',
+    qualityShortAns:'qualityShortAns',
+    commentsShortAns:'commentsShortAns',
+    updateDate:'updateDate',
+}
+
 module.exports = {
     FLATS_RECORD_FIELDS,
     FLATS_RECORD_FIELDS_ANS,
