@@ -118,8 +118,24 @@ const HOUSES_RECORD_SHORT_ANS = {
     updateDate:'updateDate',
 }
 
+const HOUSES_RECORD_GPT = {
+    houseId:'houseId',
+    technologyGPT:'technologyGPT',
+    lawStatusGPT:'lawStatusGPT',
+    houseTypeGPT:'houseTypeGPT',
+    garageGPT:'garageGPT',
+    modernizationGPT:'modernizationGPT',
+    alarmGPT:'alarmGPT',
+    kitchenGPT:'kitchenGPT',
+    bathNumberGPT:'bathNumberGPT',
+    commentsGPT:'commentsGPT',
+    qualityGPT:'qualityGPT',
+    updateDate:'updateDate',
+}
+
 module.exports = {
     HOUSES_RECORD_FIELDS,
     HOUSES_RECORD_FIELDS_ANS,
     HOUSES_RECORD_SHORT_ANS,
+    HOUSES_RECORD_GPT
 }

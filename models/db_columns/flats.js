@@ -114,22 +114,43 @@ const FLATS_RECORD_FIELDS_ANS = {
 }
 
 const FLATS_RECORD_SHORT_ANS = {
-    flatId:'flatId',
-    technologyShortAns:'technologyShortAns',
-    elevatorShortAns:'elevatorShortAns',
-    basementShortAns:'basementShortAns',
-    garageShortAns:'garageShortAns',
-    gardenShortAns:'gardenShortAns',
-    modernizationShortAns:'modernizationShortAns',
-    alarmShortAns:'alarmShortAns',
-    kitchenShortAns:'kitchenShortAns',
-    outbuildingShortAns:'outbuildingShortAns',
-    qualityShortAns:'qualityShortAns',
-    commentsShortAns:'commentsShortAns',
-    updateDate:'updateDate',
+    flatId: 'flatId',
+    technologyShortAns: 'technologyShortAns',
+    elevatorShortAns: 'elevatorShortAns',
+    basementShortAns: 'basementShortAns',
+    garageShortAns: 'garageShortAns',
+    gardenShortAns: 'gardenShortAns',
+    modernizationShortAns: 'modernizationShortAns',
+    alarmShortAns: 'alarmShortAns',
+    kitchenShortAns: 'kitchenShortAns',
+    outbuildingShortAns: 'outbuildingShortAns',
+    qualityShortAns: 'qualityShortAns',
+    commentsShortAns: 'commentsShortAns',
+    updateDate: 'updateDate',
 }
+
+const FLATS_RECORD_GPT = {
+    flatId: 'flatId',
+    technologyGPT: 'technologyGPT',
+    lawStatusGPT: 'lawStatusGPT',
+    elevatorGPT: 'elevatorGPT',
+    basementGPT: 'basementGPT',
+    garageGPT: 'garageGPT',
+    gardenGPT: 'gardenGPT',
+    modernizationGPT: 'modernizationGPT',
+    alarmGPT: 'alarmGPT',
+    kitchenGPT: 'kitchenGPT',
+    outbuildingGPT: 'outbuildingGPT',
+    qualityGPT: 'qualityGPT',
+    rentGPT: 'rentGPT',
+    commentsGPT: 'commentsGPT',
+    updateDate: 'updateDate',
+}
+
 
 module.exports = {
     FLATS_RECORD_FIELDS,
     FLATS_RECORD_FIELDS_ANS,
+    FLATS_RECORD_SHORT_ANS,
+    FLATS_RECORD_GPT
 };
