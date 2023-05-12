@@ -18,8 +18,12 @@ apiRouter.route('/')
 apiRouter.route('/flats/')
     .post(async (req, res) => {
         const data = req.body;
-        const id = await FlatsAnswersRepository.insert(new FlatsRecord(data))
+        const id = await FlatsRepository.insert(new FlatsRecord(data))
         res.status(202).json({"message":`${id}`})
+    })
+    .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
+        const data = await FlatsRepository.getAll()
+        res.status(202).json(data)
     })
 
 apiRouter.route('/flats/answers/')

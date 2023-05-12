@@ -6,7 +6,6 @@ const ROLES_LIST = require('../../config/roles');
 
 registerRouter.route('/')
     .post(verifyRoles(ROLES_LIST.Admin), registerController.handleNewUser)
-
 module.exports = {
     registerRouter,
 };

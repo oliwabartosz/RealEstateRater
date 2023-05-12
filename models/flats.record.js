@@ -32,7 +32,23 @@ class FlatsRecordAns {
     }
 }
 
+class FlatsGPTRecordAns {
+    constructor(obj) {
+        this.number = obj.number;
+
+        // Other necessary keys to database, that can be null
+        const fields = [
+            ...Object.values(FLATS_RECORD_FIELDS_ANS)
+        ];
+        for (const field of fields) {
+            this[field] = obj[field] ?? null;
+        }
+    }
+}
+
+
 module.exports = {
     FlatsRecord,
     FlatsRecordAns,
+    FlatsGPTRecordAns
 }

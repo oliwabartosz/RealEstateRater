@@ -1,0 +1,7 @@
+const JWT_ACCESS_TOKEN_TIME = '1h'
+const JWT_REFRESH_TOKEN_TIME = '1d'
+
+module.exports = {
+    JWT_ACCESS_TOKEN_TIME,
+    JWT_REFRESH_TOKEN_TIME
+}

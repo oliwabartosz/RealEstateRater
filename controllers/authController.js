@@ -23,7 +23,7 @@ const handleLogin = async (req, res) => {
     }
 
     // Check if user provided username and password
-    if (await checkIfUserExists(req, res, username)) {
+    if (await checkIfUserExists(req, res, username, 1)) {
         return;
     }
 
@@ -34,7 +34,6 @@ const handleLogin = async (req, res) => {
 
     // Get roles by username
     const roles = await getRolesFromDatabase(username) // [1, 2, 3]
-    console.log(roles)
 
     // Creates JWT
     /// Creates AccessToken and sends it as JSON.

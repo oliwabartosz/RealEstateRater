@@ -3,8 +3,10 @@ const {UsersRepository} = require("../models/repositories/users.repository");
 
 
 const handleNewUser = async (req, res) => {
+    const {username, password} = req.body;
+
     // Check if user provided username and password
-    if (checkUserNamePassword(req, res)) {
+    if (checkUserNamePassword(req, res, username, password)) {
         return;
     }
 
@@ -15,7 +17,7 @@ const handleNewUser = async (req, res) => {
     }
 
     // Checks if username exists in a database
-    if (await checkIfUserExists(req, res)) {
+    if (await checkIfUserExists(req, res, username, 0)) {
         return;
     }
 

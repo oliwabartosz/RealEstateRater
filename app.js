@@ -47,7 +47,7 @@ app.use('/rer/auth', authRouter);
 app.use('/rer/refresh', refreshRouter);
 app.use('/rer/logout', logoutRouter);
 
-// app.use(verifyJwt);
+app.use(verifyJwt);
 app.use('/rer/register', registerRouter)
 app.use('/rer/flats', flatsRouter);
 app.use('/rer/houses', housesRouter);

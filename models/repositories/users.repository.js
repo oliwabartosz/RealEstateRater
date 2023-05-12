@@ -92,8 +92,7 @@ class UsersRepository {
         const [results] = await pool.execute('SELECT `username` FROM `users` WHERE username = :username', {
             username: username
         });
-
-        return results.length === 1 ? true : null;
+        return results.length
     }
 
     static async getPasswordFromDatabase(username) {

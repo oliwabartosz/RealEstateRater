@@ -49,7 +49,7 @@ class FlatsOffersRepository {
         });
         return results.length === 1 ? new FlatsRecord(results[0]) : null;
     }
-    static async findAll() {
+    static async getAll() {
 
         const [results] = await pool.execute('SELECT * FROM `flats`');
         return results.map(result => new FlatsRecord(result));
