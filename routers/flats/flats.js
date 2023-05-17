@@ -2,7 +2,7 @@ const express = require('express');
 const ROLES_LIST = require('../../config/roles')
 const verifyRoles = require('../../middlewares/verifyRoles')
 const {FlatsRecord} = require("../../models/flats.record");
-const {FlatsRepository} = require("../../models/repositories/flatsOffers.repository");
+const {FlatsRepository} = require("../../models/repositories/flats/FlatsOffers.repository");
 
 
 const flatsRouter = express.Router();
