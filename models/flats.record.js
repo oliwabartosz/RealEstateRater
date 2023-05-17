@@ -53,9 +53,15 @@ class FlatsShortAnsRecord {
     }
 }
 
+const argsGPT = [
+    "flatId", "technologyGPT", "lawStatusGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
+    "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"
+];
+
 module.exports = {
     FlatsRecord,
     FlatsRecordAns,
     FlatsGPTRecord,
-    FlatsShortAnsRecord
+    FlatsShortAnsRecord,
+    argsGPT
 }

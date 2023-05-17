@@ -1,8 +1,10 @@
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
-const {FlatsGPTRecord} = require("../../flats.record");
+const {FlatsGPTRecord, argsGPT} = require("../../flats.record");
+const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
 
 class FlatsGptOffersRepository {
+
     static _checkRecord(record) {
         if (!(record instanceof FlatsGPTRecord)) {
             throw new Error('record must be an instance of FlatsRecordAns')
@@ -19,23 +21,31 @@ class FlatsGptOffersRepository {
     static async insert(record) {
         FlatsGptOffersRepository._checkRecord(record);
 
-        const columns = Object.keys(record).filter(key => key !== 'id' && key !== 'updateDate' && key !== 'number')
-
-        if (!(await FlatsGptOffersRepository._checkIfExists(record.id))) {
-            await pool.execute(`INSERT INTO flats_GPT (flatId, ${columns.join(", ")}) VALUES (:flatId, :technologyGPT, :lawStatusGPT, :elevatorGPT, :basementGPT, :garageGPT, :gardenGPT, :modernizationGPT, :alarmGPT, :kitchenGPT, :outbuildingGPT, :qualityGPT, :rentGPT, :commentsGPT)`, {
-                flatId: record.id,
-                ...record,
-            });
+        if (!(await checkIfExistsById('flats_GPT', record.id))) {
+            await addToDatabase(record, 'flats_GPT', argsGPT);
             return 'added.'
-
         } else {
-            await pool.execute(`UPDATE flats_GPT SET technologyGPT = :technologyGPT, lawStatusGPT = :lawStatusGPT, elevatorGPT = :elevatorGPT, basementGPT = :basementGPT, garageGPT = :garageGPT, gardenGPT = :gardenGPT, modernizationGPT = :modernizationGPT, alarmGPT = :alarmGPT, kitchenGPT = :kitchenGPT, outbuildingGPT = :outbuildingGPT, qualityGPT = :qualityGPT, rentGPT = :rentGPT, commentsGPT = :commentsGPT WHERE flatId = :flatId `, {
-                flatId: record.id,
-                ...record,
-            });
+            await updateToDatabase(record, `flats_GPT`, argsGPT);
             return 'updated.'
         }
     }
+
+    //
+    //     if (!(await FlatsGptOffersRepository._checkIfExists(record.id))) {
+    //         await pool.execute(`INSERT INTO flats_GPT (flatId, ${columns.join(", ")}) VALUES (:flatId, :technologyGPT, :lawStatusGPT, :elevatorGPT, :basementGPT, :garageGPT, :gardenGPT, :modernizationGPT, :alarmGPT, :kitchenGPT, :outbuildingGPT, :qualityGPT, :rentGPT, :commentsGPT)`, {
+    //             flatId: record.id,
+    //             ...record,
+    //         });
+    //         return 'added.'
+    //
+    //     } else {
+    //         await pool.execute(`UPDATE flats_GPT SET technologyGPT = :technologyGPT, lawStatusGPT = :lawStatusGPT, elevatorGPT = :elevatorGPT, basementGPT = :basementGPT, garageGPT = :garageGPT, gardenGPT = :gardenGPT, modernizationGPT = :modernizationGPT, alarmGPT = :alarmGPT, kitchenGPT = :kitchenGPT, outbuildingGPT = :outbuildingGPT, qualityGPT = :qualityGPT, rentGPT = :rentGPT, commentsGPT = :commentsGPT WHERE flatId = :flatId `, {
+    //             flatId: record.id,
+    //             ...record,
+    //         });
+    //         return 'updated.'
+    //     }
+    // }
 }
 
 module.exports = {
