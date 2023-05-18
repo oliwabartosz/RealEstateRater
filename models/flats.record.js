@@ -31,6 +31,19 @@ class FlatsRecordAns {
     }
 }
 
+class FlatsShortAnsRecord {
+    constructor(obj) {
+        this.number = obj.number;
+
+        const fields = [
+            ...Object.values(FLATS_RECORD_SHORT_ANS)
+        ];
+        for (const field of fields) {
+            this[field] = obj[field] ?? null;
+        }
+    }
+}
+
 class FlatsGPTRecord {
     constructor(obj) {
         const fields = [
@@ -42,26 +55,10 @@ class FlatsGPTRecord {
     }
 }
 
-class FlatsShortAnsRecord {
-    constructor(obj) {
-        const fields = [
-            ...Object.values(FLATS_RECORD_SHORT_ANS)
-        ];
-        for (const field of fields) {
-            this[field] = obj[field] ?? null;
-        }
-    }
-}
-
-const argsGPT = [
-    "flatId", "technologyGPT", "lawStatusGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
-    "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"
-];
 
 module.exports = {
     FlatsRecord,
     FlatsRecordAns,
-    FlatsGPTRecord,
     FlatsShortAnsRecord,
-    argsGPT
+    FlatsGPTRecord,
 }

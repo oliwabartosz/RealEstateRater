@@ -2,6 +2,8 @@ const {v4: uuid} = require("uuid");
 
 const {pool} = require("../../../config/dbConn");
 const {FlatsRecordAns} = require("../../flats.record");
+const {updateToDatabase, addToDatabase} = require("./utils/flats-utils");
+const {argsShortAns, argsAns} = require("../../db_columns/flats");
 
 class FlatsOffersAnsRepository {
     static _checkRecord(record) {
@@ -31,21 +33,14 @@ class FlatsOffersAnsRepository {
 
     static async insert(record) {
         FlatsOffersAnsRepository._checkRecord(record);
-
         const getIdByNumber = await this._getId(record.number);
-        const columns = Object.keys(record).filter(key => key !== 'number' && key !== 'updateDate')
+        record.id = getIdByNumber;
 
         if (!(await FlatsOffersAnsRepository._checkId(getIdByNumber))) {
-            await pool.execute(`INSERT INTO flats_ans (flatId, ${columns.join(", ")}) VALUES (:flatId, :technologyAns, :lawStatusAns, :elevatorAns, :basementAns, :garageAns, :gardenAns, :modernizationAns, :alarmAns, :kitchenAns, :outbuildingAns, :qualityAns, :rentAns, :commentsAns, :deleteAns, :rateStatus, :user)`, {
-                flatId: getIdByNumber,
-                ...record,
-            });
+            await addToDatabase(record, 'flats_ans', argsAns)
             return 'added.'
         } else {
-            await pool.execute(`UPDATE flats_ans SET technologyAns = :technologyAns, lawStatusAns = :lawStatusAns, elevatorAns = :elevatorAns, basementAns = :basementAns, garageAns = :garageAns, gardenAns = :gardenAns, modernizationAns = :modernizationAns, alarmAns = :alarmAns, kitchenAns = :kitchenAns, outbuildingAns = :outbuildingAns, qualityAns = :qualityAns, rentAns = :rentAns, commentsAns = :commentsAns, deleteAns = :deleteAns, rateStatus = :rateStatus, user = :user WHERE flatId = :flatId `, {
-                flatId: getIdByNumber,
-                ...record,
-            });
+            await updateToDatabase(record, 'flats_ans', argsAns)
             return 'updated.'
         }
     }

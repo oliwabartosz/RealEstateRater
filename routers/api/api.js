@@ -3,11 +3,12 @@ require('express-async-errors');
 const ROLES_LIST = require('../../config/roles');
 const verifyRoles = require('../../middlewares/verifyRoles');
 const {FlatsRepository} = require('../../models/repositories/flats/FlatsOffers.repository');
-const {FlatsAnswersRepository, FlatsShortsAnswersRepository} = require('../../models/repositories/flats/FlatsOffersAns.repository');
-const {FlatsRecord, FlatsGPTRecord} = require("../../models/flats.record");
+const {FlatsAnswersRepository} = require('../../models/repositories/flats/FlatsOffersAns.repository');
+const {FlatsRecord, FlatsGPTRecord, FlatsShortAnsRecord} = require("../../models/flats.record");
 const {FlatsRecordAns} = require("../../models/flats.record");
 const {UsersRepository} = require("../../models/repositories/users.repository");
 const {FlatsGPTRepository} = require("../../models/repositories/flats/FlatsGptOffers.repository");
+const {FlatsShortsAnswersRepository} = require("../../models/repositories/flats/FlatsShortAnsOffers.repository");
 
 const apiRouter = express.Router();
 
@@ -39,8 +40,7 @@ apiRouter.route('/flats/gpt/')
     })
 
 
-
-
+// TODO - user, not api -> push this to flats router
 apiRouter.route('/flats/answers/')
     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
         const data = req.body;
@@ -48,10 +48,10 @@ apiRouter.route('/flats/answers/')
         res.status(202).json({"message":`${id}`})
     })
 
-apiRouter.route('/flats/answers/gpt')
+apiRouter.route('/flats/answers/short')
     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
         const data = req.body;
-        const id = await FlatsShortsAnswersRepository.insert(new FlatsShortsAnswersRepository(data))
+        const id = await FlatsShortsAnswersRepository.insert(new FlatsShortAnsRecord(data))
         res.status(202).json({"message":`${id}`})
     })
 

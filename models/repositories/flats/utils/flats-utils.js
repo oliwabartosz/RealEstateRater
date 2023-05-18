@@ -1,15 +1,15 @@
 const {pool} = require("../../../../config/dbConn");
 
-async function checkIfExistsById(sqlTable, id) {
-    const [results] = await pool.execute(`SELECT flatId FROM ${sqlTable} WHERE flatId = :id`, {
-        id,
-    });
-    return results.length > 0
-}
+// async function checkIfExistsById(sqlTable, id) {
+//     const [results] = await pool.execute(`SELECT flatId FROM ${sqlTable} WHERE flatId = :id`, {
+//         id,
+//     });
+//     return results.length > 0
+// }
 
 // ["flatId", "technologyGPT", "lawStatusGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT", "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"]
 async function addToDatabase(record, sqlTable, ...args) {
-
+    console.log(record)
     const joinedArgs = args[0]
         .map(item => `:${item}`)
         .join(", "); // ":flatId, :technologyGPT, :lawStatusGPT..."
@@ -20,7 +20,6 @@ async function addToDatabase(record, sqlTable, ...args) {
         flatId: record.id,
         ...record,
     });
-    return 'added.'
 }
 
 async function updateToDatabase(record, sqlTable, ...args) {
@@ -30,15 +29,14 @@ async function updateToDatabase(record, sqlTable, ...args) {
         .map(item => `${item} = :${item}`)
         .join(', '); // "technologyGPT = :technologyGPT, lawStatusGPT = :lawStatusGPT..."
 
-    await pool.execute(`UPDATE ${sqlTable} SET ${joinedArgs} WHERE flatId = :flatId `, {
+    await pool.execute(`UPDATE ${sqlTable} SET ${joinedArgs} WHERE flatId = :flatId`, {
         flatId: record.id,
         ...record,
     });
-    return 'updated.'
 }
 
 module.exports = {
     addToDatabase,
     updateToDatabase,
-    checkIfExistsById,
+    // checkIfExistsById,
 }

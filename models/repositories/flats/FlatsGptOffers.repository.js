@@ -1,7 +1,8 @@
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
-const {FlatsGPTRecord, argsGPT} = require("../../flats.record");
+const {FlatsGPTRecord} = require("../../flats.record");
 const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
+const {argsGPT} = require("../../db_columns/flats");
 
 class FlatsGptOffersRepository {
 
