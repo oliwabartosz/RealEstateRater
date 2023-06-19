@@ -153,10 +153,10 @@ const argsAns = [
     "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
     ]
 
-const argsShortAns = [
-    "flatId", "technologyShortAns", "elevatorShortAns", "basementShortAns", "garageShortAns", "gardenShortAns",
-    "modernizationShortAns", "alarmShortAns", "kitchenShortAns", "outbuildingShortAns", "qualityShortAns",
-    "commentsShortAns",
+const argsPartialAns = [
+    "flatId", "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns",
+    "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
+    "commentsAns",
 ]
 
 const argsGPT = [
@@ -171,7 +171,7 @@ module.exports = {
     FLATS_RECORD_SHORT_ANS,
     FLATS_RECORD_GPT,
     argsAns,
-    argsShortAns,
+    argsPartialAns,
     argsGPT,
 
 };

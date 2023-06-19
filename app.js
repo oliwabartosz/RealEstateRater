@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const bodyParser = require('body-parser');
 const hbs = require('express-handlebars');
 const path = require('path');
 const cors = require('cors');
@@ -30,6 +31,7 @@ app.use(express.urlencoded( {
 app.use(credentials)
 app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 

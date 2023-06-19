@@ -18,7 +18,7 @@ apiRouter.route('/')
     })
 
 apiRouter.route('/flats/')
-    .post(async (req, res) => {
+    .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
         const data = req.body;
         const id = await FlatsRepository.insert(new FlatsRecord(data))
         res.status(202).json({"message":`${id}`})
@@ -36,22 +36,6 @@ apiRouter.route('/flats/gpt/')
     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
         const data = await req.body;
         const id = await FlatsGPTRepository.insert(new FlatsGPTRecord(data))
-        res.status(202).json({"message":`${id}`})
-    })
-
-
-// TODO - user, not api -> push this to flats router
-apiRouter.route('/flats/answers/')
-    .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
-        const data = req.body;
-        const id = await FlatsAnswersRepository.insert(new FlatsRecordAns(data))
-        res.status(202).json({"message":`${id}`})
-    })
-
-apiRouter.route('/flats/answers/short')
-    .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
-        const data = req.body;
-        const id = await FlatsShortsAnswersRepository.insert(new FlatsShortAnsRecord(data))
         res.status(202).json({"message":`${id}`})
     })
 

@@ -9,7 +9,7 @@ class FlatsRecord {
         // Other necessary keys to database, that can be null
         const fields = [
             ...Object.values(FLATS_RECORD_FIELDS),
-            // ...Object.values(FLATS_RECORD_FIELDS_ANS)
+
         ];
         for (const field of fields) {
             this[field] = obj[field] ?? null;
@@ -31,18 +31,19 @@ class FlatsRecordAns {
     }
 }
 
-class FlatsShortAnsRecord {
-    constructor(obj) {
-        this.number = obj.number;
-
-        const fields = [
-            ...Object.values(FLATS_RECORD_SHORT_ANS)
-        ];
-        for (const field of fields) {
-            this[field] = obj[field] ?? null;
-        }
-    }
-}
+// // @ TODO - delete when done
+// class FlatsShortAnsRecord {
+//     constructor(obj) {
+//         this.number = obj.number;
+//
+//         const fields = [
+//             ...Object.values(FLATS_RECORD_SHORT_ANS)
+//         ];
+//         for (const field of fields) {
+//             this[field] = obj[field] ?? null;
+//         }
+//     }
+// }
 
 class FlatsGPTRecord {
     constructor(obj) {
@@ -59,6 +60,5 @@ class FlatsGPTRecord {
 module.exports = {
     FlatsRecord,
     FlatsRecordAns,
-    FlatsShortAnsRecord,
     FlatsGPTRecord,
 }

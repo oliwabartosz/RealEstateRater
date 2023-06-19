@@ -3,7 +3,7 @@ const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
 const {FlatsRecordAns} = require("../../flats.record");
 const {updateToDatabase, addToDatabase} = require("./utils/flats-utils");
-const {argsShortAns, argsAns} = require("../../db_columns/flats");
+const {argsAns, argsPartialAns} = require("../../db_columns/flats");
 
 class FlatsOffersAnsRepository {
     static _checkRecord(record) {
@@ -11,6 +11,7 @@ class FlatsOffersAnsRepository {
             throw new Error('record must be an instance of FlatsRecordAns')
         }
     }
+
     static async _getId(number) {
         const [results] = await pool.execute('SELECT `id`, `number` FROM `flats` WHERE `number` = :number', {
             number,
@@ -44,7 +45,32 @@ class FlatsOffersAnsRepository {
             return 'updated.'
         }
     }
+
+    static async insertPartials(record) {
+        FlatsOffersAnsRepository._checkRecord(record);
+        const getIdByNumber = await this._getId(record.number);
+        record.id = getIdByNumber;
+
+        const { technologyAns, elevatorAns, basementAns, garageAns, gardenAns, modernizationAns, alarmAns, kitchenAns,
+            outbuildingAns, qualityAns, commentsAns, id } = record
+
+        const partialRecord = { technologyAns, elevatorAns, basementAns, garageAns, gardenAns, modernizationAns, alarmAns, kitchenAns,
+            outbuildingAns, qualityAns, commentsAns, id }
+
+
+
+        if (!(await FlatsOffersAnsRepository._checkId(getIdByNumber))) {
+            await addToDatabase(partialRecord, 'flats_ans', argsPartialAns)
+            return 'added.'
+        } else {
+            await updateToDatabase(partialRecord, 'flats_ans', argsPartialAns)
+            return 'updated.'
+        }
+    }
+
 }
+
+
 module.exports = {
     FlatsAnswersRepository: FlatsOffersAnsRepository,
 }

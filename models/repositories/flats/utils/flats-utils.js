@@ -38,5 +38,4 @@ async function updateToDatabase(record, sqlTable, ...args) {
 module.exports = {
     addToDatabase,
     updateToDatabase,
-    // checkIfExistsById,
 }
