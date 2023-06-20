@@ -1,15 +1,48 @@
 <h4>Stan budynku</h4>
-<p><strong>Materiał</strong>: {{ flat_data.material }}</p>
-<p><strong>Rok budowy</strong>: {{ flat_data.yearBuilt }}</p>
-<p><strong>Ulica:</strong> {{ flat_data.street }}</p>
-<p><strong>Lokalizacja:</strong> {{ flat_data.localization }}</p>
-<p>ocieplony: {{!-- dodać opis, zrobić ify --}}</p>
-<p>moderniz: {{!-- dodać opis, zrobić ify --}}</p>
-<p>odrestaur: {{!-- dodać opis, zrobić ify --}}</p>
-<p>odnow: {{!-- dodać opis, zrobić ify --}}</p>
-<p>ociepl: {{!-- dodać opis, zrobić ify --}}</p>
-<p>remon: {{!-- dodać opis, zrobić ify --}}</p>
-<p>elewac: {{!-- dodać opis, zrobić ify --}}</p>
+{{#if flat_data.material}}
+    <p><strong>Materiał</strong>: {{ flat_data.material }}</p>
+{{/if}}
+
+{{#if flat_data.yearBuilt}}
+    <p><strong>Rok budowy</strong>: {{ flat_data.yearBuilt }}</p>
+{{/if}}
+
+{{#if flat_data.street}}
+    <p><strong>Ulica:</strong> {{ flat_data.street }}</p>
+{{/if}}
+
+{{#if flat_data.localization}}
+    <p><strong>Lokalizacja:</strong> {{ flat_data.localization }}</p>
+{{/if}}
+
+{{#if flat_data.insulatedBuildingDesc}}
+    <p>ocieplony: {{ flat_data.insulatedBuildingDesc }}</p>
+{{/if}}
+
+{{#if flat_data.insulatedBuildingDesc2}}
+    <p>ociepl: {{ flat_data.insulatedBuildingDesc2 }}</p>
+{{/if}}
+
+{{#if flat_data.modernizatedBuildingDesc}}
+    <p>moderniz: {{ flat_data.modernizatedBuildingDesc }}</p>
+{{/if}}
+
+{{#if flat_data.restoredBuildingDesc}}
+    <p>odrestaur: {{ flat_data.restoredBuildingDesc }}</p>
+{{/if}}
+
+{{#if flat_data.renewedBuildingDesc}}
+    <p>odnow: {{ flat_data.renewedBuildingDesc }}</p>
+{{/if}}
+
+{{#if flat_data.renovationDesc}}
+    <p>remon: {{ flat_data.renovationDesc }}</p>
+{{/if}}
+
+{{#if flat_data.elevationDesc}}
+    <p>elewac: {{ flat_data.elevationDesc }}</p>
+{{/if}}
+
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" id="modernization_1" name="modernization" value="4">

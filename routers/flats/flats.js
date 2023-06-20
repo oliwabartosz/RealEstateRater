@@ -28,40 +28,38 @@ flatsRouter
     })
 
     .get('/:number', async (req, res) => {
-        let {number} = req.params
-        // number = Number(number)
-        const flatData = await FlatsRepository.find(number)
-        const lastNumber = await FlatsRepository.getLastNumber()
+        const { number } = req.params;
+        const flatData = await FlatsRepository.find(number);
+        const firstNumber = await FlatsRepository.getFirstNumber();
+        const lastNumber = await FlatsRepository.getLastNumber();
 
-        if (isNaN(number)) {
-            res.redirect('/rer/flats')
-        } else if (number > Number(lastNumber)) {
-            res.redirect('/rer/flats')
-        } else {
-            res.render('forms/basic/flat', {
-                flat_data: flatData,
-                lastNumber
-            });
+        const isInvalidNumber = isNaN(number) || number > Number(lastNumber) || number < Number(firstNumber);
+
+        if (isInvalidNumber) {
+            return res.redirect('/rer/flats/');
         }
 
-
+        res.render('forms/basic/flat', {
+            flat_data: flatData,
+            lastNumber
+        });
     })
     .get('/gpt/:number', async (req, res) => {
-        let {number} = req.params
-        // number = Number(number)
-        const flatData = await FlatsRepository.find(number)
-        const lastNumber = await FlatsRepository.getLastNumber()
+        const { number } = req.params;
+        const flatData = await FlatsRepository.find(number);
+        const firstNumber = await FlatsRepository.getFirstNumber();
+        const lastNumber = await FlatsRepository.getLastNumber();
 
-        if (isNaN(number)) {
-            res.redirect('/rer/flats')
-        } else if (number > Number(lastNumber)) {
-            res.redirect('/rer/flats')
-        } else {
-            res.render('forms/gpt/flat', {
-                flat_data: flatData,
-                lastNumber
-            });
+        const isInvalidNumber = isNaN(number) || number > Number(lastNumber) || number < Number(firstNumber);
+
+        if (isInvalidNumber) {
+            return res.redirect('/rer/flats/gpt');
         }
+
+        res.render('forms/gpt/flat', {
+            flat_data: flatData,
+            lastNumber
+        });
     })
 
 flatsRouter

@@ -1,14 +1,44 @@
 <h4>Infrastruktura alarmowa</h4>
-<p><strong>Monitoring:</strong> {{ flat_data.monitoring }}</p>
-<p><strong>Osiedle strzeżone:</strong> {{ flat_data.guardedEstate }}</p>
-<p>monitoring: {{!-- dodać opis, zrobić ify --}}</p>
-<p>monit: {{!-- dodać opis, zrobić ify --}}</p>
-<p>alarm: {{!-- dodać opis, zrobić ify --}}</p>
-<p>strzeż: {{!-- dodać opis, zrobić ify --}}</p>
-<p>ochron:{{!-- dodać opis, zrobić ify --}}</p>
-<p>dozór: {{!-- dodać opis, zrobić ify --}}</p>
-<p>dozor: {{!-- dodać opis, zrobić ify --}}</p>
-<p>portier: {{!-- dodać opis, zrobić ify --}}</p>
+{{#if flat_data.monitoring}}
+    <p><strong>Monitoring:</strong> {{ flat_data.monitoring }}</p>
+{{/if}}
+
+{{#if flat_data.guardedEstate}}
+    <p><strong>Osiedle strzeżone:</strong> {{ flat_data.guardedEstate }}</p>
+{{/if}}
+
+{{#if flat_data.monitoringDesc}}
+    <p>monitoring: {{ flat_data.monitoringDesc }}</p>
+{{/if}}
+
+{{#if flat_data.monitoringDesc2}}
+    <p>monit: {{ flat_data.monitoringDesc2 }}</p>
+{{/if}}
+
+{{#if flat_data.alarmDesc}}
+    <p>alarm: {{ flat_data.alarmDesc }}</p>
+{{/if}}
+
+{{#if flat_data.guardedDesc}}
+    <p>strzeż: {{ flat_data.guardedDesc }}</p>
+{{/if}}
+
+{{#if flat_data.securityDesc}}
+    <p>ochron: {{ flat_data.securityDesc }}</p>
+{{/if}}
+
+{{#if flat_data.supervisionDesc}}
+    <p>dozór: {{ flat_data.supervisionDesc }}</p>
+{{/if}}
+
+{{#if flat_data.supervisionDesc2}}
+    <p>dozor: {{ flat_data.supervisionDesc2 }}</p>
+{{/if}}
+
+{{#if flat_data.doorkeeperDesc}}
+    <p>portier: {{ flat_data.doorkeeperDesc }}</p>
+{{/if}}
+
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" id="alarm_yes" name="alarm" value="1">

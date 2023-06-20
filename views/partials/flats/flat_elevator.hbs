@@ -1,6 +1,15 @@
 <h4>Winda</h4>
-<p><strong>Liczba kondygnacji:</strong> {{ add flat_data.floorsNumber 1 }}</p>
-<p><strong>Winda:</strong> {{ flat_data.elevator }}
+{{#if flat_data.floorsNumber}}
+    <p><strong>Liczba kondygnacji:</strong> {{add flat_data.floorsNumber 1}}</p>
+{{/if}}
+
+{{#if flat_data.elevator}}
+    <p><strong>Winda:</strong> {{flat_data.elevator}}</p>
+{{/if}}
+
+{{#if flat_data.elevatorDesc}}
+    <p>wind: {{flat_data.elevatorDesc}}</p>
+{{/if}}
 
 <p>wind: {{!-- dodać opis, zrobić ify --}}</p>
 

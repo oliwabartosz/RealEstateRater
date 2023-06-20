@@ -1,11 +1,33 @@
 <h4>Kuchnia</h4>
-<p><strong>Typ kuchni</strong>: {{ flat_data.kitchenType}}</p>
-<p>aneks: {{!-- dodać opis, zrobić ify --}}</p>
-<p>widna: {{!-- dodać opis, zrobić ify --}}</p>
-<p>ciemna: {{!-- dodać opis, zrobić ify --}}</p>
-<p>prześwit: {{!-- dodać opis, zrobić ify --}}</p>
-<p>z oknem: {{!-- dodać opis, zrobić ify --}}</p>
-<p>z jadalni: {{!-- dodać opis, zrobić ify --}}</p>
+{{#if flat_data.kitchenType}}
+    <p><strong>Typ kuchni</strong>: {{ flat_data.kitchenType}}</p>
+{{/if}}
+
+{{#if flat_data.kitchenAnnexDesc}}
+    <p>aneks: {{ flat_data.kitchenAnnexDesc}}</p>
+{{/if}}
+
+{{#if flat_data.kitchenBrightDesc}}
+    <p>widna: {{ flat_data.kitchenBrightDesc}}</p>
+{{/if}}
+
+{{#if flat_data.kitchenDarkDesc}}
+    <p>ciemna: {{ flat_data.kitchenDarkDesc}}</p>
+{{/if}}
+
+{{#if flat_data.kitchenClearanceDesc}}
+    <p>prześwit: {{ flat_data.kitchenClearanceDesc}}</p>
+{{/if}}
+
+{{#if flat_data.kitchenWindowDesc}}
+    <p>z oknem: {{ flat_data.kitchenWindowDesc}}</p>
+{{/if}}
+
+{{#if flat_data.kitchenDiningRoomDesc}}
+    <p>z jadalni: {{ flat_data.kitchenDiningRoomDesc}}</p>
+{{/if}}
+
+
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" id="kitchen_1" name="kitchen" value="1">

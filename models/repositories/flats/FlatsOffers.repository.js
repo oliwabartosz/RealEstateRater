@@ -64,6 +64,15 @@ class FlatsOffersRepository {
         }
     }
 
+    static async getFirstNumber() {
+        const [result] = await pool.execute('SELECT `number` FROM `flats` ORDER BY `number` ASC LIMIT 1;');
+        if (result.length > 0) {
+            return String(result[0].number);
+        } else {
+            return null;
+        }
+    }
+
     static async getAllDataForGPT() {
         const columns = Object.values(FLATS_RECORD_GPT).join(', ')
         const [results] = await pool.execute('SELECT ' + columns +  ' FROM `flats` LEFT JOIN `flats_GPT` ON `flats`.`id` = `flats_GPT`.`flatId` ORDER BY `flats`.`number` ASC');

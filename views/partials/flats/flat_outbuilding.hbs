@@ -1,7 +1,16 @@
 <h4>Oficyna</h4>
-<p>oficyn:  {{!-- dodać opis, zrobić ify --}}</p>
-<p>linia: {{!-- dodać opis, zrobić ify --}}</p>
-<p>linii: {{!-- dodać opis, zrobić ify --}}</p>
+
+{{#if flat_data.outbuildingDesc}}
+    <p>oficyn: {{ flat_data.outbuildingDesc }}</p>
+{{/if}}
+
+{{#if flat_data.outbuildingDesc2}}
+    <p>linia: {{ flat_data.outbuildingDesc2 }}</p>
+{{/if}}
+
+{{#if flat_data.outbuildingDesc3}}
+    <p>linii: {{ flat_data.outbuildingDesc3 }}</p>
+{{/if}}
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" id="outbuilding_yes" name="outbuilding" value="1">

@@ -1,9 +1,33 @@
 <h4>Piwnica</h4>
-<p><strong>Piwnica:</strong> {{ flats_db.basement }}</p>
-<p>piwnic: {{!-- dodać opis, zrobić ify --}}</p>
-<p>komórk: {{!-- dodać opis, zrobić ify --}}</p>
-<p>strych: {{!-- dodać opis, zrobić ify --}}</p>
-<p>gospodarcze: {{!-- dodać opis, zrobić ify --}}</p>
+{{#if flats_db.basement}}
+    <p><strong>Piwnica:</strong> {{flats_db.basement}}</p>
+{{/if}}
+
+{{#if flats_db.storageRoom}}
+    <p><strong>Komórka:</strong> {{flats_db.storageRoom}}</p>
+{{/if}}
+
+{{#if flats_db.attic}}
+    <p><strong>Strych:</strong> {{flats_db.attic}}</p>
+{{/if}}
+
+{{#if flats_db.basementDesc}}
+    <p>piwnic: {{flats_db.basementDesc}}</p>
+{{/if}}
+
+{{#if flats_db.storageroomDesc}}
+    <p>komórk: {{flats_db.storageroomDesc}}</p>
+{{/if}}
+
+{{#if flats_db.atticDesc}}
+    <p>strych: {{flats_db.atticDesc}}</p>
+{{/if}}
+
+{{#if flats_db.utilityroomDesc}}
+    <p>gospodarcze: {{flats_db.utilityroomDesc}}</p>
+{{/if}}
+
+
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" id="basement_yes" name="basement" value="1">
