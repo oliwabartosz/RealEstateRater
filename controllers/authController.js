@@ -3,7 +3,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const {checkUserNamePassword, checkIfUserExists, checkPassword, getRolesFromDatabase, createAccessToken,
-    createRefreshToken
+    createRefreshToken, goToHomePage
 } = require("./utils/utils");
 require('dotenv').config();
 
@@ -42,6 +42,9 @@ const handleLogin = async (req, res) => {
     /// Creates refreshToken and sends it to database and cookie.
     await createRefreshToken(res, username, accessToken);
 
+    if (username !== 'Api') {
+        goToHomePage(res)
+    }
 
 }
 

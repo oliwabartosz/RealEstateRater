@@ -6,7 +6,7 @@
                     <h4 class="text-center">Logowanie</h4>
                 </div>
                 <div class="card-body">
-                    <form action="/re/auth" method="post">
+                    <form action="/rer/auth" method="post">
                         <div class="form-group">
                             <label for="username">Nazwa użytkownika:</label>
                             <input type="text" class="form-control" id="username" name="username" required>
@@ -15,7 +15,7 @@
                             <label for="password">Hasło:</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 50px;">Zaloguj się</button>
+                        <button onclick="sendLogin()" class="btn btn-primary btn-block" style="margin-top: 50px;">Zaloguj się</button>
                     </form>
                 </div>
             </div>

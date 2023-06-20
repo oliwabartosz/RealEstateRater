@@ -9,17 +9,29 @@ const {FlatsAnswersRepository} = require("../../models/repositories/flats/FlatsO
 const flatsRouter = express.Router();
 
 flatsRouter
-    .get('/all', async (req, res) => {
-        res.render('forms/basic/flats-table');
+    .get('/', async (req, res) => {
+        const flatsList = await FlatsRepository.getAll()
+
+        res.render('forms/basic/flats-table', {
+            flatsList,
+        });
     })
     .get('/:number', async (req, res) => {
         const {number} = req.params
         const flatData = await FlatsRepository.find(number)
         const lastNumber = await FlatsRepository.getLastNumber()
-        res.render('forms/basic/flat', {
-            flat_data: flatData,
-            lastNumber
-        });
+
+
+        if (number > Number(lastNumber)) {
+            res.redirect('/rer/flats')
+        } else {
+            res.render('forms/basic/flat', {
+                flat_data: flatData,
+                lastNumber
+            });
+        }
+
+
     })
     .get('/gpt/all', (req, res) => {
         res.render('forms/gpt/flats-table');

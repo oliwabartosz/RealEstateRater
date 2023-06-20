@@ -52,7 +52,7 @@ class FlatsOffersRepository {
     }
     static async getAll() {
 
-        const [results] = await pool.execute('SELECT * FROM `flats`');
+        const [results] = await pool.execute('SELECT * FROM `flats` ORDER BY `number` ASC');
         return results.map(result => new FlatsRecord(result));
     }
     static async getLastNumber() {

@@ -39,6 +39,15 @@ function checkRolesProvided(req, res) {
 
 async function checkIfUserExists(req, res, username, desiredNumber) {
     const findUser = await UsersRepository.findUserByUsername(username)
+
+    if (findUser === 0) {
+        res.status(400).json({
+            message: 'Bad input',
+            response: 400,
+        });
+        return true;
+    }
+
     if (findUser !== desiredNumber) {
         res.status(409).json({
             "message": "Conflict",
@@ -110,6 +119,17 @@ function createAccessToken(res, username, roles) {
         process.env.ACCESS_TOKEN_SECRET,
         {expiresIn: JWT_ACCESS_TOKEN_TIME}
     )
+
+    // @TODO: new 19.06.2023 - creating access
+    if (username !== 'Api') {
+        res.cookie('jwt_a', accessToken, {
+            httpOnly: true,
+            sameSite: 'None',
+            secure: true,
+            maxAge: 24 * 60 * 60 * 1000
+        })
+    }
+
     return {accessToken};
 }
 
@@ -120,7 +140,19 @@ async function createRefreshToken(res, username, accessToken) {
         {expiresIn: JWT_REFRESH_TOKEN_TIME}
     );
     await UsersRepository.addRefreshToken(username, refreshToken);
-    res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000}).json(accessToken);
+
+    res.cookie('jwt', refreshToken, {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000
+    })
+
+    if (username === 'Api') {
+        res.json(accessToken);
+    }
+
+
 }
 
 async function getRefreshToken(username) {
@@ -147,7 +179,15 @@ async function evaluateJWT(refreshToken, username, res) {
             );
             res.json({accessToken})
         });
+
+
 }
+
+//@TODO: new 19.06.2023 - creating access
+function goToHomePage(res) {
+    res.render('home/index')
+}
+
 
 module.exports = {
     checkUserNamePassword,
@@ -159,5 +199,6 @@ module.exports = {
     createAccessToken,
     createRefreshToken,
     getRefreshToken,
-    evaluateJWT
+    evaluateJWT,
+    goToHomePage
 }
