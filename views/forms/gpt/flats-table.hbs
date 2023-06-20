@@ -1,0 +1,21 @@
+<table>
+    <tr>
+        <th>Numer oferty</th>
+        <th>Typ oferty</th>
+        <th>Status oferty</th>
+        <th>Status w bazie</th>
+        <th>Ocenione przez</th>
+        <th>Do usunięcia?</th>
+    </tr>
+    {{#each flatsList}}
+        <tr>
+            <td><a href="/rer/flats/gpt/{{this.number}}">{{this.offerId}}</a></td>
+            <td>{{this.offerType}}</td>
+            <td>{{this.offerStatus}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    {{/each}}
+
+</table>

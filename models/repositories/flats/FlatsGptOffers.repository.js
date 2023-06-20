@@ -1,6 +1,6 @@
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
-const {FlatsGPTRecord} = require("../../flats.record");
+const {FlatsGPTRecord, FlatsRecord} = require("../../flats.record");
 const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
 const {argsGPT} = require("../../db_columns/flats");
 
@@ -29,6 +29,12 @@ class FlatsGptOffersRepository {
             await updateToDatabase(record, `flats_GPT`, argsGPT);
             return 'updated.'
         }
+    }
+
+    static async getAll() {
+
+        const [results] = await pool.execute('SELECT * FROM `flats` ORDER BY `number` ASC');
+        return results.map(result => new FlatsGPTRecord(result));
     }
 
     //

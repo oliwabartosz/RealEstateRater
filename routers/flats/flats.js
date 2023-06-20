@@ -4,6 +4,7 @@ const verifyRoles = require('../../middlewares/verifyRoles')
 const {FlatsRecord, FlatsRecordAns} = require("../../models/flats.record");
 const {FlatsRepository} = require("../../models/repositories/flats/FlatsOffers.repository");
 const {FlatsAnswersRepository} = require("../../models/repositories/flats/FlatsOffersAns.repository");
+const {FlatsGPTRepository} = require("../../models/repositories/flats/FlatsGptOffers.repository");
 
 
 const flatsRouter = express.Router();
@@ -16,13 +17,25 @@ flatsRouter
             flatsList,
         });
     })
+    .get('/gpt/', async (req, res) => {
+        const flatsGPTList = await FlatsGPTRepository.getAll()
+        const flatsList = await FlatsRepository.getAll()
+
+        res.render('forms/gpt/flats-table', {
+            flatsGPTList,
+            flatsList,
+        });
+    })
+
     .get('/:number', async (req, res) => {
-        const {number} = req.params
+        let {number} = req.params
+        // number = Number(number)
         const flatData = await FlatsRepository.find(number)
         const lastNumber = await FlatsRepository.getLastNumber()
 
-
-        if (number > Number(lastNumber)) {
+        if (isNaN(number)) {
+            res.redirect('/rer/flats')
+        } else if (number > Number(lastNumber)) {
             res.redirect('/rer/flats')
         } else {
             res.render('forms/basic/flat', {
@@ -33,17 +46,22 @@ flatsRouter
 
 
     })
-    .get('/gpt/all', (req, res) => {
-        res.render('forms/gpt/flats-table');
-    })
     .get('/gpt/:number', async (req, res) => {
-        const {number} = req.params
+        let {number} = req.params
+        // number = Number(number)
         const flatData = await FlatsRepository.find(number)
         const lastNumber = await FlatsRepository.getLastNumber()
-        res.render('forms/gpt/flat', {
-            flat_data: flatData,
-            lastNumber
-        });
+
+        if (isNaN(number)) {
+            res.redirect('/rer/flats')
+        } else if (number > Number(lastNumber)) {
+            res.redirect('/rer/flats')
+        } else {
+            res.render('forms/gpt/flat', {
+                flat_data: flatData,
+                lastNumber
+            });
+        }
     })
 
 flatsRouter

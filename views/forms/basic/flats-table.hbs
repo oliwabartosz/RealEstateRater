@@ -10,10 +10,10 @@
     </tr>
     {{#each flatsList}}
         <tr>
-            <td>{{flatsList.number}}</td>
-            <td><a href="/rer/flats/{{flatsList.number}}">{{flatsList.offerId}}</a></td>
-            <td>{{flatsList.offerType}}</td>
-            <td>{{flatsList.offerStatus}}</td>
+            <td>{{this.number}}</td>
+            <td><a href="/rer/flats/{{this.number}}">{{this.offerId}}</a></td>
+            <td>{{this.offerType}}</td>
+            <td>{{this.offerStatus}}</td>
             <td></td>
             <td></td>
             <td></td>
