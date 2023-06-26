@@ -14,7 +14,22 @@ class FlatsOffersRepository {
         const [results] = await pool.execute('SELECT `number` FROM `flats` ORDER BY `number` DESC LIMIT 1;');
         return results && results.length > 0 ? results[0].number : 0;
     }
-    static async insert(record) {
+
+    static async getIdByNumber(number) {
+        const [results] = await pool.execute('SELECT `id`, `number` FROM `flats` WHERE `number` = :number', {
+            number,
+        });
+
+        if (results.length > 0) {
+            return results[0].id;
+        } else {
+            throw new Error('There is no record with that id or number!')
+
+        }
+    }
+
+
+        static async insert(record) {
         FlatsOffersRepository._checkRecord(record);
         record.id = record.id ?? uuid();
 

@@ -1,7 +1,7 @@
-function addAnsStringToObjectKeys(data) {
+function addStringToObjectKeys(data, string) {
     for (const key in data) {
         if (Object.hasOwnProperty.call(data, key)) {
-            const modifiedKey = key + 'Ans';
+            const modifiedKey = key + string;
             data[modifiedKey] = data[key];
         }
     }
@@ -9,5 +9,5 @@ function addAnsStringToObjectKeys(data) {
 }
 
 module.exports = {
-    addAnsStringToObjectKeys,
+    addStringToObjectKeys,
 }

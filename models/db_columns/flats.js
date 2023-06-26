@@ -135,6 +135,7 @@ const FLATS_RECORD_GPT = {
 
     technologyGPT: 'technologyGPT',
     lawStatusGPT: 'lawStatusGPT',
+    balconyGPT: 'balconyGPT',
     elevatorGPT: 'elevatorGPT',
     basementGPT: 'basementGPT',
     garageGPT: 'garageGPT',
@@ -159,9 +160,8 @@ const argsPartialAns = [
     "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
     "commentsAns",
 ]
-
 const argsGPT = [
-    "flatId", "technologyGPT", "lawStatusGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
+    "flatId", "technologyGPT", "lawStatusGPT",  "balconyGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
     "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"
 ];
 

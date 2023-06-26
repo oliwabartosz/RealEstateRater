@@ -1,8 +1,10 @@
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
-const {FlatsGPTRecord, FlatsRecord} = require("../../flats.record");
+const {FlatsGPTRecord, FlatsRecord, FlatsRecordAns} = require("../../flats.record");
 const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
-const {argsGPT} = require("../../db_columns/flats");
+const {argsGPT, argsAns} = require("../../db_columns/flats");
+const {FlatsAnswersRepository} = require("./FlatsOffersAns.repository");
+const {FlatsRepository} = require("./FlatsOffers.repository");
 
 class FlatsGptOffersRepository {
 
@@ -19,14 +21,26 @@ class FlatsGptOffersRepository {
         return results.length > 0
     }
 
-    static async insert(record) {
-        FlatsGptOffersRepository._checkRecord(record);
+    static async _checkId(id) {
+        const [results] = await pool.execute('SELECT `flatId` FROM `flats_GPT` WHERE `flatId` = :id', {
+            id,
+        });
+        return results.length > 0;
+    }
 
-        if (!(await checkIfExistsById('flats_GPT', record.id))) {
-            await addToDatabase(record, 'flats_GPT', argsGPT);
+
+    static async insert(record) {
+        // @TODO - to będzie do parse jSON
+        FlatsGptOffersRepository._checkRecord(record);
+        const getIdByNumber = await FlatsRepository.getIdByNumber(record.number);
+        record.id = getIdByNumber;
+        console.log(record)
+
+        if (!(await FlatsGptOffersRepository._checkId(getIdByNumber))) {
+            await addToDatabase(record, 'flats_GPT', argsGPT)
             return 'added.'
         } else {
-            await updateToDatabase(record, `flats_GPT`, argsGPT);
+            await updateToDatabase(record, 'flats_GPT', argsGPT)
             return 'updated.'
         }
     }
@@ -37,22 +51,13 @@ class FlatsGptOffersRepository {
         return results.map(result => new FlatsGPTRecord(result));
     }
 
-    //
-    //     if (!(await FlatsGptOffersRepository._checkIfExists(record.id))) {
-    //         await pool.execute(`INSERT INTO flats_GPT (flatId, ${columns.join(", ")}) VALUES (:flatId, :technologyGPT, :lawStatusGPT, :elevatorGPT, :basementGPT, :garageGPT, :gardenGPT, :modernizationGPT, :alarmGPT, :kitchenGPT, :outbuildingGPT, :qualityGPT, :rentGPT, :commentsGPT)`, {
-    //             flatId: record.id,
-    //             ...record,
-    //         });
-    //         return 'added.'
-    //
-    //     } else {
-    //         await pool.execute(`UPDATE flats_GPT SET technologyGPT = :technologyGPT, lawStatusGPT = :lawStatusGPT, elevatorGPT = :elevatorGPT, basementGPT = :basementGPT, garageGPT = :garageGPT, gardenGPT = :gardenGPT, modernizationGPT = :modernizationGPT, alarmGPT = :alarmGPT, kitchenGPT = :kitchenGPT, outbuildingGPT = :outbuildingGPT, qualityGPT = :qualityGPT, rentGPT = :rentGPT, commentsGPT = :commentsGPT WHERE flatId = :flatId `, {
-    //             flatId: record.id,
-    //             ...record,
-    //         });
-    //         return 'updated.'
-    //     }
-    // }
+    static async find(id) {
+
+        const [results] = await pool.execute('SELECT * FROM `flats_GPT` WHERE flatId = :id', {
+            id,
+        });
+        return results.length === 1 ? new FlatsGPTRecord(results[0]) : null;
+    }
 }
 
 module.exports = {

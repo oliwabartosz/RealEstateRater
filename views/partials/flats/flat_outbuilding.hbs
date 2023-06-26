@@ -21,5 +21,8 @@
         <input class="form-check-input" type="radio" id="outbuilding_no" name="outbuilding" value="0" {{#if (equals flat_ans_data.outbuildingAns 0)}}checked{{/if}}>
         <label class="form-check-label" for="outbuilding_no">Nie</label>
     </div>
+    {{#if flat_gpt_data.outbuildingGPT}}
+        <p>GPT: {{flat_gpt_data.outbuildingGPT}}</p>
+    {{/if}}
 </div>
 <hr class="mt-0 mb-4">
