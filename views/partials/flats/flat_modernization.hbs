@@ -43,18 +43,19 @@
     <p>elewac: {{ flat_data.elevationDesc }}</p>
 {{/if}}
 
-
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="modernization_1" name="modernization" value="4">
-    <label class="form-check-label" for="modernization_1">Po modernizacji</label>
-</div>
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="modernization_2" name="modernization" value="5">
-    <label class="form-check-label" for="modernization_2">Wymaga modernizacji</label>
-</div>
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="modernization_3" name="modernization" value="0">
-    <label class="form-check-label" for="modernization_3">Puste</label>
+<div class="question">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="modernization_1" name="modernization" value="4" {{#if (equals flat_ans_data.modernizationAns 4)}}checked{{/if}} required>
+        <label class="form-check-label" for="modernization_1">Po modernizacji</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="modernization_2" name="modernization" value="5" {{#if (equals flat_ans_data.modernizationAns 5)}}checked{{/if}}>
+        <label class="form-check-label" for="modernization_2">Wymaga modernizacji</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="modernization_3" name="modernization" value="0" {{#if (equals flat_ans_data.modernizationAns 0)}}checked{{/if}}>
+        <label class="form-check-label" for="modernization_3">Puste</label>
+    </div>
 </div>
 <hr class="mt-0 mb-4">
 

@@ -95,6 +95,7 @@ const FLATS_RECORD_FIELDS = {
 const FLATS_RECORD_FIELDS_ANS = {
     technologyAns: 'technologyAns',
     lawStatusAns: 'lawStatusAns',
+    balconyAns: 'balconyAns',
     elevatorAns: 'elevatorAns',
     basementAns: 'basementAns',
     garageAns: 'garageAns',
@@ -148,7 +149,7 @@ const FLATS_RECORD_GPT = {
 }
 
 const argsAns = [
-    "flatId", "technologyAns", "lawStatusAns", "elevatorAns", "basementAns", "garageAns",
+    "flatId", "technologyAns", "lawStatusAns", "balconyAns", "elevatorAns", "basementAns", "garageAns",
     "gardenAns", "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns",
     "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
     ]

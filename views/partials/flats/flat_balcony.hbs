@@ -1,5 +1,8 @@
 <h4>Balkon</h4>
+
+{{#if flat_data.balcony}}
 <p><strong>Balkon:</strong> {{ flat_data.balcony }}</p>
+{{/if}}
 {{#if flat_data.balconyQuantity}}
     <p><strong>Liczba balkonów:</strong> {{flat_data.balconyQuantity}}</p>
 {{/if}}
@@ -27,13 +30,17 @@
     <p>taras: {{flat_data.terraceDesc}}</p>
 {{/if}}
 
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="balcony_1" name="balcony" value="1">
-    <label class="form-check-label" for="balcony_1">Tak</label>
-</div>
 
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="balcony_0" name="balcony" value="0">
-    <label class="form-check-label" for="balcony_0">Nie</label>
+
+<div class="question">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="balcony_1" name="balcony" value="1" {{#if (equals flat_ans_data.balconyAns 1)}}checked{{/if}} required>
+        <label class="form-check-label" for="balcony_1">Tak</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="balcony_0" name="balcony" {{#if (equals flat_ans_data.balconyAns 0)}}checked{{/if}} value="0">
+        <label class="form-check-label" for="balcony_0">Nie</label>
+    </div>
 </div>
 <hr class="mt-0 mb-4">

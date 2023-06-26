@@ -9,7 +9,6 @@ const {pool} = require("../../../../config/dbConn");
 
 // ["flatId", "technologyGPT", "lawStatusGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT", "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"]
 async function addToDatabase(record, sqlTable, ...args) {
-    console.log(record)
     const joinedArgs = args[0]
         .map(item => `:${item}`)
         .join(", "); // ":flatId, :technologyGPT, :lawStatusGPT..."

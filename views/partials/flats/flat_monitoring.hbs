@@ -39,13 +39,14 @@
     <p>portier: {{ flat_data.doorkeeperDesc }}</p>
 {{/if}}
 
-
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="alarm_yes" name="alarm" value="1">
-    <label class="form-check-label" for="alarm_yes">Tak</label>
-</div>
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="alarm_no" name="alarm" value="0">
-    <label class="form-check-label" for="alarm_no">Nie</label>
+<div class="question">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="alarm_yes" name="alarm" value="1" {{#if (equals flat_ans_data.alarmAns 1)}}checked{{/if}} required>
+        <label class="form-check-label" for="alarm_yes">Tak</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="alarm_no" name="alarm" value="0" {{#if (equals flat_ans_data.alarmAns 0)}}checked{{/if}}>
+        <label class="form-check-label" for="alarm_no">Nie</label>
+    </div>
 </div>
 <hr class="mt-0 mb-4">

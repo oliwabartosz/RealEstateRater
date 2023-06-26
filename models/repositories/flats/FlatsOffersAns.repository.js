@@ -1,7 +1,7 @@
 const {v4: uuid} = require("uuid");
 
 const {pool} = require("../../../config/dbConn");
-const {FlatsRecordAns} = require("../../flats.record");
+const {FlatsRecordAns, FlatsRecord} = require("../../flats.record");
 const {updateToDatabase, addToDatabase} = require("./utils/flats-utils");
 const {argsAns, argsPartialAns} = require("../../db_columns/flats");
 
@@ -12,7 +12,7 @@ class FlatsOffersAnsRepository {
         }
     }
 
-    static async _getId(number) {
+    static async getIdByNumber(number) {
         const [results] = await pool.execute('SELECT `id`, `number` FROM `flats` WHERE `number` = :number', {
             number,
         });
@@ -34,8 +34,9 @@ class FlatsOffersAnsRepository {
 
     static async insert(record) {
         FlatsOffersAnsRepository._checkRecord(record);
-        const getIdByNumber = await this._getId(record.number);
+        const getIdByNumber = await this.getIdByNumber(record.number);
         record.id = getIdByNumber;
+        console.log(record)
 
         if (!(await FlatsOffersAnsRepository._checkId(getIdByNumber))) {
             await addToDatabase(record, 'flats_ans', argsAns)
@@ -48,7 +49,7 @@ class FlatsOffersAnsRepository {
 
     static async insertPartials(record) {
         FlatsOffersAnsRepository._checkRecord(record);
-        const getIdByNumber = await this._getId(record.number);
+        const getIdByNumber = await this.getIdByNumber(record.number);
         record.id = getIdByNumber;
 
         const { technologyAns, elevatorAns, basementAns, garageAns, gardenAns, modernizationAns, alarmAns, kitchenAns,
@@ -68,6 +69,13 @@ class FlatsOffersAnsRepository {
         }
     }
 
+    static async find(id) {
+
+        const [results] = await pool.execute('SELECT * FROM `flats_ans` WHERE flatId = :id', {
+            id,
+        });
+        return results.length === 1 ? new FlatsRecordAns(results[0]) : null;
+    }
 }
 
 

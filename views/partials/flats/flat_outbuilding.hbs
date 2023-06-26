@@ -12,12 +12,14 @@
     <p>linii: {{ flat_data.outbuildingDesc3 }}</p>
 {{/if}}
 
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="outbuilding_yes" name="outbuilding" value="1">
-    <label class="form-check-label" for="outbuilding_yes">Tak</label>
-</div>
-<div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" id="outbuilding_no" name="outbuilding" value="0">
-    <label class="form-check-label" for="outbuilding_no">Nie</label>
+<div class="question">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="outbuilding_yes" name="outbuilding" value="1" {{#if (equals flat_ans_data.outbuildingAns 1)}}checked{{/if}} required>
+        <label class="form-check-label" for="outbuilding_yes">Tak</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="outbuilding_no" name="outbuilding" value="0" {{#if (equals flat_ans_data.outbuildingAns 0)}}checked{{/if}}>
+        <label class="form-check-label" for="outbuilding_no">Nie</label>
+    </div>
 </div>
 <hr class="mt-0 mb-4">

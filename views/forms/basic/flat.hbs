@@ -1,34 +1,34 @@
 <h1 class="mt-2 text-center">{{flat_data.offerId}} ({{flat_data.offerIdExpected}})</h1>
 
-<h1 class="mt-2 text-center">Oferta #{{flat_data.number}}/{{ lastNumber }}</h1>
+<h1 class="mt-2 text-center" id="offer-no">Oferta #{{flat_data.number}}/{{ lastNumber }}</h1>
 
 <p><strong>Status w bazie: </strong></p> {{!-- polaczyc w bazie tabele --}}
 <hr class="mt-0 mb-4">
 
+
+<h2>Opis oferty</h2>
+{{> flats/flat_description}}
+<hr class="mt-0 mb-4">
 <form action="{{add flat_data.number 1}}" method="post">
+<h2>Dane techniczne</h2>
+{{> flats/flat_technology}}
+{{> flats/flat_law}}
+{{> flats/flat_balcony}}
+{{> flats/flat_elevator}}
+{{> flats/flat_basement}}
+{{> flats/flat_garage}}
+{{> flats/flat_garden}}
+{{> flats/flat_monitoring}}
+{{> flats/flat_outbuilding}}
+{{> flats/flat_rent}}
+{{> gallery}}
+{{> flats/flat_modernization}}
+{{> flats/flat_kitchen}}
+{{> flats/flat_quality}}
+{{> flats/flat_comments}}
+{{> flats/flat_delete}}
 
-    <h2>Opis oferty</h2>
-    {{> flats/flat_description}}
-    <hr class="mt-0 mb-4">
-
-    <h2>Dane techniczne</h2>
-    {{> flats/flat_technology}}
-    {{> flats/flat_law}}
-    {{> flats/flat_balcony}}
-    {{> flats/flat_elevator}}
-    {{> flats/flat_basement}}
-    {{> flats/flat_garage}}
-    {{> flats/flat_garden}}
-    {{> flats/flat_monitoring}}
-    {{> flats/flat_outbuilding}}
-    {{> flats/flat_rent}}
-    {{> gallery}}
-    {{> flats/flat_modernization}}
-    {{> flats/flat_kitchen}}
-    {{> flats/flat_quality}}
-    {{> flats/flat_comments}}
-    {{>realestate_delete}}
-
+<!--<button class="btn btn-success" onclick="postData(getData())">Zapisz i nast.</button>-->
     <button type="submit" class="btn btn-success">Zapisz i nast.</button>
-
 </form>
+<script src="/assets/js/delete-checkbox.js"></script>
