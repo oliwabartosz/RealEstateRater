@@ -5,7 +5,7 @@ const {FlatsRecord, FlatsRecordAns} = require("../../models/flats.record");
 const {FlatsRepository} = require("../../models/repositories/flats/FlatsOffers.repository");
 const {FlatsAnswersRepository} = require("../../models/repositories/flats/FlatsOffersAns.repository");
 const {FlatsGPTRepository} = require("../../models/repositories/flats/FlatsGptOffers.repository");
-const {addStringToObjectKeys} = require("../utils");
+const {addStringToObjectKeys, getFilesFromDirectory} = require("../utils");
 
 const flatsRouter = express.Router();
 
@@ -33,13 +33,8 @@ flatsRouter
 
     .get('/:number', async (req, res) => {
         const { number } = req.params;
-        const id = await FlatsRepository.getIdByNumber(number)
-        const flatData = await FlatsRepository.find(number);
-        const flatAnsData = await FlatsAnswersRepository.find(id);
-        const flatGPTData = await FlatsGPTRepository.find(id);
         const firstNumber = await FlatsRepository.getFirstNumber();
         const lastNumber = await FlatsRepository.getLastNumber();
-        const username = req.user;
 
         const isInvalidNumber = isNaN(number) || number > Number(lastNumber) || number < Number(firstNumber);
 
@@ -47,23 +42,32 @@ flatsRouter
             return res.redirect('/rer/flats/');
         }
 
+        const id = await FlatsRepository.getIdByNumber(number)
+        const flatData = await FlatsRepository.find(number);
+        const offerIdExpected = flatData.offerIdExpected;
+        const flatAnsData = await FlatsAnswersRepository.find(id);
+        const flatGPTData = await FlatsGPTRepository.find(id);
+
+        const username = req.user;
+
+        const images = getFilesFromDirectory(`./public/images/offers/${offerIdExpected}`)
+
+
+
         res.render('forms/basic/flat', {
             flat_data: flatData,
             flat_ans_data: flatAnsData,
             flat_gpt_data: flatGPTData,
+            images,
+            offerIdExpected,
             lastNumber,
             username,
         });
     })
     .get('/gpt/:number', async (req, res) => {
         const { number } = req.params;
-        const flatData = await FlatsRepository.find(number);
-        const id = await FlatsRepository.getIdByNumber(number)
-        const flatAnsData = await FlatsAnswersRepository.find(id);
         const firstNumber = await FlatsRepository.getFirstNumber();
         const lastNumber = await FlatsRepository.getLastNumber();
-        const username = req.user;
-
 
         const isInvalidNumber = isNaN(number) || number > Number(lastNumber) || number < Number(firstNumber);
 
@@ -71,9 +75,22 @@ flatsRouter
             return res.redirect('/rer/flats/gpt');
         }
 
+        const flatData = await FlatsRepository.find(number);
+        const offerIdExpected = flatData.offerIdExpected;
+        const id = await FlatsRepository.getIdByNumber(number)
+        const flatAnsData = await FlatsAnswersRepository.find(id);
+
+        const username = req.user;
+
+        const images = getFilesFromDirectory(`./public/images/offers/${offerIdExpected}`)
+
+
+
         res.render('forms/gpt/flat', {
             flat_data: flatData,
             lastNumber,
+            offerIdExpected,
+            images,
             flat_ans_data: flatAnsData,
             username
         });

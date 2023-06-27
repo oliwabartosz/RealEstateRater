@@ -9,3 +9,42 @@
 .btn-block {
     max-width: 50px;
 }
+
+#image-break {
+    padding-right: 2px;
+}
+
+.h2-break {
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.h4-break {
+    padding-bottom: 10px;
+}
+
+.p-break {
+    padding-top: 5px;
+}
+
+.btn-break {
+    margin-right: 2px;
+}
+
+.navbar-break {
+    margin-bottom: 10px;
+}
+
+.gpt {
+    border:2px indigo solid;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background-color: indigo;
+}
+
+#navigation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

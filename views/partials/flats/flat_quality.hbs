@@ -1,4 +1,4 @@
-<h4>Standard</h4>
+<h4 class="h4-break">Standard</h4>
 {{#if flat_data.flatQuality}}
     <p><strong>Standard określony przez pośrednika:</strong> {{ flat_data.flatQuality }}</p>
 {{/if}}
@@ -17,7 +17,9 @@
         <label class="form-check-label" for="quality_3">Niski</label>
     </div>
     {{#if flat_gpt_data.qualityGPT}}
-        <p>GPT: {{flat_gpt_data.qualityGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.qualityGPT}}</span>
+        </p>
     {{/if}}
 </div>
 

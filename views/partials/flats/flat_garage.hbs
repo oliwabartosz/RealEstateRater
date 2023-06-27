@@ -1,4 +1,4 @@
-<h4>Garaż/Miejsca parkingowe</h4>
+<h4 class="h4-break">Garaż/Miejsca parkingowe</h4>
 {{#if flat_data.parkingPlace}}
     <p><strong>Garaż/Miejsca parkingowe:</strong> {{ flat_data.parkingPlace }}</p>
 {{/if}}
@@ -42,7 +42,9 @@
         <label class="form-check-label" for="garage_no">Nie</label>
     </div>
     {{#if flat_gpt_data.garageGPT}}
-        <p>GPT: {{flat_gpt_data.garageGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.garageGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

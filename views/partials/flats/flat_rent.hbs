@@ -1,4 +1,4 @@
-<h4>Czynsz</h4>
+<h4 class="h4-break">Czynsz</h4>
 <p><strong>Czynsz administracyjny:</strong> {{ flat_data.rent }}</p>
 
 <p>czynsz: {{flat_data.rentDesc}}</p>
@@ -13,7 +13,9 @@
         <input type="text" name="rent" class="form-control" placeholder="Wpisz wartość czynszu (opcjonalne)" {{#if flat_ans_data.rentAns}}value="{{flat_ans_data.rentAns}}"{{/if}}>
     </div>
     {{#if flat_gpt_data.rentGPT}}
-        <p>GPT: {{flat_gpt_data.rentGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.rentGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

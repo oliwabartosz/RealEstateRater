@@ -1,4 +1,4 @@
-<h4>Infrastruktura alarmowa</h4>
+<h4 class="h4-break">Infrastruktura alarmowa</h4>
 {{#if flat_data.monitoring}}
     <p><strong>Monitoring:</strong> {{ flat_data.monitoring }}</p>
 {{/if}}
@@ -49,7 +49,9 @@
         <label class="form-check-label" for="alarm_no">Nie</label>
     </div>
     {{#if flat_gpt_data.alarmGPT}}
-        <p>GPT: {{flat_gpt_data.alarmGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.alarmGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

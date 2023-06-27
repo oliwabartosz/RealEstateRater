@@ -1,4 +1,4 @@
-<h4>Kuchnia</h4>
+<h4 class="h4-break">Kuchnia</h4>
 {{#if flat_data.kitchenType}}
     <p><strong>Typ kuchni</strong>: {{ flat_data.kitchenType}}</p>
 {{/if}}
@@ -42,7 +42,9 @@
         <label class="form-check-label" for="kitchen_3">Aneks</label>
     </div>
     {{#if flat_gpt_data.kitchenGPT}}
-        <p>GPT: {{flat_gpt_data.kitchenGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.kitchenGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

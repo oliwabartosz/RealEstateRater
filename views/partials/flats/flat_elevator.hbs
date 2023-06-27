@@ -1,4 +1,4 @@
-<h4>Winda</h4>
+<h4 class="h4-break">Winda</h4>
 {{#if flat_data.floorsNumber}}
     <p><strong>Liczba kondygnacji:</strong> {{add flat_data.floorsNumber 1}}</p>
 {{/if}}
@@ -21,7 +21,9 @@
         <label class="form-check-label" for="elevator_no">Nie</label>
     </div>
     {{#if flat_gpt_data.elevatorGPT}}
-        <p>GPT: {{flat_gpt_data.elevatorGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.elevatorGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

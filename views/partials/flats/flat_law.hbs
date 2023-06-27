@@ -1,4 +1,4 @@
-<h4>Prawo</h4>
+<h4 class="h4-break">Prawo</h4>
 {{#if flat_data.lawStatus}}
     <p><strong>Stan prawny:</strong> {{ flat_data.lawStatus }}</p>
 {{/if}}
@@ -21,7 +21,9 @@
     <label class="form-check-label" for="law_status_2">Spółdzielcze</label>
 </div>
     {{#if flat_gpt_data.lawStatusGPT}}
-        <p>GPT: {{flat_gpt_data.lawStatusGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.lawStatusGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

@@ -1,4 +1,4 @@
-<h4>Piwnica</h4>
+<h4 class="h4-break">Piwnica</h4>
 {{#if flats_db.basement}}
     <p><strong>Piwnica:</strong> {{flats_db.basement}}</p>
 {{/if}}
@@ -38,7 +38,9 @@
         <label class="form-check-label" for="basement_no">Nie</label>
     </div>
     {{#if flat_gpt_data.basementGPT}}
-        <p>GPT: {{flat_gpt_data.basementGPT}}</p>
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.basementGPT}}</span>
+        </p>
     {{/if}}
 </div>
 <hr class="mt-0 mb-4">

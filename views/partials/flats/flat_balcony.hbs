@@ -1,4 +1,4 @@
-<h4>Balkon</h4>
+<h4 class="h4-break">Balkon</h4>
 
 {{#if flat_data.balcony}}
 <p><strong>Balkon:</strong> {{ flat_data.balcony }}</p>
@@ -43,7 +43,8 @@
         <label class="form-check-label" for="balcony_0">Nie</label>
     </div>
     {{#if flat_gpt_data.balconyGPT}}
-        <p>GPT: {{flat_gpt_data.balconyGPT}}</p>
-    {{/if}}
+        <p class="p-break">
+            <span class="gpt">GPT: {{flat_gpt_data.balconyGPT}}</span>
+        </p>    {{/if}}
 </div>
 <hr class="mt-0 mb-4">
