@@ -1,6 +1,12 @@
 <h1 class="mt-2 text-center">{{flat_data.offerId}} ({{flat_data.offerIdExpected}})</h1>
-
 <h1 class="mt-2 text-center">Oferta #{{flat_data.number}}/{{ lastNumber }}</h1>
+{{!-- navigation --}}
+<div id="navigation" class="d-flex justify-content-center align-items-center">
+    <button type="button" onclick="goToPreviousOffer({{flat_data.number}})" class="btn btn-outline-secondary btn-break"><</button>
+    <button type="button" onclick="goToNextOffer({{flat_data.number}})" class="btn btn-outline-secondary btn-break">></button>
+</div>
+{{!-- end navigation --}}
+
 
 <p><strong>Status w bazie: </strong></p> {{!-- polaczyc w bazie tabele --}}
 <hr class="mt-0 mb-4">
@@ -18,3 +24,5 @@
 
     <button type="submit" class="btn btn-success">Zapisz i nast.</button>
 </form>
+<script src="/assets/js/delete-checkbox.js"></script>
+<script src="/assets/js/navigation.js"></script>
