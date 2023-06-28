@@ -9,4 +9,4 @@ Thumbs.db Desktop.ini
 # env
 .env
 # images
-public/assets/images/offers/*
+public/assets/images/offers/
