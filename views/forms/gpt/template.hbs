@@ -17,20 +17,21 @@
 
 {{!-- end navigation --}}
 <div class="gpt-template">
-    <p>Twoim zadaniem jest ccena parametrów oferty nieruchomość z tekstu rozdzielonego przez <>. W tym celu wykonaj
+    <p>Twoim zadaniem jest ocena parametrów oferty nieruchomości z tekstu rozdzielonego przez <>. W tym celu wykonaj
         następujące czynności:</p>
     <ol>
         <li>
-            Stworzysz obiekt JSON, który zawiera
+            Stwórz obiekt JSON, który zawiera
             następujące klucze: technologyGPT, lawStatusGPT, balconyGPT, elevatorGPT, basementGPT, garageGPT
             gardenGPT, modernizationGPT, alarmGPT, kitchenGPT, outbuildingGPT, qualityGPT, rentGPT, commentsGPT
         </li>
         <li>
-            Dla oceny technologii budowy (klucz technologyGPT):
-            <ul>
+            {{!-- technologia budowy --}}
+            Dla oceny technologii budowy (klucz technologyGPT obiektu JSON):
+            <ul class="dashed">
                 <li>Wpisz 1, jeśli rok budowy jest mniejszy niż 1970, a materiał to cegła.</li>
                 <li>Wpisz 2, jeśli rok budowy jest większy niż 1990, a materiał to bloczki, silka lub cegła.</li>
-                <li>Wpisz 7, jeśli rok budowy jest większy od 1960 i mniejszy od 1992, a w polu "Materiał" wpisano
+                <li>Wpisz 7, jeśli rok budowy jest większy od 1960 i mniejszy od 1992, a w polu &lt;Materiał&gt; wpisano
                     wielka płyta, beton, inny lub mieszany.
                 </li>
                 <li>
@@ -44,31 +45,31 @@
                 <p>Ocenę technologii przypisz do klucza technologyGPT obiektu JSON.</p>
             </ul>
         </li>
-        <li>Dla oceny modernizacji (klucz modernizationGPT):
-            <ul>
-                <li>Wpisz 4, jeśli w rok budynku, bloku lub kamienicy jest mniejszy niż 1995 i w &lt;Opis mieszkania&gt;
-                    jest wskazane,
-                    że budynek, blok lub kamienica jest ocieplony, odrestaurowany lub odnowiony. Jeżeli to możliwe rok
-                    budowy weź z pola &lt;Rok budowy&gt;,
+        {{!-- modernizacja --}}
+        <li>Dla oceny modernizacji (klucz modernizationGPT obiektu JSON):
+            <ul class="dashed">
+                <li>Wpisz 4, jeśli rok budynku, bloku lub kamienicy jest mniejszy niż 1995 i w &lt;Opis mieszkania&gt;
+                    jest wskazane, że budynek, blok lub kamienica jest ocieplony, odrestaurowany lub odnowiony.
+                    Jeżeli to możliwe rok budowy weź z pola &lt;Rok budowy&gt;,
                 </li>
                 <li>Wpisz 4, jeśli rok budowy budynku, bloku lub kamienicy jest mniejszy niż 1995, a w &lt;Opis
                     mieszkania&gt; napisano,
                     że budynek/kamienica/blok posiada nową elewację. Rok budowy weź z pola &lt;Rok budowy&gt;, jeżeli to
                     możliwe.
                 </li>
-                <li>Wpisz 5, jeśli w opisie mieszkania jest napisane, że budynek, blok lub kamienica są w trakcji
+                <li>Wpisz 5, jeśli w opisie mieszkania jest napisane, że budynek, blok lub kamienica są w trakcie
                     renowacji lub odnowienia lub gdy renowacja lub odnowienie są planowane.
                 </li>
                 <li>Podczas analizy weź pod uwagę &lt;Rok budowy&gt;, &lt;Materiał&gt; i &lt;Opis mieszkania&gt;.</li>
                 <li>Jeżeli w tekście nie ma informacji wpisz null.</li>
-                <li>Jeżeli nie ma informacji o modernizacji wpisz 0.</li>
                 <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
                 <p>Ocenę modernizacji przypisz do klucza modernizationGPT obiektu JSON.</p>
             </ul>
         </li>
         <li>
-            Dla oceny Stanu prawnego (klucz lawStatusGPT):
-            <ul>
+            {{!-- stan prawny --}}
+            Dla oceny Stanu prawnego (klucz lawStatusGPT obiektu JSON):
+            <ul class="dashed">
                 <li>
                     Jeżeli rok budowy jest mniejszy niż 1990, a materiał do wielka płyta wpisz wartość 2.
                 </li>
@@ -85,25 +86,155 @@
             </ul>
             <p>Ocenę stanu prawnego przypisz do klucza lawStatusGPT obiektu JSON.</p>
 
-        <li>Dla oceny Balkonu (klucz balconyGPT):
-            <ul>
+            {{!-- balkon --}}
+        <li>Dla oceny Balkonu (klucz balconyGPT obiektu JSON):
+            <ul class="dashed">
                 <li>Wpisz wartość 0, jeżeli napisano w &lt;Opis mieszkania&gt;, że w mieszkaniu jest tylko balkon
                     francuski.
                 </li>
                 <li>Wpisz wartość 1, jeżeli w opisie są informacje o balkonie lub tarasie lub loggi.</li>
                 <li>
-                    Jeżeli w &lt;Opis mieszkania&gt; nie podano informacji o balkonie, pobierz informację z pola
-                    &lt;Balkon&gt;. Jeżeli podano ```Tak``` wpisz 1. Jeżeli podano ```Nie``` lub nic nie podano wpisz 0.
+                    Jeżeli w &lt;Opis mieszkania&gt; nie ma informacji o balkonie, pobierz informację z pola
+                    &lt;Balkon&gt;. Jeżeli jest "tak" wpisz 1. Jeżeli jest "nie" lub nie ma informacji wpisz 0.
                 </li>
                 <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
             </ul>
             <p>Ocenę stanu prawnego przypisz do klucza balconyGPT obiektu JSON.</p>
         </li>
 
+        {{!-- winda --}}
+        <li>Dla oceny Windy (klucz elevatorGPT obiektu JSON):
+            <ul class="dashed">
+                <li>Wpisz 1, jeżeli w polu &lt;Winda&gt; wpisano tak.</li>
+                <li>Wpisz 0, jeżeli w polu &lt;Winda&gt; wpisano nie.</li>
+                <li>
+                    Jeżeli jednak liczba kondygnacji jest większa od 6 lub informacja ta jest w &lt;Opis mieszkania&gt;
+                    to wpisz 1
+                </li>
+                <li>
+                    Wpisz 0, jeżeli liczba kondygnacji jest mniejsza od 6 i nie ma takiej informacji w polu &lt;Winda&gt;
+                    lub &lt;Opis mieszkania&gt;
+                </li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę windy przypisz do klucza elevatorGPT obiektu JSON.</p>
+        </li>
 
+        {{!-- garaż --}}
+        <li>Dla oceny Garażu (klucz garageGPT obiektu JSON):
+            <ul class="dashed">
+                <li>
+                    Wpisz 0, jeżeli w polu &lt;Cena miejsca postojowego&gt; lub &lt;Cena miejsca garażowego&gt; jest
+                    liczba większa od 0.
+                </li>
+                <li>
+                    Wpisz 0, jeżeli w &lt;Opis mieszkania&gt; napisano, że garaż można dokupić.
+                </li>
+                <li>
+                    Wpisz 0, jeżeli nie ma informacji o garażu lub miejscu postojowym.
+                </li>
+                <li>
+                    Wpisz 1, jeżeli w &lt;Opis mieszkania&gt; jest informacja, że do mieszkania przynależy garaż lub miejsce
+                    postojowe.
+                </li>
+                <li>
+                    Wpisz 1, jeżeli w &lt;Opis mieszkania&gt; napisano, że garaż lub miejsce postojowe jest w cenie
+                    mieszkania.
+                </li>
+                <li>
+                    Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.
+                </li>
+            </ul>
+            <p>Ocenę dotyczącą garażu i miejsca postojowego przypisz do klucza garageGPT obiektu JSON.</p>
+        </li>
+
+        {{!-- ogórd --}}
+        <li>Dla oceny dotyczącej Ogrodu (klucz gardenGPT obiektu JSON):
+            <ul class="dashed">
+                <li>Wpisz 1, jeżeli w polu &lt;Ogród&gt; wpisano tak.</li>
+                <li>Wpisz 0, jeżeli w polu &lt;Ogród&gt; wpisano nie.</li>
+                <li>Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; jest informacja, że przy mieszkaniu jest ogród.</li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę dotyczącą ogrodu przypisz do klucza gardenGPT obiektu JSON.</p>
+        </li>
+
+        {{!-- monitoring --}}
+        <li>Dla oceny dotyczącej Monitoringu (klucz alarmGPT obiektu JSON):
+            <ul class="dashed">
+                <li>Wpisz 1, jeżeli w polu &lt;Monitoring&gt; lub &lt;Ochrona&gt; lub &lt;Osiedle strzeżone&gt; wpisano
+                    tak.
+                </li>
+                <li>Wpisz 0, jeżeli w polu &lt;Monitoring&gt; lub &lt;Ochrona&gt; lub &lt;Osiedle strzeżone&gt; wpisano
+                    nie.
+                </li>
+                <li>Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; wpisano o dozorze, monitoringu, ochronie, kamerach
+                </li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę dotyczącą Monitoringu przypisz do klucza alarmGPT obiektu JSON.</p>
+        </li>
+
+        {{!-- kitchen --}}
+        <li>Dla oceny dotyczącej Kuchni (klucz kitchenGPT obiektu JSON):
+            <ul class="dashed">
+                <li>Wpisz 1, jeżeli w polu &lt;Kuchnia&gt; "ciemna", "prześwit" lub "inny".</li>
+                <li>Wpisz 2, jeżeli w polu &lt;Kuchnia&gt; wpisano "widna".</li>
+                <li>Wpisz 3, jeżeli w polu &lt;Kuchnia&gt; wpisano "aneks kuchenny".</li>
+                <li>Przeanalizuj &lt;Opis mieszkania&gt;. Jeżeli w opisie jest informacja o kuchni ciemnej wpisz 1,
+                    jeżeli o kuchni widnej wpisz 2, a jeśli o aneksie kuchennym to wpisz 3
+                </li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę dotyczącą kuchni przypisz do klucza kitchenGPT obiektu JSON.</p>
+        </li>
+
+        {{!-- monitoring --}}
+        <li>Dla oceny dotyczącej oficyny (klucz outbuildingGPT obiektu JSON):
+            <ul class="dashed">
+                <li>
+                    Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; napisano, że mieszkanie jest oficynie kamienicy
+                </li>
+                <li>
+                    Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; napisano, że mieszkanie jest w drugiej linii zabudowy,
+                    a rok budowy jest mniejszy niż 1960.
+                </li>
+                <li>
+                    Wpisz 0, jeżeli rok budowy jest większy niż 1960, a mieszkanie nie jest kamienicą
+                </li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę dotyczącą Oficyny przypisz do klucza outbuildingGPT obiektu JSON.</p>
+        </li>
+
+        <li>Dla oceny dotyczącej czynszu (klucz rentGPT):
+            <ul class="dashed">
+                <li>
+                    Wpisz wartość czynszu, jeżeli jest w polu &lt;Czynsz&gt;. Jeżeli nie ma to wpisz informację
+                    podaną w polu &lt;Opis mieszkania&gt;
+                </li>
+                <li>
+                    Jeżeli w polu &lt;Opis mieszkania&gt; jest, że mieszkanie jest bezczynszowe wpisz 0.
+                </li>
+                <li>
+                    Jeżeli w tekście nie ma informacji o czynszu wpisz null.
+                </li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę dotyczącą Czynszu przypisz do klucza rentGPT obiektu JSON.</p>
+        </li>
+
+
+
+        {{!-- "flatId", "technologyGPT", "lawStatusGPT",  "balconyGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
+        "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT" --}}
+
+
+
+        {{!-- standard nieruchmości --}}
         <li>
-            W kluczy qualityGPT:
-            <ul>
+            W kluczu qualityGPT:
+            <ul class="dashed">
                 {{#unless flat_ans_data.qualityAns}}
                     <li>Wpisz wartość: null</li>
                 {{else}}
@@ -111,8 +242,9 @@
                 {{/unless}}
             </ul>
         </li>
+        {{!-- komentarz/uzasadnienie --}}
         <li>W kluczu commentGPT:
-            <ul>
+            <ul class="dashed">
                 <li>Przypisz do kluczy informacje dlaczego nadałeś wartości poszczególnym kluczom.</li>
                 <li>Wykorzystaj taki format: klucz:uzasadnienie</li>
                 <li>Informacje przypisz do klucza commentGPT obiektu JSON.</p>
@@ -123,75 +255,88 @@
 
     </ol>
 
+    {{!-- TEXT --}}
     <p>
         Tekst oferty nieruchomości do analizy:
         &lt;
         {{#if flat_data.material}}
-            &lt;Materiał&gt;: {{flat_data.material}}
+            &lt;Materiał&gt;: {{flat_data.material}}<br/>
         {{/if}}
 
         {{#if flat_data.yearBuilt}}
-            &lt;Rok budowy&gt; {{flat_data.yearBuilt}}
+            &lt;Rok budowy&gt; {{flat_data.yearBuilt}}<br/>
         {{/if}}
 
         {{#if flat_data.lawStatus}}
-            &lt;Stan prawny&gt; {{flat_data.lawStatus}}
+            &lt;Stan prawny&gt; {{flat_data.lawStatus}}<br/>
         {{/if}}
 
         {{#if flat_data.balcony}}
-            &lt;Balkon&gt; {{flat_data.balcony}}
+            &lt;Balkon&gt; {{flat_data.balcony}}<br/>
         {{/if}}
         {{#if flat_data.balconyQuantity}}
-            &lt;Liczba balkonów&gt; {{flat_data.balconyQuantity}}
+            &lt;Liczba balkonów&gt; {{flat_data.balconyQuantity}}<br/>
         {{/if}}
         {{#if flat_data.terracesQuantity}}
-            &lt;Liczba tarasów&gt; {{flat_data.terracesQuantity}}
+            &lt;Liczba tarasów&gt; {{flat_data.terracesQuantity}}<br/>
         {{/if}}
         {{#if flat_data.loggiasQuantity}}
-            &lt;Liczba logii&gt; {{flat_data.loggiasQuantity}}
+            &lt;Liczba logii&gt; {{flat_data.loggiasQuantity}}<br/>
         {{/if}}
         {{#if flat_data.frenchBalconyQuantity}}
-            &lt;Liczba balkonów francuskich&gt; {{flat_data.frenchBalconyQuantity}}
+            &lt;Liczba balkonów francuskich&gt; {{flat_data.frenchBalconyQuantity}}<br/>
         {{/if}}
 
         {{#if flat_data.elevator}}
-            &lt;Winda&gt; {{flat_data.elevator}}
+            &lt;Winda&gt; {{flat_data.elevator}}<br/>
+        {{/if}}
+
+        {{#if flat_data.floorsNumber}}
+            &lt;Liczba kondygnacji&gt; {{flat_data.floorsNumber}}<br/>
         {{/if}}
 
         {{#if flat_data.basement}}
-            &lt;Piwnica&gt; {{flat_data.basement}}
+            &lt;Piwnica&gt; {{flat_data.basement}}<br/>
         {{/if}}
 
         {{#if flat_data.garage}}
-            &lt;Garaż&gt; {{flat_data.garage}}
+            &lt;Garaż&gt; {{flat_data.garage}}<br/>
+        {{/if}}
+
+        {{#if flat_data.priceParkingUnderground}}
+            &lt;Cena miejsca postojowego&gt; {{flat_data.priceParkingUnderground}}<br/>
+        {{/if}}
+
+        {{#if flat_data.priceParkingGround}}
+            &lt;Cena miejsca garażowego&gt; {{flat_data.priceParkingGround}}<br/>
         {{/if}}
 
         {{#if flat_data.garden}}
-            &lt;Ogród&gt; {{flat_data.garden}}
+            &lt;Ogród&gt; {{flat_data.garden}}<br/>
         {{/if}}
 
         {{#if flat_data.monitoring}}
-            &lt;Monitoring&gt; {{flat_data.monitoring}}
+            &lt;Monitoring&gt; {{flat_data.monitoring}}<br/>
         {{/if}}
 
         {{#if flat_data.security}}
-            &lt;Ochrona&gt; {{flat_data.security}}
+            &lt;Ochrona&gt; {{flat_data.security}}<br/>
         {{/if}}
 
         {{#if flat_data.guardedArea}}
-            &lt;Osiedle strzeżone&gt; {{flat_data.guardedArea}}
+            &lt;Osiedle strzeżone&gt; {{flat_data.guardedArea}}<br/>
         {{/if}}
 
-        {{#if flat_data.kitchen}}
-            &lt;Kuchnia&gt; {{flat_data.kitchen}}
+        {{#if flat_data.kitchenType}}
+            &lt;Kuchnia&gt; {{flat_data.kitchenType}}<br/>
         {{/if}}
 
         {{#if flat_data.outbuilding}}
-            &lt;Oficyna&gt; {{flat_data.outbuilding}}
+            &lt;Oficyna&gt; {{flat_data.outbuilding}}<br/>
         {{/if}}
 
         {{#if flat_data.rent}}
-            &lt;rent&gt; {{flat_data.rent}}
+            &lt;Czynsz&gt; {{flat_data.rent}}<br/>
         {{/if}}
 
         &lt;Opis mieszkania&gt; {{flat_data.description}}
@@ -205,7 +350,6 @@
                   {{#if flat_gpt_data.commentsGPT}}value="{{flat_gpt_data.commentsGPT}}"{{/if}} required></textarea>
     </div>
 
-
     <div class="d-flex justify-content-center align-items-center">
         <button type="button" onclick="copyTextToClipboard()" class="btn btn-outline-success btn-break">
             Kopiuj tekst do schowka
@@ -214,10 +358,12 @@
     </div>
 </form>
 <div id="navigation" class="d-flex justify-content-center align-items-center">
-    <button type="button" onclick="goToPreviousOffer({{flat_data.number}})" class="btn btn-outline-secondary btn-break">
+    <button type="button" onclick="goToPreviousOffer({{flat_data.number}})"
+            class="btn btn-outline-secondary btn-break">
         <
     </button>
-    <button type="button" onclick="goToNextOffer({{flat_data.number}})" class="btn btn-outline-secondary btn-break">>
+    <button type="button" onclick="goToNextOffer({{flat_data.number}})" class="btn btn-outline-secondary btn-break">
+        >
     </button>
 </div>
 
@@ -256,8 +402,6 @@
     storageRoom: 'storageRoom',
     attic: 'attic',
     parkingPlace: 'parkingPlace',
-    priceParkingUnderground: 'priceParkingUnderground',
-    priceParkingGround: 'priceParkingGround',
     garden: 'garden',
     elevator: 'elevator',
     security: 'security',
@@ -265,8 +409,7 @@
     guardedArea: 'guardedArea',
     securityControl: 'securityControl',
     description: 'description', --}}
-{{!-- "flatId", "technologyGPT", "lawStatusGPT",  "balconyGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
-    "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT" --}}
+
 
 
 <script src="/assets/js/copy-template.js"></script>
