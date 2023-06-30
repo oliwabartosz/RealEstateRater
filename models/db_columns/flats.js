@@ -90,7 +90,7 @@ const FLATS_RECORD_FIELDS = {
     withoutRentDesc: 'withoutRentDesc',
     rentDesc: 'rentDesc',
     levelDesc: 'levelDesc'
-}
+};
 
 const FLATS_RECORD_FIELDS_ANS = {
     technologyAns: 'technologyAns',
@@ -112,22 +112,7 @@ const FLATS_RECORD_FIELDS_ANS = {
     user: 'user',
     updateDate: 'updateDate',
 
-}
-
-const FLATS_RECORD_SHORT_ANS = {
-    technologyShortAns: 'technologyShortAns',
-    elevatorShortAns: 'elevatorShortAns',
-    basementShortAns: 'basementShortAns',
-    garageShortAns: 'garageShortAns',
-    gardenShortAns: 'gardenShortAns',
-    modernizationShortAns: 'modernizationShortAns',
-    alarmShortAns: 'alarmShortAns',
-    kitchenShortAns: 'kitchenShortAns',
-    outbuildingShortAns: 'outbuildingShortAns',
-    qualityShortAns: 'qualityShortAns',
-    commentsShortAns: 'commentsShortAns',
-    updateDate: 'updateDate',
-}
+};
 
 const FLATS_RECORD_GPT = {
     id: 'id',
@@ -147,7 +132,14 @@ const FLATS_RECORD_GPT = {
     qualityGPT: 'qualityGPT',
     rentGPT: 'rentGPT',
     commentsGPT: 'commentsGPT',
-}
+};
+
+const TEMPLATE_GPT_RECORD = {
+    id: 'id',
+    number: 'number',
+
+    template: 'template',
+};
 
 const argsAns = [
     "flatId", "technologyAns", "lawStatusAns", "balconyAns", "elevatorAns", "basementAns", "garageAns",
@@ -165,14 +157,18 @@ const argsGPT = [
     "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"
 ];
 
+const argsTemplateGPT = [
+    "flatId", "template"
+]
 
 module.exports = {
     FLATS_RECORD_FIELDS,
     FLATS_RECORD_FIELDS_ANS,
-    FLATS_RECORD_SHORT_ANS,
     FLATS_RECORD_GPT,
+    TEMPLATE_GPT_RECORD,
     argsAns,
     argsPartialAns,
     argsGPT,
+    argsTemplateGPT
 
 };

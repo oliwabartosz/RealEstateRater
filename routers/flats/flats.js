@@ -6,6 +6,9 @@ const {FlatsRepository} = require("../../models/repositories/flats/FlatsOffers.r
 const {FlatsAnswersRepository} = require("../../models/repositories/flats/FlatsOffersAns.repository");
 const {FlatsGPTRepository} = require("../../models/repositories/flats/FlatsGptOffers.repository");
 const {addStringToObjectKeys, getFilesFromDirectory} = require("../utils");
+const {createGptTemplate} = require("../template-gpt");
+const {TemplateGPTRepository} = require("../../models/repositories/templates.repository");
+const {TemplateGPTRecord} = require("../../models/templateGPTRecord");
 
 const flatsRouter = express.Router();
 
@@ -83,7 +86,6 @@ flatsRouter
 
         const images = getFilesFromDirectory(`./public/images/offers/${offerIdExpected}`)
 
-
         res.render('forms/gpt/flat', {
             flat_data: flatData,
             lastNumber,
@@ -121,6 +123,16 @@ flatsRouter
     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.User), async (req, res) => {
         const {number} = req.params;
         const id = await FlatsRepository.getIdByNumber(number - 1)
+        let promptGPT = '';
+        const data = req.body;
+
+        data.number = Number(number) - 1;
+        data.user = req.user;
+        addStringToObjectKeys(data, 'Ans');
+
+
+        await FlatsAnswersRepository.insert(new FlatsRecordAns(data))
+
         const originalData = await FlatsAnswersRepository.find(id);
 
         const {
@@ -142,14 +154,10 @@ flatsRouter
             rateStatus
         } = originalData
 
-        const user = req.user;
-        const data = req.body;
-
         data.comments = (data.comments === '') ? null : data.comments;
 
-        addStringToObjectKeys(data, 'Ans');
+        // addStringToObjectKeys(data, 'Ans');
 
-        data.number = Number(number) - 1;
         data.technologyAns = (data.technologyAns === null) ? technologyAns : data.technologyAns;
         data.deleteAns = (data.deleteAns === undefined) ? deleteAns : data.deleteAns;
         data.deleteAns = (data.deleteAns === 'checked') ? 'tak' : data.deleteAns;
@@ -168,9 +176,11 @@ flatsRouter
         data.rentAns = rentAns;
         data.commentsAns = (data.commentsAns === null) ? commentsAns : data.commentsAns;
 
-        data.user = user;
+        promptGPT = createGptTemplate(technologyAns, modernizationAns, kitchenAns, qualityAns);
 
-        await FlatsAnswersRepository.insert(new FlatsRecordAns(data))
+        await TemplateGPTRepository.insert(new TemplateGPTRecord({number: number - 1, template: promptGPT}));
+
+
         res.redirect(`${Number(number)}`)
     })
 
@@ -198,7 +208,7 @@ flatsRouter
         res.render('forms/gpt/template', {
             flat_data: originalData,
             flat_ans_data: answersData,
-            flats_gpt_data: gptData,
+            flat_gpt_data: gptData,
             lastNumber,
             username
         });
@@ -209,11 +219,12 @@ flatsRouter
     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.User), async (req, res) => {
         const {number} = req.params;
         const id = await FlatsRepository.getIdByNumber(number - 1);
+        console.log(number, id)
         const data = req.body['gpt-json'];
 
         try {
             const jsonData = JSON.parse(data);
-            jsonData.number = number;
+            jsonData.number = number - 1;
             jsonData.commentsGPT = JSON.stringify(jsonData.commentsGPT)
             await FlatsGPTRepository.insert(new FlatsGPTRecord(jsonData))
             res.redirect(`${Number(number)}`)

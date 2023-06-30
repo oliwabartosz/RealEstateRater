@@ -25,47 +25,60 @@
             następujące klucze: technologyGPT, lawStatusGPT, balconyGPT, elevatorGPT, basementGPT, garageGPT
             gardenGPT, modernizationGPT, alarmGPT, kitchenGPT, outbuildingGPT, qualityGPT, rentGPT, commentsGPT
         </li>
-        <li>
-            {{!-- technologia budowy --}}
-            Dla oceny technologii budowy (klucz technologyGPT obiektu JSON):
-            <ul class="dashed">
-                <li>Wpisz 1, jeśli rok budowy jest mniejszy niż 1970, a materiał to cegła.</li>
-                <li>Wpisz 2, jeśli rok budowy jest większy niż 1990, a materiał to bloczki, silka lub cegła.</li>
-                <li>Wpisz 7, jeśli rok budowy jest większy od 1960 i mniejszy od 1992, a w polu &lt;Materiał&gt; wpisano
-                    wielka płyta, beton, inny lub mieszany.
-                </li>
-                <li>
-                    Wpisz 3, gdy rok budowy jest większy niż 2000, a liczba kondygnacji jest większa niż 13. Podczas
-                    analizy weź pod uwagę pola z tekstu jak &lt;Rok budowy&gt;, &lt;Materiał&gt;
-                    i &lt;Opis mieszkania&gt;.
-                </li>
-                <li>
-                    Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.
-                </li>
-                <p>Ocenę technologii przypisz do klucza technologyGPT obiektu JSON.</p>
-            </ul>
-        </li>
+        <p></p>
+        {{!-- technologia budowy --}}
+        {{#unless flat_ans_data.technologyAns}}
+
+            <li>
+                Dla oceny technologii budowy (klucz technologyGPT obiektu JSON):
+
+
+                <ul class="dashed">
+                    <li>Wpisz 1, jeśli rok budowy jest mniejszy niż 1970, a materiał to cegła.</li>
+                    <li>Wpisz 2, jeśli rok budowy jest większy niż 1990, a materiał to bloczki, silka lub cegła.</li>
+                    <li>Wpisz 7, jeśli rok budowy jest większy od 1960 i mniejszy od 1992, a w polu &lt;Materiał&gt;
+                        wpisano
+                        wielka płyta, beton, inny lub mieszany.
+                    </li>
+                    <li>
+                        Wpisz 3, gdy rok budowy jest większy niż 2000, a liczba kondygnacji jest większa niż 13. Podczas
+                        analizy weź pod uwagę pola z tekstu jak &lt;Rok budowy&gt;, &lt;Materiał&gt;
+                        i &lt;Opis mieszkania&gt;.
+                    </li>
+                    <li>
+                        Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.
+                    </li>
+                    <p>Ocenę technologii przypisz do klucza technologyGPT obiektu JSON.</p>
+                </ul>
+            </li>
+        {{/unless}}
         {{!-- modernizacja --}}
-        <li>Dla oceny modernizacji (klucz modernizationGPT obiektu JSON):
-            <ul class="dashed">
-                <li>Wpisz 4, jeśli rok budynku, bloku lub kamienicy jest mniejszy niż 1995 i w &lt;Opis mieszkania&gt;
-                    jest wskazane, że budynek, blok lub kamienica jest ocieplony, odrestaurowany lub odnowiony.
-                    Jeżeli to możliwe rok budowy weź z pola &lt;Rok budowy&gt;,
-                </li>
-                <li>Wpisz 4, jeśli rok budowy budynku, bloku lub kamienicy jest mniejszy niż 1995, a w &lt;Opis
-                    mieszkania&gt; napisano,
-                    że budynek/kamienica/blok posiada nową elewację. Rok budowy weź z pola &lt;Rok budowy&gt;, jeżeli to
-                    możliwe.
-                </li>
-                <li>Wpisz 5, jeśli w opisie mieszkania jest napisane, że budynek, blok lub kamienica są w trakcie
-                    renowacji lub odnowienia lub gdy renowacja lub odnowienie są planowane.
-                </li>
-                <li>Podczas analizy weź pod uwagę &lt;Rok budowy&gt;, &lt;Materiał&gt; i &lt;Opis mieszkania&gt;.</li>
-                <li>Jeżeli w tekście nie ma informacji wpisz null.</li>
-                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
-                <p>Ocenę modernizacji przypisz do klucza modernizationGPT obiektu JSON.</p>
-            </ul>
-        </li>
+        {{#unless flat_ans_data.modernizationAns}}
+            <li>
+                Dla oceny modernizacji (klucz modernizationGPT obiektu JSON):
+                <ul class="dashed">
+                    <li>Wpisz 4, jeśli rok budynku, bloku lub kamienicy jest mniejszy niż 1995 i w &lt;Opis mieszkania&gt;
+                        jest wskazane, że budynek, blok lub kamienica jest ocieplony, odrestaurowany lub odnowiony.
+                        Jeżeli to możliwe rok budowy weź z pola &lt;Rok budowy&gt;,
+                    </li>
+                    <li>Wpisz 4, jeśli rok budowy budynku, bloku lub kamienicy jest mniejszy niż 1995, a w &lt;Opis
+                        mieszkania&gt; napisano,
+                        że budynek/kamienica/blok posiada nową elewację. Rok budowy weź z pola &lt;Rok budowy&gt;,
+                        jeżeli to
+                        możliwe.
+                    </li>
+                    <li>Wpisz 5, jeśli w opisie mieszkania jest napisane, że budynek, blok lub kamienica są w trakcie
+                        renowacji lub odnowienia lub gdy renowacja lub odnowienie są planowane.
+                    </li>
+                    <li>Podczas analizy weź pod uwagę &lt;Rok budowy&gt;, &lt;Materiał&gt; i &lt;Opis mieszkania&gt;.
+                    </li>
+                    <li>Jeżeli w tekście nie ma informacji wpisz null.</li>
+                    <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+                    <p>Ocenę modernizacji przypisz do klucza modernizationGPT obiektu JSON.</p>
+                </ul>
+            </li>
+        {{/unless}}
+
         <li>
             {{!-- stan prawny --}}
             Dla oceny Stanu prawnego (klucz lawStatusGPT obiektu JSON):
@@ -105,8 +118,8 @@
         {{!-- winda --}}
         <li>Dla oceny Windy (klucz elevatorGPT obiektu JSON):
             <ul class="dashed">
-                <li>Wpisz 1, jeżeli w polu &lt;Winda&gt; wpisano tak.</li>
-                <li>Wpisz 0, jeżeli w polu &lt;Winda&gt; wpisano nie.</li>
+                <li>Wpisz 1, jeżeli w polu &lt;Winda&gt; jest tak.</li>
+                <li>Wpisz 0, jeżeli w polu &lt;Winda&gt; jest nie.</li>
                 <li>
                     Jeżeli jednak liczba kondygnacji jest większa od 6 lub informacja ta jest w &lt;Opis mieszkania&gt;
                     to wpisz 1
@@ -118,6 +131,23 @@
                 <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
             </ul>
             <p>Ocenę windy przypisz do klucza elevatorGPT obiektu JSON.</p>
+        </li>
+
+        {{!-- basement --}}
+        <li>Dla oceny Piwnicy (klucz basementGPT obiektu JSON):
+            <ul class="dashed">
+                <li>Wpisz 1, jeżeli w polu &lt;Piwnica&gt; jest tak.</li>
+                <li>Wpisz 0, jeżeli w polu &lt;Piwnica&gt; jest nie.</li>
+                <li>
+                    Jeżeli jednak w &lt;Opis mieszkania&gt; jest, że piwnica lub komórka lokatorska jest za dodatkową opłatą to
+                    to wpisz 0.
+                </li>
+                <li>
+                    Wpisz 1, jeżeli w &lt;Opis mieszkania&gt; jest napisane, że do mieszkania przynależy piwnica lub komórka lokatorska lub jest ona w cenie
+                </li>
+                <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
+            </ul>
+            <p>Ocenę piwnicy przypisz do klucza basementGPT obiektu JSON.</p>
         </li>
 
         {{!-- garaż --}}
@@ -134,7 +164,8 @@
                     Wpisz 0, jeżeli nie ma informacji o garażu lub miejscu postojowym.
                 </li>
                 <li>
-                    Wpisz 1, jeżeli w &lt;Opis mieszkania&gt; jest informacja, że do mieszkania przynależy garaż lub miejsce
+                    Wpisz 1, jeżeli w &lt;Opis mieszkania&gt; jest informacja, że do mieszkania przynależy garaż lub
+                    miejsce
                     postojowe.
                 </li>
                 <li>
@@ -170,6 +201,8 @@
                 </li>
                 <li>Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; wpisano o dozorze, monitoringu, ochronie, kamerach
                 </li>
+                <li>Wpisz 0, jeżeli w polu &lt;Opis mieszkania&gt; nie ma nic o dozorze, monitoringu, ochronie, kamerach
+                </li>
                 <li>Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.</li>
             </ul>
             <p>Ocenę dotyczącą Monitoringu przypisz do klucza alarmGPT obiektu JSON.</p>
@@ -196,7 +229,8 @@
                     Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; napisano, że mieszkanie jest oficynie kamienicy
                 </li>
                 <li>
-                    Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; napisano, że mieszkanie jest w drugiej linii zabudowy,
+                    Wpisz 1, jeżeli w polu &lt;Opis mieszkania&gt; napisano, że mieszkanie jest w drugiej linii
+                    zabudowy,
                     a rok budowy jest mniejszy niż 1960.
                 </li>
                 <li>
@@ -232,16 +266,27 @@
 
 
         {{!-- standard nieruchmości --}}
+
+        {{!-- if reated earlier --}}
+        {{#if flat_ans_data.modernizationAns}}
+            <li>Do klucza modernizationGPT obiektu JSON przypisz wartość {{flat_ans_data.modernizationAns}}.</li>
+        {{/if}}
+        {{#if flat_ans_data.technologyAns}}
+            <li>Do klucza technologyGPT obiektu JSON przypisz wartość {{flat_ans_data.technologyAns}}.</li>
+        {{/if}}
+        {{#if flat_ans_data.kitchenAns}}
+            <li>Do klucza kitchenGPT obiektu JSON przypisz wartość {{flat_ans_data.kitchenAns}}.</li>
+        {{/if}}
         <li>
-            W kluczu qualityGPT:
-            <ul class="dashed">
-                {{#unless flat_ans_data.qualityAns}}
-                    <li>Wpisz wartość: null</li>
-                {{else}}
-                    <li>Wpisz wartość: {{flat_ans_data.qualityAns}}</li>
-                {{/unless}}
-            </ul>
+            Do klucza qualityGPT obiektu JSON przypisz wartość
+            {{#unless flat_ans_data.qualityAns}}
+                null
+            {{else}}
+                {{flat_ans_data.qualityAns}}.
+            {{/unless}}
         </li>
+        <p></p>
+
         {{!-- komentarz/uzasadnienie --}}
         <li>W kluczu commentGPT:
             <ul class="dashed">
@@ -251,7 +296,8 @@
                 </li>
             </ul>
         </li>
-        <li>Wygeneruj tylko obiekt JSON.</li>
+
+        <li>Wygeneruj tylko poprawny obiekt JSON.</li>
 
     </ol>
 
@@ -345,9 +391,34 @@
 </div>
 
 <form action="{{add flat_data.number 1}}" method="post">
-    <div class="input-group mb-3">
+
+    <div class="d-flex justify-content-center align-items-center">
+
+        <div class="input-group mb-3 {{#if flat_gpt_data}}w-75{{/if}}">
         <textarea name="gpt-json" rows="20" class="form-control" placeholder="Podaj obiekt JSON."
-                  {{#if flat_gpt_data.commentsGPT}}value="{{flat_gpt_data.commentsGPT}}"{{/if}} required></textarea>
+                   required></textarea>
+        </div>
+    <div class="mb-3 {{#if flat_gpt_data}}w-25{{/if}}" style="margin-left: 20px;">
+        {{#if flat_gpt_data}}
+            {
+            "technologyGPT": {{flat_gpt_data.technologyGPT}},<br>
+            "lawStatusGPT": {{flat_gpt_data.lawStatusGPT}},<br>
+            "balconyGPT": {{flat_gpt_data.balconyGPT}},<br>
+            "elevatorGPT": {{flat_gpt_data.elevatorGPT}},<br>
+            "basementGPT": {{flat_gpt_data.basementGPT}},<br>
+            "garageGPT": {{flat_gpt_data.garageGPT}},<br>
+            "gardenGPT": {{flat_gpt_data.gardenGPT}},<br>
+            "modernizationGPT": {{flat_gpt_data.modernizationGPT}},<br>
+            "alarmGPT": {{flat_gpt_data.alarmGPT}},<br>
+            "kitchenGPT": {{flat_gpt_data.kitchenGPT}},<br>
+            "outbuildingGPT": {{flat_gpt_data.outbuildingGPT}},<br>
+            "qualityGPT": {{flat_gpt_data.qualityGPT}},<br>
+            "rentGPT": {{flat_gpt_data.rentGPT}},<br>
+            "commentsGPT": {{flat_gpt_data.commentsGPT}}<br>
+            }
+        {{/if}}
+        </div>
+
     </div>
 
     <div class="d-flex justify-content-center align-items-center">

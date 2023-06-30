@@ -13,7 +13,6 @@ class FlatsOffersAnsRepository {
         }
     }
 
-s
     static async _checkId(id) {
         const [results] = await pool.execute('SELECT `flatId` FROM `flats_ans` WHERE `flatId` = :id', {
             id,
