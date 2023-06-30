@@ -193,10 +193,12 @@ flatsRouter
         const id = await FlatsRepository.getIdByNumber(number)
         const originalData = await FlatsRepository.find(number);
         const answersData = await FlatsAnswersRepository.find(id);
+        const gptData = await FlatsGPTRepository.find(id);
 
         res.render('forms/gpt/template', {
             flat_data: originalData,
             flat_ans_data: answersData,
+            flats_gpt_data: gptData,
             lastNumber,
             username
         });
