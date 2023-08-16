@@ -6,7 +6,7 @@ const {argsGPT, argsAns} = require("../../db_columns/flats");
 const {FlatsAnswersRepository} = require("./FlatsOffersAns.repository");
 const {FlatsRepository} = require("./FlatsOffers.repository");
 
-class FlatsGptOffersRepository {
+class FlatsGPTRepository {
 
     static _checkRecord(record) {
         if (!(record instanceof FlatsGPTRecord)) {
@@ -31,12 +31,10 @@ class FlatsGptOffersRepository {
 
     static async insert(record) {
         // @TODO - to będzie do parse jSON
-        FlatsGptOffersRepository._checkRecord(record);
-        const getIdByNumber = await FlatsRepository.getIdByNumber(record.number);
-        record.id = getIdByNumber;
+        FlatsGPTRepository._checkRecord(record);
         console.log(record)
 
-        if (!(await FlatsGptOffersRepository._checkId(getIdByNumber))) {
+        if (!(await FlatsGPTRepository._checkId(record.id))) {
             await addToDatabase(record, 'flats_GPT', argsGPT)
             return 'added.'
         } else {
@@ -61,5 +59,5 @@ class FlatsGptOffersRepository {
 }
 
 module.exports = {
-    FlatsGPTRepository: FlatsGptOffersRepository,
+    FlatsGPTRepository,
 }

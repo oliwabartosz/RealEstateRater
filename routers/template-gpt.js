@@ -43,11 +43,11 @@ function createGptTemplate(technologyAns, modernizationAns, kitchenAns, qualityA
         - Ocenę stanu prawnego przypisz do klucza lawStatusGPT obiektu JSON.
         
         3. Dla oceny Balkonu (klucz balconyGPT obiektu JSON):
-        - Wpisz wartość 0, jeżeli napisano w <Opis mieszkania>, że w mieszkaniu jest tylko balkon francuski.
-        - Wpisz wartość 1, jeżeli w opisie są informacje o balkonie lub tarasie lub loggi.
-        - Jeżeli w <Opis mieszkania> nie ma informacji o balkonie, pobierz informację z pola <Balkon>. Jeżeli jest "tak" wpisz 1. Jeżeli jest "nie" lub nie ma informacji wpisz 0.
+        Dla oceny Balkonu (klucz balconyGPT obiektu JSON):
+        - Wpisz wartość 1, jeżeli w <Opis mieszkania> jest balkon lub taras lub loggia.
+        - Wpisz wartość 0, jeżeli w <Opis mieszkania>, że w mieszkaniu jest tylko balkon francuski.
+        - Jeżeli w <Opis mieszkania> nie ma informacji o balkonie, pobierz informację z pola <Balkon>. Jeżeli jest "tak" wpisz 1. Jeżeli jest "nie" lub jest puste wpisz 0.
         - Jeżeli nie jesteś pewny odpowiedzi wpisz: -9.
-        - Ocenę stanu prawnego przypisz do klucza balconyGPT obiektu JSON.
         
         4. Dla oceny Windy (klucz elevatorGPT obiektu JSON):
         - Wpisz 1, jeżeli w polu <Winda> jest tak.

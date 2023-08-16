@@ -1,13 +1,5 @@
 const {pool} = require("../../../../config/dbConn");
 
-// async function checkIfExistsById(sqlTable, id) {
-//     const [results] = await pool.execute(`SELECT flatId FROM ${sqlTable} WHERE flatId = :id`, {
-//         id,
-//     });
-//     return results.length > 0
-// }
-
-// ["flatId", "technologyGPT", "lawStatusGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT", "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"]
 async function addToDatabase(record, sqlTable, ...args) {
     const joinedArgs = args[0]
         .map(item => `:${item}`)

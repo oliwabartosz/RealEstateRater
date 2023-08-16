@@ -16,6 +16,8 @@ class FlatsOffersRepository {
     }
 
     static async getIdByNumber(number) {
+        console.log(number)
+
         const [results] = await pool.execute('SELECT `id`, `number` FROM `flats` WHERE `number` = :number', {
             number,
         });
@@ -29,7 +31,7 @@ class FlatsOffersRepository {
     }
 
 
-        static async insert(record) {
+    static async insert(record) {
         FlatsOffersRepository._checkRecord(record);
         record.id = record.id ?? uuid();
 

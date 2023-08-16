@@ -25,10 +25,6 @@
             następujące klucze: technologyGPT, lawStatusGPT, balconyGPT, elevatorGPT, basementGPT, garageGPT
             gardenGPT, modernizationGPT, alarmGPT, kitchenGPT, outbuildingGPT, qualityGPT, rentGPT, commentsGPT
         </li>
-        <li>
-            Dokonaj analizy tekstu i pozyskaj informacje na temat: technologii budynku, stanu prawnego, balkonu w mieszkaniu,
-            garażu, ogrodu, modernizacji budynku, monitoringu, kuchni, czynszu, oficyna
-        </li>
         <p></p>
         <li>
             {{!-- stan prawny --}}
@@ -314,12 +310,12 @@
     <p>
         Tekst oferty nieruchomości do analizy:
         &lt;
-        {{#if flat_data.material}}
-            &lt;Materiał&gt;: {{flat_data.material}}<br/>
-        {{/if}}
-
         {{#if flat_data.buildingType}}
             &lt;Rodzaj budynku&gt;: {{flat_data.buildingType}}<br/>
+        {{/if}}
+
+        {{#if flat_data.material}}
+            &lt;Materiał&gt;: {{flat_data.material}}<br/>
         {{/if}}
 
         {{#if flat_data.yearBuilt}}

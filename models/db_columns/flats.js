@@ -119,19 +119,45 @@ const FLATS_RECORD_GPT = {
     number: 'number',
 
     technologyGPT: 'technologyGPT',
+    technology_summary: 'technology_summary',
+
     lawStatusGPT: 'lawStatusGPT',
+    law_summary:'law_summary',
+
     balconyGPT: 'balconyGPT',
+    balcony_summary: 'balcony_summary',
+
     elevatorGPT: 'elevatorGPT',
+    elevator_summary: 'elevator_summary',
+
     basementGPT: 'basementGPT',
+    basement_summary: 'basement_summary',
+
     garageGPT: 'garageGPT',
+    garage_summary: 'garage_summary',
+
     gardenGPT: 'gardenGPT',
+    garden_summary: 'garden_summary',
+
     modernizationGPT: 'modernizationGPT',
+    modernization_summary: 'modernization_summary',
+
     alarmGPT: 'alarmGPT',
+    alarm_summary: 'alarm_summary',
+
     kitchenGPT: 'kitchenGPT',
+    kitchen_summary: 'kitchen_summary',
+
     outbuildingGPT: 'outbuildingGPT',
+    outbuilding_summary: 'outbuilding_summary',
+
     qualityGPT: 'qualityGPT',
+
     rentGPT: 'rentGPT',
+    rent_summary: 'rent_summary',
+
     commentsGPT: 'commentsGPT',
+    status: 'status'
 };
 
 const TEMPLATE_GPT_RECORD = {
@@ -145,21 +171,24 @@ const argsAns = [
     "flatId", "technologyAns", "lawStatusAns", "balconyAns", "elevatorAns", "basementAns", "garageAns",
     "gardenAns", "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns",
     "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
-    ]
+    ];
 
 const argsPartialAns = [
     "flatId", "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns",
     "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
     "commentsAns",
-]
+];
+
 const argsGPT = [
-    "flatId", "technologyGPT", "lawStatusGPT",  "balconyGPT", "elevatorGPT", "basementGPT", "garageGPT", "gardenGPT",
-    "modernizationGPT", "alarmGPT", "kitchenGPT", "outbuildingGPT", "qualityGPT", "rentGPT", "commentsGPT"
+    "flatId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary",  "balconyGPT", "balcony_summary",
+    "elevatorGPT", "elevator_summary", "basementGPT", "basement_summary", "garageGPT", "garage_summary", "gardenGPT",
+    "garden_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
+    "kitchen_summary", "outbuildingGPT", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT", 'status'
 ];
 
 const argsTemplateGPT = [
     "flatId", "template"
-]
+];
 
 module.exports = {
     FLATS_RECORD_FIELDS,
@@ -170,5 +199,4 @@ module.exports = {
     argsPartialAns,
     argsGPT,
     argsTemplateGPT
-
 };

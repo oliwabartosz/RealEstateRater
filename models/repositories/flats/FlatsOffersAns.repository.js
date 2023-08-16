@@ -1,12 +1,12 @@
 const {v4: uuid} = require("uuid");
 
 const {pool} = require("../../../config/dbConn");
-const {FlatsRecordAns, FlatsRecord} = require("../../flats.record");
+const {FlatsRecordAns} = require("../../flats.record");
 const {updateToDatabase, addToDatabase} = require("./utils/flats-utils");
 const {argsAns, argsPartialAns} = require("../../db_columns/flats");
 const {FlatsRepository} = require("./FlatsOffers.repository");
 
-class FlatsOffersAnsRepository {
+class FlatsAnswersRepository {
     static _checkRecord(record) {
         if (!(record instanceof FlatsRecordAns)) {
             throw new Error('record must be an instance of FlatsRecordAns')
@@ -21,11 +21,12 @@ class FlatsOffersAnsRepository {
     }
 
     static async insert(record) {
-        FlatsOffersAnsRepository._checkRecord(record);
+
+        FlatsAnswersRepository._checkRecord(record);
         const getIdByNumber = await FlatsRepository.getIdByNumber(record.number);
         record.id = getIdByNumber;
 
-        if (!(await FlatsOffersAnsRepository._checkId(getIdByNumber))) {
+        if (!(await FlatsAnswersRepository._checkId(getIdByNumber))) {
             await addToDatabase(record, 'flats_ans', argsAns)
             return 'added.'
         } else {
@@ -43,7 +44,7 @@ class FlatsOffersAnsRepository {
     }
 
     static async insertPartials(record) {
-        FlatsOffersAnsRepository._checkRecord(record);
+        FlatsAnswersRepository._checkRecord(record);
         const getIdByNumber = await FlatsRepository.getIdByNumber(record.number);
         record.id = getIdByNumber;
 
@@ -55,7 +56,7 @@ class FlatsOffersAnsRepository {
 
 
 
-        if (!(await FlatsOffersAnsRepository._checkId(getIdByNumber))) {
+        if (!(await FlatsAnswersRepository._checkId(getIdByNumber))) {
             await addToDatabase(partialRecord, 'flats_ans', argsPartialAns)
             return 'added.'
         } else {
@@ -68,5 +69,5 @@ class FlatsOffersAnsRepository {
 
 
 module.exports = {
-    FlatsAnswersRepository: FlatsOffersAnsRepository,
+    FlatsAnswersRepository,
 }
