@@ -1,16 +1,20 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import * as express from 'express';
-import {Application, json, Request, Response, static as expressStatic} from "express";
-import * as cookieParser from 'cookie-parser';
-import {engine} from "express-handlebars";
-import {handlebarsHelpers} from "./utils/handlebars-helpers";
+import express from 'express';
+import {Application, json, Request, Response, static as expressStatic} from 'express';
+import cookieParser from 'cookie-parser';
+import {engine} from 'express-handlebars';
+
 
 import cors from 'cors';
+// import {handlebarsHelpers} from "./utils/handlebars-helpers";
 
 import path from "path";
 import bodyParser from "body-parser";
+
+// Routers
+import {homeRouter} from './routers/home/home';
 
 
 const app: Application = express();
@@ -19,14 +23,14 @@ app.use(express.urlencoded( {
     extended: true,
 }));
 
-app.use(credentials)
-app.use(cors(corsOptions));
+// app.use(credentials)
+// app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
 
-app.engine('.hbs', hbs.engine({
+app.engine('.hbs', engine({
     extname: '.hbs',
     helpers: handlebarsHelpers,
 }));
