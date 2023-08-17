@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "es6",
+    "downlevelIteration": true,
+    "lib": [
+      "dom",
+      "es6"
+    ]
+  }
+}

@@ -39,19 +39,11 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.13",
     "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.5.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0"
-  },
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "target": "es6",
-    "downlevelIteration": true,
-    "lib": [
-      "dom",
-      "es6"
-    ]
   }
 }

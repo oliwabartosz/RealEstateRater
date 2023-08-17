@@ -44,7 +44,7 @@ flatsRouter
 
         const id = await FlatsRepository.getIdByNumber(number)
         const flatData = await FlatsRepository.find(number);
-        const offerIdExpected = flatData.offerIdExpected;
+        const offerIdExpected = flatData['offerIdExpected'];
         const flatAnsData = await FlatsAnswersRepository.find(id);
         const flatGPTData = await FlatsGPTRepository.find(id);
 
@@ -75,7 +75,7 @@ flatsRouter
         }
 
         const flatData = await FlatsRepository.find(number);
-        const offerIdExpected = flatData.offerIdExpected;
+        const offerIdExpected = flatData['offerIdExpected'];
         const id = await FlatsRepository.getIdByNumber(number)
         const flatAnsData = await FlatsAnswersRepository.find(id);
 
