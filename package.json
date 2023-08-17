@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon index.js",
-    "start:dev": "npx tsnd app.ts"
+    "start-js:dev": "npx nodemon index.js",
+    "start-ts:dev": "npx tsnd app.ts"
   },
   "repository": {
     "type": "git",
