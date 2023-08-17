@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon index.js"
+    "start": "npx nodemon index.js",
+    "start:dev": "npx tsnd app.ts"
   },
   "repository": {
     "type": "git",
@@ -36,5 +37,21 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.0",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
+  },
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "es6",
+    "downlevelIteration": true,
+    "lib": [
+      "dom",
+      "es6"
+    ]
   }
 }
