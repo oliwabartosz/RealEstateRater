@@ -2,7 +2,7 @@ const {UsersRepository} = require("../../models/repositories/users.repository");
 const bcrypt = require("bcrypt");
 const {UsersRecord} = require("../../models/users.record");
 const jwt = require("jsonwebtoken");
-const {JWT_ACCESS_TOKEN_TIME, JWT_REFRESH_TOKEN_TIME} = require("../../config/generalConfig");
+const {JWT_ACCESS_TOKEN_TIME, JWT_REFRESH_TOKEN_TIME} = require("../../config/generalJWTConfig");
 
 function _convertRolesToProperFormat(req) {
     const roles = req.body.roles ?? [];

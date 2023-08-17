@@ -8,7 +8,7 @@ import {engine} from 'express-handlebars';
 
 
 import cors from 'cors';
-// import {handlebarsHelpers} from "./utils/handlebars-helpers";
+ import {handlebarsHelpers} from "./config/handlebarHelpers"
 
 import path from "path";
 import bodyParser from "body-parser";
