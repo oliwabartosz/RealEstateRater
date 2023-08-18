@@ -8,14 +8,25 @@ import {engine} from 'express-handlebars';
 
 
 import cors from 'cors';
- import {handlebarsHelpers} from "./config/handlebarHelpers"
+
+
+import {handlebarsHelpers} from "./config/handlebarHelpers"
 
 import path from "path";
 import bodyParser from "body-parser";
 
 // Routers
 import {homeRouter} from './routers/home/home';
+import {loginRouter} from "./routers/login/login";
 
+// Middlewares
+const corsOptions = require('./middlewares/config/corsOptions') //@TODO: corsOptions
+const credentials = require("./middlewares/credentials"); //@TODO: credentials
+const {verifyJwt} = require("./middlewares/verifyJWT"); //@TODO: JWT verify
+
+// Errors
+import {handleError} from "./config/error";
+import {authRouter} from "./routers/login/auth";
 
 const app: Application = express();
 
@@ -23,8 +34,8 @@ app.use(express.urlencoded( {
     extended: true,
 }));
 
-// app.use(credentials)
-// app.use(cors(corsOptions));
+app.use(credentials)
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(express.json());

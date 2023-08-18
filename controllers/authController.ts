@@ -1,0 +1,54 @@
+import {writeFile} from "fs";
+import path from "path";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const {checkUserNamePassword, checkIfUserExists, checkPassword, getRolesFromDatabase, createAccessToken,
+    createRefreshToken, goToHomePage
+} = require("./utils/utils");
+require('dotenv').config();
+
+const usersDb = {
+    users: require('../models/users.json'),
+    setUsers: function (data) {
+        this.users = data
+    }
+}
+
+const handleLogin = async (req, res) => {
+    const {username, password} = req.body;
+
+    // Check if user provided username and password
+    if (checkUserNamePassword(req, res, username, password)) {
+        return;
+    }
+
+    // Check if user provided username and password
+    if (await checkIfUserExists(req, res, username, 1)) {
+        return;
+    }
+
+    // Check if password stored in database is correct
+    if (!await checkPassword(req, res, username, password)) {
+        return;
+    }
+
+    // Get roles by username
+    const roles = await getRolesFromDatabase(username) // [1, 2, 3]
+
+    // Creates JWT
+    /// Creates AccessToken and sends it as JSON.
+    const accessToken = createAccessToken(res, username, roles);
+
+    /// Creates refreshToken and sends it to database and cookie.
+    await createRefreshToken(res, username, accessToken);
+
+    if (username !== 'Api') {
+        goToHomePage(res)
+    }
+
+}
+
+module.exports = {
+    handleLogin
+}

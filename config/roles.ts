@@ -1,15 +1,13 @@
-enum Roles {
+export enum Roles {
     User = 1,
-    API = 2,
+    Api = 2,
     Admin = 3
 }
 
 // @TODO: czy to jest potrzebne? może wystarczy sam enum?
 
-const ROLES_LIST = {
+export const ROLES = {
     "User": Roles.User,
-    "API": Roles.API,
+    "Api": Roles.Api,
     "Admin": Roles.Admin,
 }
-
-module.exports = ROLES_LIST
