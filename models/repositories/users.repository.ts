@@ -4,7 +4,7 @@ import {UsersRecord} from "../users.record";
 import {Roles, ROLES} from "../../config/roles";
 
 
-class UsersRepository {
+export class UsersRepository {
     private static checkRecord(record: UsersRecord): void {
         if (!(record instanceof UsersRecord)) {
             throw new Error('Record must be an instance of UsersRecord')
@@ -19,7 +19,7 @@ class UsersRepository {
             roles.push('User');
         }
 
-        // Map role names to corresponding numbers for the 'users_roles' table
+        // Map role names to corresponding numbers for the 'users_roles' table.
         const roleMapping: { [key: string]: number } = {
             "User": Roles.User,
             "Api": Roles.Api,
@@ -143,8 +143,4 @@ class UsersRepository {
         return results.map(result => new UsersRecord(result));
     }
 
-}
-
-module.exports = {
-    UsersRepository,
 }
