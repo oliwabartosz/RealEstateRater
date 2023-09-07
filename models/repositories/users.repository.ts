@@ -2,16 +2,11 @@ import {v4 as uuid} from "uuid";
 import {pool} from "../../config/dbConn";
 import {UsersRecord} from "../users.record";
 import {Roles, ROLES} from "../../config/roles";
+import {ValidationError} from "../../config/error";
 
 
 export class UsersRepository {
-    private static checkRecord(record: UsersRecord): void {
-        if (!(record instanceof UsersRecord)) {
-            throw new Error('Record must be an instance of UsersRecord')
-        }
-    }
-
-    private static async AssignRolesIntoDataBase(record: UsersRecord): Promise<void> {
+    private static async assignRolesIntoDataBase(record: UsersRecord): Promise<number[]> {
         const { roles= [] } = record; // @TODO: check if this clever idea works instead of: let roles: string[] = record.roles ?? [];
 
         // Add basic role that every user should have
@@ -35,12 +30,21 @@ export class UsersRepository {
                 role: role,
             });
         }
+
+        return rolesNumbers;
+
     }
 
     public static async addUser(record: UsersRecord) {
-        UsersRepository.checkRecord(record);
 
-        // Assign ID if not provided
+        // Checking the length of username & password
+        if (record.username.length < 3 || record.username.length > 25) {
+            throw new ValidationError('Nazwa użytkownika powinna zawierać od 3 do 25 znaków.');
+        }
+        if (record.password.length < 5) {
+            throw new ValidationError('Hasło musi zawierać więcej niż 5 znaków.');
+        }
+
         record.id = record.id ?? uuid();
 
         await pool.execute('INSERT INTO `users` VALUES(:id, :username, :password, :refreshToken)', {
@@ -50,12 +54,13 @@ export class UsersRepository {
             refreshToken: record.refreshToken,
         });
 
-        await UsersRepository.AssignRolesIntoDataBase(record)
+        const roles = await UsersRepository.assignRolesIntoDataBase(record)
 
         // Return user specifics
         return {
             id: record.id,
             username: record.username,
+            rolesNumber: roles,
             message: "User has been added."
         }
     }
@@ -68,7 +73,6 @@ export class UsersRepository {
     }
 
     static async delete(record: UsersRecord): Promise<void> {
-        UsersRepository.checkRecord(record);
         if (!record.id) {
             throw new Error('Users ID not provided.');
         }
@@ -79,7 +83,6 @@ export class UsersRepository {
     }
 
     static async changePassword(record: UsersRecord) {
-        UsersRepository.checkRecord(record)
         if (!record.id) {
             throw new Error('Users ID not provided.');
         }

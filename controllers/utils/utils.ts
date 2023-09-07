@@ -1,18 +1,19 @@
-const {UsersRepository} = require("../../models/repositories/users.repository");
-const bcrypt = require("bcrypt");
-const {UsersRecord} = require("../../models/users.record");
-const jwt = require("jsonwebtoken");
-const {JWT_ACCESS_TOKEN_TIME, JWT_REFRESH_TOKEN_TIME} = require("../../config/generalJWTConfig");
+import {UsersRepository} from "../../models/repositories/users.repository";
+import bcrypt from "bcrypt";
+import {UsersRecord} from "../../models/users.record";
+import jwt, {JwtPayload} from "jsonwebtoken";
+import {JwtAccessTokenDuration, JwtRefreshTokenDuration, NewUser, RequestBody} from "../../types";
+import {Request, Response} from "express";
 
-function _convertRolesToProperFormat(req) {
-    const roles = req.body.roles ?? [];
+export function _convertRolesToProperFormat(req: Request): string[] | null {
+    const roles: string[] = req.body.roles ?? [];
     if (!Array.isArray(roles)) {
         return null;
     }
     return Array.from(new Set(roles.map(role => role.toLowerCase())));
 }
 
-function checkUserNamePassword(req, res, username, password) {
+export function checkUserNamePassword(req: Request, res: Response, username: string, password: string): boolean {
     if (!username || !password) {
         res.status(400).json({
             message: 'Bad input',
@@ -23,7 +24,7 @@ function checkUserNamePassword(req, res, username, password) {
     return false;
 }
 
-function checkRolesProvided(req, res) {
+export function checkRolesProvided(req: Request, res: Response): boolean {
     const roles = _convertRolesToProperFormat(req);
     const validRoles = new Set(['user', 'admin', 'api']);
 
@@ -37,7 +38,7 @@ function checkRolesProvided(req, res) {
     return false;
 }
 
-async function checkIfUserExists(req, res, username, desiredNumber) {
+export async function checkIfUserExists(req: Request, res: Response, username: string, desiredNumber: number): Promise<boolean> {
     const findUser = await UsersRepository.findUserByUsername(username)
 
     if (findUser === 0) {
@@ -58,7 +59,7 @@ async function checkIfUserExists(req, res, username, desiredNumber) {
     return false;
 }
 
-async function checkPassword(req, res, username, passwordProvided) {
+export async function checkPassword(req: Request, res: Response, username: string, passwordProvided: string): Promise<boolean> {
     const {password: passwordInDatabase} = await UsersRepository.getPasswordFromDatabase(username)
 
     const match = await bcrypt.compare(passwordProvided, passwordInDatabase);
@@ -74,27 +75,27 @@ async function checkPassword(req, res, username, passwordProvided) {
     }
 }
 
-async function getRolesFromDatabase(username) {
+export async function getRolesFromDatabase(username: string): Promise<string[]> {
     return UsersRepository.getRolesFromDatabase(username);
 
 }
 
-async function createNewUser(req, res) {
-    const {username, password} = req.body;
+export async function createNewUser(req: Request, res: Response) {
+    const {username, password}: RequestBody = req.body;
     const roles = _convertRolesToProperFormat(req);
 
     try {
         // password encryption
         const hashedPass = await bcrypt.hash(String(password), 10);
-
-        const newUser = {
+        const newUser: NewUser = {
+            id: undefined,
             "username": username.toLowerCase(),
             "roles": roles,
             "refreshToken": null,
             "password": hashedPass
         }
 
-        const {id, rolesNumbers} = await UsersRepository.addUser(new UsersRecord(newUser));
+        const {id, rolesNumber} = await UsersRepository.addUser(new UsersRecord(newUser));
 
         res.status(201).json({
             "message": "Success! User created!",
@@ -108,7 +109,7 @@ async function createNewUser(req, res) {
     }
 }
 
-function createAccessToken(res, username, roles) {
+export function createAccessToken(res: Response, username: string, roles: string[], expiresIn: JwtAccessTokenDuration) {
     const accessToken = jwt.sign(
         {
             "UserInfo": {
@@ -116,15 +117,15 @@ function createAccessToken(res, username, roles) {
                 "roles": roles
             }
         },
-        process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn: JWT_ACCESS_TOKEN_TIME}
+        process.env.ACCESS_TOKEN_SECRET!,
+        {expiresIn: expiresIn}
     )
 
     // @TODO: new 19.06.2023 - creating access
     if (username !== 'Api') {
         res.cookie('jwt_a', accessToken, {
             httpOnly: true,
-            sameSite: 'None',
+            sameSite: 'none',
             secure: true,
             maxAge: 24 * 60 * 60 * 1000
         })
@@ -133,17 +134,21 @@ function createAccessToken(res, username, roles) {
     return {accessToken};
 }
 
-async function createRefreshToken(res, username, accessToken) {
+export async function createRefreshToken(res: Response, username: string, accessToken: {
+    accessToken: string
+}, expiresIn: JwtRefreshTokenDuration) {
     const refreshToken = jwt.sign(
         {"username": username},
         process.env.REFRESH_TOKEN_SECRET,
-        {expiresIn: JWT_REFRESH_TOKEN_TIME}
+        {
+            expiresIn: expiresIn
+        }
     );
     await UsersRepository.addRefreshToken(username, refreshToken);
 
     res.cookie('jwt', refreshToken, {
         httpOnly: true,
-        sameSite: 'None',
+        sameSite: 'none',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000
     })
@@ -155,22 +160,24 @@ async function createRefreshToken(res, username, accessToken) {
 
 }
 
-async function getRefreshToken(username) {
+export async function getRefreshToken(username: string): Promise<UsersRecord> {
     return await UsersRepository.getRefreshTokenFromDatabase(username);
 }
 
-async function evaluateJWT(refreshToken, username, res) {
+export async function evaluateJWT(res: Response, refreshToken: string, username: string) {
     const roles = await getRolesFromDatabase(username)
 
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
-            if (err || username !== decoded.username) return res.sendStatus(403);
+            const decodedPayload = decoded as JwtPayload;
+
+            if (err || username !== decodedPayload.username) return res.sendStatus(403);
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
-                        "username": decoded.username,
+                        "username": decodedPayload.username,
                         "roles": roles
                     }
                 },
@@ -179,26 +186,8 @@ async function evaluateJWT(refreshToken, username, res) {
             );
             res.json({accessToken})
         });
-
-
 }
 
-//@TODO: new 19.06.2023 - creating access
-function goToHomePage(res) {
+export function goToHomePage(res: Response) {
     res.render('home/index')
-}
-
-
-module.exports = {
-    checkUserNamePassword,
-    checkRolesProvided,
-    checkIfUserExists,
-    checkPassword,
-    getRolesFromDatabase,
-    createNewUser,
-    createAccessToken,
-    createRefreshToken,
-    getRefreshToken,
-    evaluateJWT,
-    goToHomePage
 }

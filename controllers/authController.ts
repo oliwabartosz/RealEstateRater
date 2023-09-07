@@ -1,22 +1,22 @@
-import {writeFile} from "fs";
-import path from "path";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import {config} from "dotenv";
+config();
+import {Request, Response} from "express";
+import {JWT_ACCESS_TOKEN_TIME, JWT_REFRESH_TOKEN_TIME} from "../config/generalJWTConfig";
 
-const {checkUserNamePassword, checkIfUserExists, checkPassword, getRolesFromDatabase, createAccessToken,
-    createRefreshToken, goToHomePage
-} = require("./utils/utils");
-require('dotenv').config();
+import {
+    checkUserNamePassword,
+    checkIfUserExists,
+    checkPassword,
+    getRolesFromDatabase,
+    createAccessToken,
+    createRefreshToken,
+    goToHomePage
+} from "./utils/utils";
+import {RequestBody} from "../types";
 
-const usersDb = {
-    users: require('../models/users.json'),
-    setUsers: function (data) {
-        this.users = data
-    }
-}
 
-const handleLogin = async (req, res) => {
-    const {username, password} = req.body;
+export const handleLogin = async (req: Request, res: Response) => {
+    const {username, password}: RequestBody  = req.body;
 
     // Check if user provided username and password
     if (checkUserNamePassword(req, res, username, password)) {
@@ -38,17 +38,13 @@ const handleLogin = async (req, res) => {
 
     // Creates JWT
     /// Creates AccessToken and sends it as JSON.
-    const accessToken = createAccessToken(res, username, roles);
+    const accessToken = createAccessToken(res, username, roles, JWT_ACCESS_TOKEN_TIME);
 
     /// Creates refreshToken and sends it to database and cookie.
-    await createRefreshToken(res, username, accessToken);
+    await createRefreshToken(res, username, accessToken, JWT_REFRESH_TOKEN_TIME);
 
     if (username !== 'Api') {
         goToHomePage(res)
     }
 
-}
-
-module.exports = {
-    handleLogin
 }
