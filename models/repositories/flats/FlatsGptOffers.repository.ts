@@ -1,22 +1,22 @@
-import {args} from "../../db_columns/flats";
+import {args, argsAns, argsGPT} from "../../db_columns/flats";
 
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
 const {FlatsGPTRecord, FlatsRecord, FlatsRecordAns} = require("../../flats.record");
 const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
-const {argsGPT, argsAns} = require("../../db_columns/flats");
+
 const {FlatsAnswersRepository} = require("./FlatsOffersAns.repository");
 const {FlatsRepository} = require("./FlatsOffers.repository");
 
 class FlatsGPTRepository {
 
-    static _checkRecord(record) {
+    private static checkRecord(record) {
         if (!(record instanceof FlatsGPTRecord)) {
             throw new Error('record must be an instance of FlatsRecordAns')
         }
     }
 
-    static async _checkIfExists(id) {
+    static async checkIfExists(id: string) {
         const [results] = await pool.execute('SELECT `flatId` FROM `flats_GPT` WHERE `flatId` = :id', {
             id,
         });
@@ -33,7 +33,7 @@ class FlatsGPTRepository {
 
     static async insert(record) {
         // @TODO - to będzie do parse jSON
-        FlatsGPTRepository._checkRecord(record);
+        FlatsGPTRepository.checkRecord(record);
         console.log(record)
 
         if (!(await FlatsGPTRepository._checkId(record.id))) {
