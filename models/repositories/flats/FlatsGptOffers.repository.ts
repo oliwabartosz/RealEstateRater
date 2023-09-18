@@ -1,7 +1,6 @@
 import {args, argsAns, argsGPT} from "../../db_columns/flats";
-
-const {v4: uuid} = require("uuid");
-const {pool} = require("../../../config/dbConn");
+import {v4 as uuid} from "uuid";
+import {pool} from "../../../config/dbConn";
 const {FlatsGPTRecord, FlatsRecord, FlatsRecordAns} = require("../../flats.record");
 const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
 

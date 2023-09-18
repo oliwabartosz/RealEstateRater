@@ -48,9 +48,10 @@
         <input class="form-check-input" type="radio" id="alarm_no" name="alarm" value="0" {{#if (equals flat_ans_data.alarmAns 0)}}checked{{/if}}>
         <label class="form-check-label" for="alarm_no">Nie</label>
     </div>
-    {{#if flat_gpt_data.alarmGPT}}
+    {{#if (convertToStr flat_gpt_data.alarmGPT)}}
         <p class="p-break">
             <span class="gpt">GPT: {{flat_gpt_data.alarmGPT}}</span>
+            <span class="gpt">GPT: {{flat_gpt_data.alarm_summary}}</span>
         </p>
     {{/if}}
 </div>

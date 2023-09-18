@@ -1,7 +1,7 @@
 const {pool} = require("../../../../config/dbConn");
 
 export async function addToDatabase(record, sqlTable, ...sqlColumns: string[]) {
-    const joinedArgs = sqlColumns[0] //@TODO: ? [0]
+    const joinedArgs = sqlColumns[0] // ['flatId', 'technologyGPT','technology_summary', 'lawStatusGPT'...]
         .map(item => `:${item}`)
         .join(", "); // ":flatId, :technologyGPT, :lawStatusGPT..."
 

@@ -20,9 +20,10 @@
         <input class="form-check-input" type="radio" id="elevator_no" name="elevator" value="0" {{#if (equals flat_ans_data.elevatorAns 0)}}checked{{/if}}>
         <label class="form-check-label" for="elevator_no">Nie</label>
     </div>
-    {{#if flat_gpt_data.elevatorGPT}}
+    {{#if (convertToStr flat_gpt_data.elevatorGPT)}}
         <p class="p-break">
             <span class="gpt">GPT: {{flat_gpt_data.elevatorGPT}}</span>
+            <span class="gpt">GPT: {{flat_gpt_data.elevator_summary}}</span>
         </p>
     {{/if}}
 </div>

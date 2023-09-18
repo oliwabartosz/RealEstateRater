@@ -93,6 +93,7 @@ const FLATS_RECORD_FIELDS = {
 };
 
 const FLATS_RECORD_FIELDS_ANS = {
+    id: 'id',
     technologyAns: 'technologyAns',
     lawStatusAns: 'lawStatusAns',
     balconyAns: 'balconyAns',
@@ -116,7 +117,7 @@ const FLATS_RECORD_FIELDS_ANS = {
 
 const FLATS_RECORD_GPT = {
     id: 'id',
-    number: 'number',
+    // number: 'number',
 
     technologyGPT: 'technologyGPT',
     technology_summary: 'technology_summary',
@@ -183,7 +184,7 @@ const argsGPT = [
     "flatId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary",  "balconyGPT", "balcony_summary",
     "elevatorGPT", "elevator_summary", "basementGPT", "basement_summary", "garageGPT", "garage_summary", "gardenGPT",
     "garden_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
-    "kitchen_summary", "outbuildingGPT", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT", 'status'
+    "kitchen_summary", "outbuildingGPT", "outbuilding_summary", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT", 'status'
 ];
 
 const argsTemplateGPT = [

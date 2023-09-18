@@ -1,12 +1,14 @@
 const {pool} = require("../../../../config/dbConn");
 
 async function addToDatabase(record, sqlTable, ...args) {
+    console.log('args[0]: ', args[0])
     const joinedArgs = args[0]
         .map(item => `:${item}`)
         .join(", "); // ":flatId, :technologyGPT, :lawStatusGPT..."
 
     const columns = Object.keys(record).filter(key => key !== 'id' && key !== 'updateDate' && key !== 'number')
 
+    console.log(joinedArgs)
     await pool.execute(`INSERT INTO ${sqlTable} (flatId, ${columns.join(", ")}) VALUES (${joinedArgs})`, {
         flatId: record.id,
         ...record,

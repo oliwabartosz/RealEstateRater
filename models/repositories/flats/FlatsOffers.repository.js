@@ -1,7 +1,12 @@
 const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
 const {FlatsRecord} = require("../../flats.record");
-const {FLAT_GPT_COLUMNS, FLATS_RECORD_GPT} = require("../../db_columns/flats");
+const {
+    FLAT_GPT_COLUMNS,
+    FLATS_RECORD_GPT,
+    FLATS_RECORD_FIELDS_ANS,
+    FLATS_RECORD_FIELDS
+} = require("../../db_columns/flats");
 
 class FlatsOffersRepository {
     static _checkRecord(record) {
@@ -67,11 +72,13 @@ class FlatsOffersRepository {
         });
         return results.length === 1 ? new FlatsRecord(results[0]) : null;
     }
+
     static async getAll() {
 
         const [results] = await pool.execute('SELECT * FROM `flats` ORDER BY `number` ASC');
         return results.map(result => new FlatsRecord(result));
     }
+
     static async getLastNumber() {
         const [result] = await pool.execute('SELECT `number` FROM `flats` ORDER BY `number` DESC LIMIT 1;');
         if (result.length > 0) {
@@ -90,12 +97,12 @@ class FlatsOffersRepository {
         }
     }
 
+
     static async getAllDataForGPT() {
         const columns = Object.values(FLATS_RECORD_GPT).join(', ')
-        const [results] = await pool.execute('SELECT ' + columns +  ' FROM `flats` LEFT JOIN `flats_GPT` ON `flats`.`id` = `flats_GPT`.`flatId` ORDER BY `flats`.`number` ASC');
+        const [results] = await pool.execute('SELECT ' + columns + ' FROM `flats` LEFT JOIN `flats_GPT` ON `flats`.`id` = `flats_GPT`.`flatId` ORDER BY `flats`.`number` ASC');
         return results;
     }
-
 }
 
 module.exports = {

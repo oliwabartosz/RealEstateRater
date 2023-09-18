@@ -44,9 +44,10 @@
                {{#if (equals flat_ans_data.technologyAns 9)}}checked{{/if}}>
         <label class="form-check-label" for="technology_9">Alternatywna</label>
     </div>
-    {{#if flat_gpt_data.technologyGPT}}
+    {{#if (convertToStr flat_gpt_data.technologyGPT)}}
         <p class="p-break">
             <span class="gpt">GPT: {{flat_gpt_data.technologyGPT}}</span>
+            <span class="gpt">GPT: {{flat_gpt_data.technology_summary}}</span>
         </p>
     {{/if}}
 </div>

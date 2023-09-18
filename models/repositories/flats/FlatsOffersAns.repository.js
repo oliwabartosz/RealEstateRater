@@ -3,7 +3,7 @@ const {v4: uuid} = require("uuid");
 const {pool} = require("../../../config/dbConn");
 const {FlatsRecordAns} = require("../../flats.record");
 const {updateToDatabase, addToDatabase} = require("./utils/flats-utils");
-const {argsAns, argsPartialAns} = require("../../db_columns/flats");
+const {argsAns, argsPartialAns, FLATS_RECORD_FIELDS_ANS} = require("../../db_columns/flats");
 const {FlatsRepository} = require("./FlatsOffers.repository");
 
 class FlatsAnswersRepository {
@@ -18,6 +18,13 @@ class FlatsAnswersRepository {
             id,
         });
         return results.length > 0;
+    }
+
+    // @TODO: add to TS.
+    static async getAll() {
+        const columns = Object.values(FLATS_RECORD_FIELDS_ANS)
+        const [results] = await pool.execute('SELECT `flats`.id, ' + columns + ' FROM `flats` JOIN `flats_ans` ON `flats`.id = `flats_ans`.flatId ORDER BY `flats`.`number` ASC');
+        return results.map(result => new FlatsRecordAns(result));
     }
 
     static async insert(record) {

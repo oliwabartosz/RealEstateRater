@@ -19,14 +19,15 @@ import bodyParser from "body-parser";
 import {homeRouter} from './routers/home/home';
 import {loginRouter} from "./routers/login/login";
 
-// Middlewares
-const corsOptions = require('./middlewares/config/corsOptions') //@TODO: corsOptions
-const credentials = require("./middlewares/credentials"); //@TODO: credentials
-const {verifyJwt} = require("./middlewares/verifyJWT"); //@TODO: JWT verify
-
 // Errors
 import {handleError} from "./config/error";
 import {authRouter} from "./routers/login/auth";
+
+
+// Middlewares
+import {corsOptions} from "./middlewares/config/corsOptions"; //@TODO: corsOptions
+import {credentials} from "./middlewares/credentials"; //@TODO: credentials
+import {verifyJwt} from "./middlewares/verifyJWT"; //@TODO: JWT verify
 
 const app: Application = express();
 

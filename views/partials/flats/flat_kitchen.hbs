@@ -41,9 +41,10 @@
         <input class="form-check-input" type="radio" id="kitchen_3" name="kitchen" value="3" {{#if (equals flat_ans_data.kitchenAns 3)}}checked{{/if}}>
         <label class="form-check-label" for="kitchen_3">Aneks</label>
     </div>
-    {{#if flat_gpt_data.kitchenGPT}}
+    {{#if (convertToStr flat_gpt_data.kitchenGPT)}}
         <p class="p-break">
             <span class="gpt">GPT: {{flat_gpt_data.kitchenGPT}}</span>
+            <span class="gpt">GPT: {{flat_gpt_data.kitchen_summary}}</span>
         </p>
     {{/if}}
 </div>

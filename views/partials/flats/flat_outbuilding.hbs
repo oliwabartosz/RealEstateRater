@@ -21,9 +21,10 @@
         <input class="form-check-input" type="radio" id="outbuilding_no" name="outbuilding" value="0" {{#if (equals flat_ans_data.outbuildingAns 0)}}checked{{/if}}>
         <label class="form-check-label" for="outbuilding_no">Nie</label>
     </div>
-    {{#if flat_gpt_data.outbuildingGPT}}
+    {{#if (convertToStr flat_gpt_data.outbuildingGPT)}}
         <p class="p-break">
             <span class="gpt">GPT: {{flat_gpt_data.outbuildingGPT}}</span>
+            <span class="gpt">GPT: {{flat_gpt_data.outbuilding_summary}}</span>
         </p>
     {{/if}}
 </div>
