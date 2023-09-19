@@ -4,8 +4,10 @@ const ROLES_LIST = require('../../config/roles');
 const verifyRoles = require('../../middlewares/verifyRoles');
 const {FlatsRepository} = require('../../models/repositories/flats/FlatsOffers.repository');
 const {FlatsRecord, FlatsGPTRecord} = require("../../models/flats.record");
+const {HousesRecord} = require("../../models/houses.record");
 const {FlatsGPTRepository} = require("../../models/repositories/flats/FlatsGptOffers.repository");
 const {FlatsAnswersRepository} = require("../../models/repositories/flats/FlatsOffersAns.repository");
+const {HousesOffersRepository} = require("../../models/repositories/houses/HousesOffers.repository");
 
 const apiRouter = express.Router();
 
@@ -38,6 +40,16 @@ apiRouter.route('/flats/gpt/')
         res.status(202).json({"message":`${id}`})
     })
 
+apiRouter.route('/houses/')
+    .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
+        const data = await HousesOffersRepository.getAll()
+        res.status(202).json(data)
+    })
+    .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.API), async (req, res) => {
+        const data = req.body;
+        const id = await HousesOffersRepository.insert(new HousesRecord(data))
+        res.status(202).json({"message":`${id}`})
+    })
 
 module.exports = {
     apiRouter,

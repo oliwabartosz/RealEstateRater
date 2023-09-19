@@ -1,5 +1,6 @@
 const {pool} = require("../../../../config/dbConn");
 
+//@TODO: make it universal for flats, houses, plots
 export async function addToDatabase(record, sqlTable, ...sqlColumns: string[]) {
     const joinedArgs = sqlColumns[0] // ['flatId', 'technologyGPT','technology_summary', 'lawStatusGPT'...]
         .map(item => `:${item}`)

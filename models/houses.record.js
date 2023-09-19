@@ -1,10 +1,7 @@
-import {
-    FLATS_RECORD_FIELDS,
-    FLATS_RECORD_FIELDS_ANS,
-    FLATS_RECORD_GPT,
-} from "./db_columns/flats";
+const {HOUSES_RECORD_FIELDS, HOUSES_RECORD_FIELDS_ANS, HOUSES_RECORD_GPT} = require("./db_columns/houses");
 
-class FlatsRecord {
+
+class HousesRecord {
     constructor(obj) {
         console.log(obj)
 
@@ -13,7 +10,7 @@ class FlatsRecord {
 
         // Other necessary keys to database, that can be null
         const fields = [
-            ...Object.values(FLATS_RECORD_FIELDS),
+            ...Object.values(HOUSES_RECORD_FIELDS),
 
         ];
         for (const field of fields) {
@@ -22,14 +19,14 @@ class FlatsRecord {
     }
 }
 
-class FlatsRecordAns {
+class HousesRecordAns {
     constructor(obj) {
 
         this.number = obj.number;
 
         // Other necessary keys to database, that can be null
         const fields = [
-            ...Object.values(FLATS_RECORD_FIELDS_ANS)
+            ...Object.values(HOUSES_RECORD_FIELDS_ANS)
         ];
         for (const field of fields) {
             this[field] = obj[field] ?? null;
@@ -37,10 +34,10 @@ class FlatsRecordAns {
     }
 }
 
-class FlatsGPTRecord {
+class HousesGPTRecord {
     constructor(obj) {
         const fields = [
-            ...Object.values(FLATS_RECORD_GPT)
+            ...Object.values(HOUSES_RECORD_GPT)
         ];
         for (const field of fields) {
             this[field] = obj[field] ?? null;
@@ -50,7 +47,7 @@ class FlatsGPTRecord {
 
 
 module.exports = {
-    FlatsRecord,
-    FlatsRecordAns,
-    FlatsGPTRecord,
+    HousesRecord,
+    HousesRecordAns,
+    HousesGPTRecord,
 }

@@ -14,6 +14,7 @@ const HOUSES_RECORD_FIELDS = {
     street: 'street',
     lawStatus: 'lawStatus',
     price: 'price',
+    priceSold: 'priceSold',
     livingArea: 'livingArea',
     houseArea: 'houseArea',
     plotArea: 'plotArea',
@@ -132,6 +133,23 @@ const HOUSES_RECORD_GPT = {
     qualityGPT:'qualityGPT',
     updateDate:'updateDate',
 }
+
+const argsAns = [
+    "houseId", "technologyAns", "lawStatusAns", "houseTypeAns", "garageAns",
+    "modernizationAns", "alarmAns", "kitchenAns", "bathNumberAns", "commentsAns",
+    "qualityAns", "deleteAns", "rateStatus", "user",
+];
+
+const argsPartialAns = [
+    "houseId", "technologyAns", "lawStatusAns", "houseTypeAns" ,"garageAns",
+    "modernizationAns", "alarmAns", "kitchenAns", "bathNumberAns", "qualityAns", "commentsAns",
+];
+
+const argsGPT = [
+    "houseId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary",  "houseTypeGPT", "houseType_summary",
+    "garageGPT", "garage_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
+    "kitchen_summary", "bathNumberGPT", "bathNumber_summary", "qualityGPT", "commentsGPT", 'status'
+];
 
 module.exports = {
     HOUSES_RECORD_FIELDS,
