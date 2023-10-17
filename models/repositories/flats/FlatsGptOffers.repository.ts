@@ -1,4 +1,4 @@
-import {args} from "../../db_columns/flats";
+import {args, FLATS_RECORD_GPT} from "../../db_columns/flats";
 import {pool} from "../../../config/dbConn";
 import {FlatsRecordGPT} from "../../flats.record";
 import {addToDatabase, updateToDatabase} from "../utils/utils";
@@ -35,14 +35,6 @@ export class FlatsRepositoryGPT {
             return 'updated.'
         }
     }
-
-    static async getAll() {
-        const [results] = await pool.execute('SELECT * FROM `flats` ORDER BY `number` ASC') as FlatsGPTResults;
-        return results.map(result => {
-            return new FlatsRecordGPT(result, {});
-        });
-    }
-
     static async find(id: string) {
         const [results] = await pool.execute('SELECT * FROM `flats_GPT` WHERE flatId = :id', {
             id,

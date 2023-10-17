@@ -1,7 +1,7 @@
 import {v4 as uuid} from "uuid";
 import {pool} from "../../../config/dbConn";
 import {FlatsRecord} from "../../flats.record";
-import {FLATS_RECORD_GPT} from "../../db_columns/flats";
+import {FLATS_RECORD_FIELDS, FLATS_RECORD_GPT} from "../../db_columns/flats";
 import {FieldPacket} from "mysql2";
 
 //@TODO: add this to general list of types in ./types/types
@@ -22,7 +22,6 @@ export class FlatsOffersRepository {
             throw new Error('There is no record with that id or number!')
         }
     }
-
 
     static async insert(record: FlatsRecord) {
         record.id = record.id ?? uuid();
@@ -56,7 +55,7 @@ export class FlatsOffersRepository {
         const [results] = await pool.execute('SELECT * FROM `flats` WHERE number = :number', {
             number,
         }) as FlatsOfferResults;
-        return results.length === 1 ? new FlatsRecord(results[0], {}) : null;
+        return results.length === 1 ? new FlatsRecord(results[0], FLATS_RECORD_FIELDS) : null;
     }
 
     static async getAll() {
@@ -64,7 +63,7 @@ export class FlatsOffersRepository {
         const [results] = await pool.execute(
             'SELECT * FROM `flats` ORDER BY `number` ASC') as FlatsOfferResults;
 
-        return results.map(result => new FlatsRecord(result, {}));
+        return results.map(result => new FlatsRecord(result, FLATS_RECORD_FIELDS));
     }
 
      static async getLastNumber(): Promise<string | null> {
@@ -88,7 +87,6 @@ export class FlatsOffersRepository {
             return null;
         }
     }
-
 
     //@TODO: why the heck is this here?
     static async getAllDataForGPT() {

@@ -12,6 +12,7 @@ export const flatsRouter = express.Router();
 flatsRouter
     .get('/', async (req, res) => {
         const flatsList = await FlatsOffersRepository.getAll()
+        console.log(flatsList)
         const username = req.user;
 
         res.render('forms/basic/flats-table', {
@@ -20,12 +21,10 @@ flatsRouter
         });
     })
     .get('/gpt/', async (req, res) => {
-        const flatsGPTList = await FlatsRepositoryGPT.getAll()
         const flatsList = await FlatsOffersRepository.getAll()
         const username = req.user;
 
         res.render('forms/gpt/flats-table', {
-            flatsGPTList,
             flatsList,
             username
         });
