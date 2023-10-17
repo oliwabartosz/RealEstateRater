@@ -1,9 +1,12 @@
 import {v4 as uuid} from "uuid";
 import {pool} from "../../config/dbConn";
 import {UsersRecord} from "../users.record";
-import {Roles, ROLES} from "../../config/roles";
+import {Roles} from "../../config/roles";
 import {ValidationError} from "../../config/error";
+import {FieldPacket} from "mysql2";
 
+//@TODO: add this to general list of types in ./types/types
+type UsersResults = [UsersRecord[], FieldPacket[]]
 
 export class UsersRepository {
     private static async assignRolesIntoDataBase(record: UsersRecord): Promise<number[]> {
@@ -100,21 +103,21 @@ export class UsersRepository {
         const [results] = await pool.execute('SELECT `id`, `username`, `password`, `refreshToken` FROM `users` WHERE' +
             ' id = :id', {
             id: id,
-        });
+        }) as UsersResults;
         return results.length === 1 ? new UsersRecord(results[0]) : null;
     }
 
     static async findUserByUsername(username: string) {
         const [results] = await pool.execute('SELECT `username` FROM `users` WHERE username = :username', {
             username: username
-        });
+        }) as UsersResults;
         return results.length
     }
 
     static async getPasswordFromDatabase(username: string) {
         const [results] = await pool.execute('SELECT `password` FROM `users` WHERE username = :username', {
             username: username
-        });
+        }) as UsersResults;
 
         return results.length === 1 ? new UsersRecord(results[0]) : null;
     }
@@ -122,7 +125,7 @@ export class UsersRepository {
     static async getRefreshTokenFromDatabase(refreshToken: string) {
         const [results] = await pool.execute('SELECT `username`, `refreshToken` FROM `users` WHERE `refreshToken` = :refreshToken', {
             refreshToken: refreshToken
-        });
+        }) as UsersResults;
 
         return results.length === 1 ? new UsersRecord(results[0]) : null;
     }
@@ -133,7 +136,7 @@ export class UsersRepository {
             ' FROM `users` JOIN `users_roles` ON `users`.`id` = `users_roles`.`userId` JOIN `roles` ON' +
             ' `users_roles`.`roleId` WHERE `users`.`username` = :username', {
             username: username
-        });
+        }) as UsersResults;
 
         const resultsIdArray = results.map(obj => obj.id)
 
@@ -142,7 +145,7 @@ export class UsersRepository {
 
     static async findAll() {
 
-        const [results] = await pool.execute('SELECT `id`, `username` FROM `users`');
+        const [results] = await pool.execute('SELECT `id`, `username` FROM `users`') as UsersResults;
         return results.map(result => new UsersRecord(result));
     }
 

@@ -16,6 +16,6 @@ export const handleRefreshToken = async (req: Request, res: Response) => {
     if (!username) return res.sendStatus(403); // Forbidden
 
     // Evaluate JWT
-    await evaluateJWT(refreshToken, username, res);
+    await evaluateJWT(res, refreshToken, username);
 
 }
