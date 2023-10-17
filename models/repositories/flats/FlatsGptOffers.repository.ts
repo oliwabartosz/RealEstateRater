@@ -1,64 +1,53 @@
-import {args, argsAns, argsGPT} from "../../db_columns/flats";
-import {v4 as uuid} from "uuid";
+import {args} from "../../db_columns/flats";
 import {pool} from "../../../config/dbConn";
-const {FlatsGPTRecord, FlatsRecord, FlatsRecordAns} = require("../../flats.record");
-const {addToDatabase, updateToDatabase, checkIfExistsById} = require("./utils/flats-utils");
+import {FlatsRecordGPT} from "../../flats.record";
+import {addToDatabase, updateToDatabase} from "../utils/utils";
+import {FieldPacket} from "mysql2";
 
-const {FlatsAnswersRepository} = require("./FlatsOffersAns.repository");
-const {FlatsRepository} = require("./FlatsOffers.repository");
+//@TODO: add this to general list of types in ./types/types
+type FlatsGPTResults = [FlatsRecordGPT[], FieldPacket[]]
 
-class FlatsGPTRepository {
-
-    private static checkRecord(record) {
-        if (!(record instanceof FlatsGPTRecord)) {
-            throw new Error('record must be an instance of FlatsRecordAns')
-        }
-    }
+export class FlatsRepositoryGPT {
+    length: number;
 
     static async checkIfExists(id: string) {
         const [results] = await pool.execute('SELECT `flatId` FROM `flats_GPT` WHERE `flatId` = :id', {
             id,
-        });
+        }) as FlatsRepositoryGPT[];
         return results.length > 0
     }
 
-    static async _checkId(id) {
+    private static async checkId(id: string) {
         const [results] = await pool.execute('SELECT `flatId` FROM `flats_GPT` WHERE `flatId` = :id', {
             id,
-        });
+        }) as FlatsRepositoryGPT[];
         return results.length > 0;
     }
 
-
-    static async insert(record) {
+    static async insert(record: FlatsRecordGPT) {
         // @TODO - to będzie do parse jSON
-        FlatsGPTRepository.checkRecord(record);
-        console.log(record)
 
-        if (!(await FlatsGPTRepository._checkId(record.id))) {
+        if (!(await FlatsRepositoryGPT.checkId(record.id))) {
             await addToDatabase(record, 'flats_GPT', args.argsGPT)
             return 'added.'
         } else {
-            await updateToDatabase(record, 'flats_GPT', args.argsAns)
+            await updateToDatabase(record, 'flats_GPT', args.argsGPT)
             return 'updated.'
         }
     }
 
     static async getAll() {
-
-        const [results] = await pool.execute('SELECT * FROM `flats` ORDER BY `number` ASC');
-        return results.map(result => new FlatsGPTRecord(result));
+        const [results] = await pool.execute('SELECT * FROM `flats` ORDER BY `number` ASC') as FlatsGPTResults;
+        return results.map(result => {
+            return new FlatsRecordGPT(result, {});
+        });
     }
 
-    static async find(id) {
-
+    static async find(id: string) {
         const [results] = await pool.execute('SELECT * FROM `flats_GPT` WHERE flatId = :id', {
             id,
-        });
-        return results.length === 1 ? new FlatsGPTRecord(results[0]) : null;
+        }) as FlatsGPTResults;
+        return results.length === 1 ? new FlatsRecordGPT(results[0], {}) : null;
     }
 }
 
-module.exports = {
-    FlatsGPTRepository,
-}

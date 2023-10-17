@@ -1,4 +1,4 @@
-export const FLATS_RECORD_FIELDS = {
+export const FLATS_RECORD_FIELDS: { [key: string]: string } = {
     market: 'market',
     offerId: 'offerId',
     offerIdExpected: 'offerIdExpected',
@@ -92,9 +92,10 @@ export const FLATS_RECORD_FIELDS = {
     withoutRentDesc: 'withoutRentDesc',
     rentDesc: 'rentDesc',
     levelDesc: 'levelDesc'
+
 };
 
-export const FLATS_RECORD_FIELDS_ANS = {
+export const FLATS_RECORD_FIELDS_ANS: { [key: string]: string } = {
     technologyAns: 'technologyAns',
     lawStatusAns: 'lawStatusAns',
     balconyAns: 'balconyAns',
@@ -116,15 +117,12 @@ export const FLATS_RECORD_FIELDS_ANS = {
 
 };
 
-export const FLATS_RECORD_GPT = {
-    id: 'id',
-    // number: 'number',
-
+export const FLATS_RECORD_GPT: { [key: string]: string } = {
     technologyGPT: 'technologyGPT',
     technology_summary: 'technology_summary',
 
     lawStatusGPT: 'lawStatusGPT',
-    law_summary:'law_summary',
+    law_summary: 'law_summary',
 
     balconyGPT: 'balconyGPT',
     balcony_summary: 'balcony_summary',
@@ -161,11 +159,12 @@ export const FLATS_RECORD_GPT = {
     commentsGPT: 'commentsGPT',
     status: 'status'
 };
-// @TODO: Add args to type, change lists argsAns, argsPartialAns and argsGPT from list to object in SQL Queries.
+// @TODO: Add args to types/types, change lists argsAns, argsPartialAns and argsGPT from list to object in SQL Queries.
 type Args = {
     argsAns: string[],
-    argsPartialAns: string[],
+    argsPartial: string[],
     argsGPT: string[],
+
 }
 export const args: Args = {
     argsAns: [
@@ -173,36 +172,35 @@ export const args: Args = {
         "gardenAns", "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns",
         "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
     ],
-    argsPartialAns: [
-        "flatId", "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns",
-        "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
-        "commentsAns",
+    argsPartial: [
+        "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns", "modernizationAns", "alarmAns", "kitchenAns",
+        "outbuildingAns", "qualityAns", "commentsAns", "id"
     ],
     argsGPT: [
-    "flatId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary",  "balconyGPT", "balcony_summary",
-    "elevatorGPT", "elevator_summary", "basementGPT", "basement_summary", "garageGPT", "garage_summary", "gardenGPT",
-    "garden_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
-    "kitchen_summary", "outbuildingGPT", "outbuilding_summary", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT",
+        "flatId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary", "balconyGPT", "balcony_summary",
+        "elevatorGPT", "elevator_summary", "basementGPT", "basement_summary", "garageGPT", "garage_summary", "gardenGPT",
+        "garden_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
+        "kitchen_summary", "outbuildingGPT", "outbuilding_summary", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT",
         "status"
-]
+    ]
 }
-
-export const argsAns: string[] = [
-    "flatId", "technologyAns", "lawStatusAns", "balconyAns", "elevatorAns", "basementAns", "garageAns",
-    "gardenAns", "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns",
-    "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
-    ];
-
-export const argsPartialAns: string[] = [
-    "flatId", "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns",
-    "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
-    "commentsAns",
-];
-
-export const argsGPT: string[] = [
-    "flatId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary",  "balconyGPT", "balcony_summary",
-    "elevatorGPT", "elevator_summary", "basementGPT", "basement_summary", "garageGPT", "garage_summary", "gardenGPT",
-    "garden_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
-    "kitchen_summary", "outbuildingGPT", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT", 'status'
-];
+// @TODO: delete below if unnecessary anymore
+// export const argsAns: string[] = [
+//     "flatId", "technologyAns", "lawStatusAns", "balconyAns", "elevatorAns", "basementAns", "garageAns",
+//     "gardenAns", "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns",
+//     "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
+// ];
+//
+// export const argsPartialAns: string[] = [
+//     "flatId", "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns",
+//     "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
+//     "commentsAns",
+// ];
+//
+// export const argsGPT: string[] = [
+//     "flatId", "technologyGPT", "technology_summary", "lawStatusGPT", "law_summary", "balconyGPT", "balcony_summary",
+//     "elevatorGPT", "elevator_summary", "basementGPT", "basement_summary", "garageGPT", "garage_summary", "gardenGPT",
+//     "garden_summary", "modernizationGPT", "modernization_summary", "alarmGPT", "alarm_summary", "kitchenGPT",
+//     "kitchen_summary", "outbuildingGPT", "qualityGPT", "rentGPT", "rent_summary", "commentsGPT", 'status'
+// ];
 

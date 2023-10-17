@@ -5,13 +5,8 @@ import express from 'express';
 import {Application, json, Request, Response, static as expressStatic} from 'express';
 import cookieParser from 'cookie-parser';
 import {engine} from 'express-handlebars';
-
-
 import cors from 'cors';
-
-
 import {handlebarsHelpers} from "./config/handlebarHelpers"
-
 import path from "path";
 import bodyParser from "body-parser";
 
@@ -23,11 +18,17 @@ import {loginRouter} from "./routers/login/login";
 import {handleError} from "./config/error";
 import {authRouter} from "./routers/login/auth";
 
-
 // Middlewares
 import {corsOptions} from "./middlewares/config/corsOptions"; //@TODO: corsOptions
-import {credentials} from "./middlewares/credentials"; //@TODO: credentials
-import {verifyJwt} from "./middlewares/verifyJWT"; //@TODO: JWT verify
+import credentials from "./middlewares/credentials"; //@TODO: credentials
+import {verifyJwt} from "./middlewares/verifyJWT";
+import {refreshRouter} from "./routers/login/refresh";
+import {logoutRouter} from "./routers/login/logout";
+import {registerRouter} from "./routers/admin/register";
+import {flatsRouter} from "./routers/flats/flats";
+import {apiRouter} from "./routers/api/api";
+import {housesRouter} from "./routers/houses/houses";
+import {plotsRouter} from "./routers/plots/plots"; //@TODO: JWT verify
 
 const app: Application = express();
 

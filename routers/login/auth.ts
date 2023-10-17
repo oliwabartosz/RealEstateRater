@@ -1,9 +1,6 @@
 import {Request, Response, Router} from "express";
+import {handleLogin} from "../../controllers/authController";
 
 export const authRouter: Router = Router();
-
-//@TODO: convert to ts
-const authController = require('../../controllers/authController')
-
 authRouter
-    .post('/', authController.handleLogin)
+    .post('/', handleLogin)

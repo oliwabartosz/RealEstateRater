@@ -179,7 +179,7 @@ const argsAns = [
 const argsPartialAns = [
     "flatId", "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns",
     "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns", "qualityAns",
-    "commentsAns",
+    "commentsAns", "user"
 ];
 
 const argsGPT = [

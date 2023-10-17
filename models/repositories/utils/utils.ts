@@ -1,7 +1,11 @@
-import {pool} from "../../../../config/dbConn";
+import {pool} from "../../../config/dbConn";
+import {GenericRealEstateRecord} from "../../generic.record";
+import {FlatsRecord, FlatsRecordAns, FlatsRecordGPT} from "../../flats.record";
 
-//@TODO: delete that file after checking
-export async function addToDatabase(record: { [key: string]: string }, sqlTable: string, ...sqlColumns: [string[]]) {
+//@TODO: add this to general list of types in ./types/types
+type RealEstateRecord = FlatsRecord | FlatsRecordAns | FlatsRecordGPT
+
+export async function addToDatabase(record: RealEstateRecord, sqlTable: string, ...sqlColumns: [string[]]) {
     const joinedArgs: string = sqlColumns[0] // ['flatId', 'technologyGPT','technology_summary', 'lawStatusGPT'...]
         .map((item: string) => `:${item}`)
         .join(", "); // ":flatId, :technologyGPT, :lawStatusGPT..."
@@ -14,7 +18,7 @@ export async function addToDatabase(record: { [key: string]: string }, sqlTable:
     });
 }
 
-export async function updateToDatabase(record: { [key: string]: string }, sqlTable: string, ...sqlColumns: [string[]]) {
+export async function updateToDatabase(record: RealEstateRecord, sqlTable: string, ...sqlColumns: [string[]]) {
     const joinedArgs = sqlColumns[0]
         .slice(1)
         .map(item => `${item} = :${item}`)

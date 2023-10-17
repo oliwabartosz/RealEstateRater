@@ -1,4 +1,4 @@
-const PLOTS_RECORD_FIELDS = {
+export const PLOTS_RECORD_FIELDS: { [key: string]: string } = {
     id: 'id',
     number: 'number',
     user: 'user',
@@ -102,7 +102,7 @@ const PLOTS_RECORD_FIELDS = {
     allowanceDesc: 'allowanceDesc',
 }
 
-const PLOTS_RECORD_FIELDS_ANS = {
+export const PLOTS_RECORD_FIELDS_ANS: { [key: string]: string } = {
     plotId: 'plotId',
     documentAns: 'documentAns',
     plotPurposeAns: 'plotPurposeAns',
@@ -125,7 +125,7 @@ const PLOTS_RECORD_FIELDS_ANS = {
     rateStatus: 'rateStatus',
 }
 
-const PLOTS_RECORD_SHORT_ANS = {
+export const PLOTS_RECORD_SHORT_ANS = {
     plotId: 'plotId',
     documentShortAns: 'documentShortAns',
     plotPurposeShortAns: 'plotPurposeShortAns',
@@ -147,7 +147,7 @@ const PLOTS_RECORD_SHORT_ANS = {
     updateDate:'updateDate',
 }
 
-const PLOTS_RECORD_GPT = {
+export const PLOTS_RECORD_GPT: { [key: string]: string } = {
     plotId:'plotId',
     documentGPT:'documentGPT',
     plotPurposeGPT:'plotPurposeGPT',
@@ -168,29 +168,22 @@ const PLOTS_RECORD_GPT = {
     updateDate:'updateDate',
 }
 
-const argsAns = [
+export const argsAns = [
     "plotId", "documentAns", "plotPurposeAns", "plotPurposeJrAns", "plotPurposeWrAns",
     "plotPurposeJwrAns", "plotPurposeFmtAns", "houseTypeAns", "lotShapeAns", "waterAns",
     "gasAns", "sewersAns", "isBuildingOnPlotAns", "accessRoadAns", "buildingOnPlotAns",
     "fenceAns", "commentsAns", "deleteAns", "rateStatus", "user"
 ];
 
-const argsPartialAns = [
+export const argsPartialAns = [
     "plotId", "lotShapeAns", "isBuildingOnPlotAns", "accessRoadAns", "buildingOnPlotAns",
     "fenceAns", "commentsAns", "user"
 ];
 
-const argsGPT = [
+export const argsGPT = [
     "plotId", "documentGPT", "document_summary", "plotPurposeGPT", "plotPurpose_summary", "plotPurposeJrGPT", "plotPurposeJr_summary",
     "plotPurposeWrGPT", "plotPurposeWr_summary", "plotPurposeJwrGPT", "plotPurposeJwr_summary", "plotPurposeFmtGPT", "plotPurposeFmt_summary",
     "houseTypeGPT", "houseType_summary", "lotShapeGPT", "lotShape_summary", "waterGPT", "water_summary", "gasGPT", "gas_summary",
     "sewersGPT", "sewers_summary", "electricityAns", "electricity_summary", "isBuildingOnPlotGPT", "isBuildingOnPlot_summary",
     "accessRoadGPT", "accessRoad_summary", "buildingOnPlotGPT", "buildingOnPlot_summary", "fenceGPT", "fance_summary", "status"
 ];
-
-module.exports = {
-    PLOTS_RECORD_FIELDS,
-    PLOTS_RECORD_FIELDS_ANS,
-    PLOTS_RECORD_SHORT_ANS,
-    PLOTS_RECORD_GPT
-}

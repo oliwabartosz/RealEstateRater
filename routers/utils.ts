@@ -13,7 +13,7 @@ export function addStringToObjectKeys(data: Record<string, any>, stringToAdd: st
     return modifiedData;
 }
 
-function getFilesFromDirectory(directoryPath: string): string[] | null {
+export function getFilesFromDirectory(directoryPath: string): string[] | null {
     // Check if the directory exists
     if (!fs.existsSync(directoryPath)) {
         return null; // Directory doesn't exist

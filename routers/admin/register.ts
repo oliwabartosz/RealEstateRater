@@ -3,6 +3,6 @@ import {handleNewUser} from "../../controllers/registrationController";
 import {verifyRoles} from "../../middlewares/verifyRoles";
 import {ROLES} from "../../config/roles";
 
-const registerRouter = express.Router();
+export const registerRouter = express.Router();
 registerRouter.route('/')
-    .post(verifyRoles(String(ROLES.Admin)), handleNewUser)
+    .post(verifyRoles(Number(String(ROLES.Admin))), handleNewUser)
