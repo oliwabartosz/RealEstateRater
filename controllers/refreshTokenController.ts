@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken";
-import {UsersRecord} from "../models/users.record";
 import {Request, Response} from "express";
 import {getRefreshToken, evaluateJWT} from "./utils/utils";
 import {config} from "dotenv";
