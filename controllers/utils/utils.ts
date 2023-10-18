@@ -1,4 +1,4 @@
-import {UsersRepository} from "../../models/repositories/users.repository";
+import {UsersRepository} from "../../models/repositories/Users.repository";
 import bcrypt from "bcrypt";
 import {UsersRecord} from "../../models/users.record";
 import jwt, {JwtPayload} from "jsonwebtoken";

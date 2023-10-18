@@ -1,5 +1,5 @@
 import {checkUserNamePassword, checkIfUserExists, createNewUser, checkRolesProvided} from "./utils/utils";
-import {UsersRepository} from "../models/repositories/users.repository";
+import {UsersRepository} from "../models/repositories/Users.repository";
 import {Request, Response} from "express";
 import {RequestBody} from "../types";
 

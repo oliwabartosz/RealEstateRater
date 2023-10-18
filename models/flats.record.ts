@@ -8,8 +8,6 @@ import {
 
 
 export class FlatsRecord extends GenericRealEstateRecord<FlatsRecord> {
-    public id: string;
-    public number: string;
 
     constructor(obj: FlatsRecord, recordFields: typeof FLATS_RECORD_FIELDS) {
         super(obj, recordFields)
@@ -19,8 +17,6 @@ export class FlatsRecord extends GenericRealEstateRecord<FlatsRecord> {
 }
 
 export class FlatsRecordAns extends GenericRealEstateRecord<FlatsRecordAns> {
-    public id: string;
-    public number: string;
 
     constructor(obj: FlatsRecordAns, recordFields: typeof FLATS_RECORD_FIELDS_ANS) {
         super(obj, recordFields)
@@ -30,7 +26,6 @@ export class FlatsRecordAns extends GenericRealEstateRecord<FlatsRecordAns> {
 }
 
 export class FlatsRecordGPT extends GenericRealEstateRecord<FlatsRecordGPT> {
-    public id: string;
     constructor(obj: FlatsRecordGPT, recordFields: typeof FLATS_RECORD_GPT) {
         super(obj, recordFields)
     }
