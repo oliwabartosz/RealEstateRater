@@ -52,10 +52,10 @@ export class FlatsAnswersRepository {
         //@TODO: czy id powinno być w argsPartial?
 
         if (!(await FlatsAnswersRepository.checkId(getIdByNumber))) {
-            await addToDatabase(record, 'flats_ans', args.argsPartial)
+            await addToDatabase(record, 'flats_ans', args.argsPartialAns)
             return 'added.'
         } else {
-            await updateToDatabase(record, 'flats_ans', args.argsPartial)
+            await updateToDatabase(record, 'flats_ans', args.argsPartialAns)
             return 'updated.'
         }
     }

@@ -1,34 +1,71 @@
 import {pool} from "../../config/dbConn";
 import {FlatsRecord, FlatsRecordAns, FlatsRecordGPT} from "../flats.record";
-import {FieldPacket} from "mysql2";
-import {FLATS_RECORD_FIELDS, FLATS_RECORD_FIELDS_ANS, FLATS_RECORD_GPT} from "../db_columns/flats";
+import {args, FLATS_RECORD_FIELDS, FLATS_RECORD_FIELDS_ANS, FLATS_RECORD_GPT} from "../db_columns/flats";
 import {v4 as uuid} from "uuid";
+import {addToDatabase, updateToDatabase} from "./utils/utils";
 
-type RealEstateResults = [FlatsRecord[] | FlatsRecordAns[] | FlatsRecordGPT[], FieldPacket[]];
-type RealEstateRecord = FlatsRecord | FlatsRecordAns | FlatsRecordGPT
-type RealEstateType = 'flats' | 'flatsAns' | 'flatsGPT' | 'houses' | 'housesAns' | 'housesGPT' | 'plots' | 'plotsAns' | 'plotsGPT'
+import {RealEstateRecord, RealEstateResults, RealEstateType} from "../../types";
+
+
 export class RealEstateRepository {
-    public static sql_table: string;
+    public sqlTable: string;
+    private recordType: { sqlTable: string; baseSqlTable: string; sqlID?: string; fields: { [p: string]: string }; args?: string[]; argsPartials?: string[] };
 
     constructor(sql_table: RealEstateType) {
-        RealEstateRepository.sql_table = sql_table;
+        this.sqlTable = sql_table;
+        this.recordType = this.determineRecordType()
+    }
+
+    private determineRecordType(): {
+        sqlTable: string;
+        baseSqlTable: string;
+        sqlID?: string;
+        fields: { [p: string]: string };
+        args?: string[];
+        argsPartials?: string[];
+    } {
+        if (this.sqlTable === 'flats') {
+            return {
+                sqlTable: 'flats',
+                baseSqlTable: 'flats',
+                fields: FLATS_RECORD_FIELDS,
+            }
+        }
+        if (this.sqlTable === 'flatsAns') {
+            return {
+                sqlTable: 'flats_ans',
+                baseSqlTable: 'flats',
+                sqlID: 'flatId',
+                fields: FLATS_RECORD_FIELDS_ANS,
+                args: args.argsAns,
+                argsPartials: args.argsPartialAns
+            }
+        }
+        if (this.sqlTable === 'flatsGPT') {
+            return {
+                sqlTable: 'flats_GPT',
+                baseSqlTable: 'flats',
+                sqlID: 'flatId',
+                fields: FLATS_RECORD_GPT,
+                args: args.argsGPT,
+            }
+        }
     }
 
     /**
      * This method creates instances based on Real Estate Type SQL Table.
      */
-    static createRecord(record: RealEstateRecord): RealEstateRecord | Error {
-        if (RealEstateRepository.sql_table === 'flats') {
-            return new FlatsRecord(record, FLATS_RECORD_FIELDS);
+    createRecord(record: RealEstateRecord): RealEstateRecord {
+        if (this.sqlTable === 'flats') {
+            return new FlatsRecord(record, this.recordType.fields);
         }
-        if (RealEstateRepository.sql_table === 'flatsAns') {
-            return new FlatsRecordAns(record, FLATS_RECORD_FIELDS_ANS);
+        if (this.sqlTable === 'flatsAns') {
+            return new FlatsRecordAns(record, this.recordType.fields);
         }
-        if (RealEstateRepository.sql_table === 'flatsGPT') {
-            return new FlatsRecordGPT(record, FLATS_RECORD_GPT);
+        if (this.sqlTable === 'flatsGPT') {
+            return new FlatsRecordGPT(record, this.recordType.fields);
         }
-        // Handle other cases or return a default value
-        throw new Error('Bad Record Instance Specified');
+
     }
 
     /**
@@ -37,11 +74,11 @@ export class RealEstateRepository {
      * @param {'first' | 'last'} offerNumber - The first number to be added.
      * @returns {Promise<string> | null} A promise that resolves to the first or last number as a string or null.
      */
-    static async getFirstOrLastNumber(offerNumber: 'first' | 'last'): Promise<string> | null {
+    async getFirstOrLastNumber(offerNumber: 'first' | 'last'): Promise<string> | null {
         let sequentialOrder: 'ASC' | 'DESC' = offerNumber === "last" ? 'DESC' : 'ASC';
 
         const [result] = await pool.execute(
-            `SELECT number FROM ${RealEstateRepository.sql_table} ORDER BY number ${sequentialOrder} LIMIT 1;`) as RealEstateResults;
+            `SELECT number FROM ${this.sqlTable} ORDER BY number ${sequentialOrder} LIMIT 1;`) as RealEstateResults;
 
         return result.length > 0 ? String(result[0].number) : null;
     }
@@ -52,8 +89,10 @@ export class RealEstateRepository {
      * @returns {Promise<string>} A promise that resolves to the id based on given id.
      */
     async getIdByNumber(number: string): Promise<string> {
+
+
         const [results] = await pool.execute(
-            `SELECT id, number FROM ${RealEstateRepository.sql_table} WHERE number = :number`,
+            `SELECT id, number FROM ${this.recordType.baseSqlTable} WHERE number = :number`,
             {
                 number,
             }) as RealEstateResults;
@@ -69,28 +108,38 @@ export class RealEstateRepository {
      * This method returns the instance of specified class with all data in table.
      */
     async getAll() {
+
         let sql;
 
-        if (RealEstateRepository.sql_table === 'flats') {
-            sql = `SELECT * FROM ${RealEstateRepository.sql_table} ORDER BY number ASC`
+        if (this.recordType.sqlTable === 'flats') {
+            sql = `SELECT * FROM ${this.sqlTable} ORDER BY number ASC`
         }
-        if (RealEstateRepository.sql_table === 'flats_ans') {
+        if (this.recordType.sqlTable === 'flats_ans') {
             const columns = Object.values(FLATS_RECORD_FIELDS_ANS).join(', ')
             sql = 'SELECT `flats`.id, ' + columns + ' FROM `flats` JOIN `flats_ans` ON `flats`.id = `flats_ans`.flatId ORDER BY `flats`.`number` ASC';
         }
-        if (RealEstateRepository.sql_table === 'flats_GPT') {
+        if (this.recordType.sqlTable === 'flats_GPT') {
             const columns = Object.values(FLATS_RECORD_GPT).join(', ')
             sql = 'SELECT `flats`.id, ' + columns + ' FROM `flats` LEFT JOIN `flats_GPT` ON `flats`.`id` = `flats_GPT`.`flatId` ORDER BY `flats`.`number` ASC';
         }
 
         const [results] = await pool.execute(sql) as RealEstateResults;
-        return results.map(result => RealEstateRepository.createRecord(result));
+        return results.map(result => this.createRecord(result));
+    }
+
+    private async checkId(id: string) {
+
+
+        const [results] = await pool.execute(
+            `SELECT ${this.recordType.sqlID} FROM ${this.recordType.sqlTable} WHERE flatId = :id`,
+            {id}) as RealEstateResults;
+        return results.length > 0;
     }
 
     /**
      * This method deletes the record from the database.
      */
-    static async delete(record: RealEstateRecord) {
+    async delete(record: RealEstateRecord) {
         if (!record.id) throw new Error('Flat ID missing.');
 
         await pool.execute(`DELETE FROM flats WHERE id = :id`, {
@@ -101,30 +150,71 @@ export class RealEstateRepository {
     /**
      * This method returns the record based on given number.
      */
-    static async find(number: string) {
+    async findByNumber(number: string): Promise<RealEstateRecord> {
         const [results] = await pool.execute(
-            `SELECT * FROM ${RealEstateRepository.sql_table} WHERE number = :number`, {
-            number,
-        }) as RealEstateResults;
+            `SELECT * FROM ${this.recordType.sqlTable} WHERE number = :number`, {
+                number,
+            }) as RealEstateResults;
 
-        return results.length === 1 ? RealEstateRepository.createRecord(results[0]) : null;
+        return results.length === 1 ? this.createRecord(results[0]) : null;
     }
 
-    static async insertWebScrapedData(record: RealEstateRecord) {
+    async findByID(id: string): Promise<RealEstateRecord> {
+
+        const [results] = await pool.execute(
+            `SELECT * FROM ${this.recordType.sqlTable} WHERE flatId = :id`, {
+            id,
+        }) as RealEstateResults;
+        return results.length === 1 ? this.createRecord(results[0]) : null;
+    }
+
+    /**
+     * This method inserts the data from Real Estate Scraper into database
+     */
+    async insertWebScrapedData(record: RealEstateRecord) {
         record.id = record.id ?? uuid();
 
-        const lastFlatNumber = Number(await RealEstateRepository.getFirstOrLastNumber('last'));
+        const lastFlatNumber = Number(await this.getFirstOrLastNumber('last'));
         record.number = String(lastFlatNumber + 1);
 
         const columns: string[] = Object.keys(record)
-        const values: string[] = Object.keys(record).map((key) => record[key as keyof FlatsRecord]);
+        const values: string[] = Object.keys(record).map((key) => record[key as keyof RealEstateRecord]);
 
         const placeholders = Array(columns.length).fill("?").join(", ");
-        const sql = `INSERT INTO ${RealEstateRepository.sql_table} (${columns.join(", ")}) VALUES (${placeholders})`;
+        const sql = `INSERT INTO ${this.sqlTable} (${columns.join(", ")}) VALUES (${placeholders})`;
 
         await pool.execute(sql, values);
 
         return record.id
     }
 
+    /**
+     * This method inserts the data from Real Estate Scraper into database
+     */
+    async insertOrUpdateAnswers(record: RealEstateRecord) {
+
+        const getIdByNumber = await this.getIdByNumber(record.number);
+        record.id = getIdByNumber;
+
+        if (!(await this.checkId(getIdByNumber))) {
+            await addToDatabase(record, this.recordType.sqlTable, this.recordType.sqlID, this.recordType.args)
+            return 'added.'
+        } else {
+            await updateToDatabase(record, this.recordType.sqlTable, this.recordType.sqlID, this.recordType.args)
+            return 'updated.'
+        }
+    }
+
+    async insertPartials(record: RealEstateRecord) {
+        const getIdByNumber = await this.getIdByNumber(record.number);
+        record.id = getIdByNumber;
+
+        if (!(await this.checkId(getIdByNumber))) {
+            await addToDatabase(record, this.recordType.sqlTable, this.recordType.sqlID, this.recordType.argsPartials)
+            return 'added.'
+        } else {
+            await updateToDatabase(record, this.recordType.sqlTable, this.recordType.sqlID, this.recordType.argsPartials)
+            return 'updated.'
+        }
+    }
 }

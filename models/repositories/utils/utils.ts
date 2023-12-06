@@ -1,31 +1,45 @@
 import {pool} from "../../../config/dbConn";
-import {GenericRealEstateRecord} from "../../generic.record";
-import {FlatsRecord, FlatsRecordAns, FlatsRecordGPT} from "../../flats.record";
+import {RealEstateRecord} from "../../../types";
 
-//@TODO: add this to general list of types in ./types/types
-type RealEstateRecord = FlatsRecord | FlatsRecordAns | FlatsRecordGPT
+export async function addToDatabase(record: RealEstateRecord, sqlTable: string, sqlID: string, ...sqlColumns: [string[]]) {
+    const values = typescriptObjectWorkaround(record, [sqlColumns[0]], sqlID)
 
-export async function addToDatabase(record: RealEstateRecord, sqlTable: string, ...sqlColumns: [string[]]) {
-    const joinedArgs: string = sqlColumns[0] // ['flatId', 'technologyGPT','technology_summary', 'lawStatusGPT'...]
-        .map((item: string) => `:${item}`)
-        .join(", "); // ":flatId, :technologyGPT, :lawStatusGPT..."
 
-    const columns = Object.keys(record).filter(key => key !== 'id' && key !== 'updateDate' && key !== 'number')
+    const sqlCols = Object.keys(values).sort().join(", ")
+    const sqlVals = Object.keys(values).sort().map((item: string) => `:${item}`)
 
-    await pool.execute(`INSERT INTO ${sqlTable} (flatId, ${columns.join(", ")}) VALUES (${joinedArgs})`, {
-        flatId: record.id,
-        ...record,
+    await pool.execute(`INSERT INTO ${sqlTable} (${sqlCols}) VALUES (${sqlVals})`, {
+        ...values
     });
 }
 
-export async function updateToDatabase(record: RealEstateRecord, sqlTable: string, ...sqlColumns: [string[]]) {
+export async function updateToDatabase(record: RealEstateRecord, sqlTable: string, sqlID: string, ...sqlColumns: [string[]]) {
     const joinedArgs = sqlColumns[0]
         .slice(1)
         .map(item => `${item} = :${item}`)
         .join(', '); // "technologyGPT = :technologyGPT, lawStatusGPT = :lawStatusGPT..."
 
-    await pool.execute(`UPDATE ${sqlTable} SET ${joinedArgs} WHERE flatId = :flatId`, {
-        flatId: record.id,
-        ...record,
+    const values = typescriptObjectWorkaround(record, sqlColumns, sqlID)
+
+    await pool.execute(`UPDATE ${sqlTable} SET ${joinedArgs} WHERE flatId = :flatId`, {...values});
+}
+
+function typescriptObjectWorkaround(record: RealEstateRecord, arr: [string[]], sqlID: string) {
+    // values in mysql2 was ...record, but I had to make a workaround
+
+    const output: { [key: string]: any } = {};
+
+    arr[0].slice(1).forEach(column => {
+        output[column] = record[column as keyof RealEstateRecord];
     });
+
+    for (const key in output) {
+        if (output[key] === undefined) {
+            delete output[key];
+        }
+    }
+
+    output[sqlID] = record.id;
+
+    return output
 }

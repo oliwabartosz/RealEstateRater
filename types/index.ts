@@ -1,5 +1,6 @@
 // types
 export * from './types/jwt-tokens';
+export * from './types/real-estate-record';
 
 // interfaces
 export * from './interfaces/request-body'

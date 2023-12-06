@@ -91,8 +91,20 @@ export const FLATS_RECORD_FIELDS: { [key: string]: string } = {
     feesDesc: 'feesDesc',
     withoutRentDesc: 'withoutRentDesc',
     rentDesc: 'rentDesc',
-    levelDesc: 'levelDesc'
-
+    levelDesc: 'levelDesc',
+    balconyLemma: 'balconyLemma',
+    elevatorLemma: 'elevatorLemma',
+    basementLemma: 'basementLemma',
+    garageLemma: 'garageLemma',
+    gardenLemma: 'gardenLemma',
+    modernizationLemma: 'modernizationLemma',
+    monitoringLemma: 'monitoringLemma',
+    lawStatusLemma: 'lawStatusLemma',
+    kitchenLemma: 'kitchenLemma',
+    technologyLemma: 'technologyLemma',
+    outbuildingLemma: 'outbuildingLemma',
+    rentLemma: 'rentLemma',
+    streetLemma: 'streetLemma'
 };
 
 export const FLATS_RECORD_FIELDS_ANS: { [key: string]: string } = {
@@ -162,7 +174,7 @@ export const FLATS_RECORD_GPT: { [key: string]: string } = {
 // @TODO: Add args to types/types, change lists argsAns, argsPartialAns and argsGPT from list to object in SQL Queries.
 type Args = {
     argsAns: string[],
-    argsPartial: string[],
+    argsPartialAns: string[],
     argsGPT: string[],
 
 }
@@ -172,7 +184,7 @@ export const args: Args = {
         "gardenAns", "modernizationAns", "alarmAns", "kitchenAns", "outbuildingAns",
         "qualityAns", 'rentAns', 'commentsAns', 'deleteAns', 'rateStatus', 'user',
     ],
-    argsPartial: [
+    argsPartialAns: [
         "technologyAns", "elevatorAns", "basementAns", "garageAns", "gardenAns", "modernizationAns", "alarmAns", "kitchenAns",
         "outbuildingAns", "qualityAns", "commentsAns", "id"
     ],
